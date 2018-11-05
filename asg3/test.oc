@@ -1,0 +1,6 @@
+int a = 7;
+struct node {
+   string data;
+   node[] link;
+}
+

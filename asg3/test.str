@@ -1,0 +1,17 @@
+string_set[   2]:   13497578857207247412 0xfecd98->"string"
+                   13945322250941355849 0xfecbe8->"struct"
+string_set[   3]:   11597697714117577063 0xfe84c8->"="
+                    5344662657899890615 0xfecb58->";"
+string_set[   6]:   14752253762927134915 0xfecef8->"data"
+                    3729804957429652673 0xfe84e8->"<<ROOT>>"
+string_set[   9]:    2699919699724185070 0xfecd48->"link"
+                    1124216861911730172 0xfe8558->"[]"
+string_set[  11]:      21606623943142546 0xfecd28->"{"
+string_set[  12]:   13686721134187162920 0xfecfb8->"}"
+string_set[  17]:    4993892634952068459 0xfec628->"a"
+string_set[  18]:   18345866965089363306 0xfecc88->"node"
+string_set[  19]:     905566266843721762 0xfecab8->"7"
+string_set[  21]:   12597418120160561823 0xfec648->"int"
+load_factor = 0.609
+bucket_count = 23
+max_bucket_size = 2
