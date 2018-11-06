@@ -4,3 +4,8 @@ struct node {
    node[] link;
 }
 
+int main (int n, int m) 
+{
+
+}
+

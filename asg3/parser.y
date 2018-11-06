@@ -55,6 +55,7 @@ start      : program                                      {  parser::root = $1; 
 
 program    : program structdef                            { $$ = $1 -> adopt ($2); }
            | program globaldecl                           { $$ = $1 -> adopt ($2); }
+           | program function                             { $$ = $1 -> adopt ($2); }
            |                                              { $$ = parser::root; }
            ; 
 
@@ -72,8 +73,23 @@ fielddecl  : basetype TOK_IDENT                           { $$ = $1 ->  adopt_sy
 globaldecl : identdec TOK_VARDECL constant ';'            { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
+function   : identdec '(' identdeclist ')' fnbody          {destroy($2); destroy($4); $$ = $1 -> adopt ($3); $3 -> adopt ($5); }
+           | identdec '(' ')' fnbody                       {destroy($2); destroy($3); $$=$1 -> adopt ($4); }
+           | identdec '(' ')' '{' '}'                      {destroy($2); destroy($3); destroy($4); destroy($5); $$ = $1; }
+           ;                                              
+                                                         
+
+identdeclist   : identdeclist ',' identdec                 {destroy ($2); $$ = $1 -> adopt ($3); }
+               | identdec                                  {$$ = $1;} 
+               ;
+
 identdec   : basetype TOK_ARRAY TOK_IDENT                 { $$ = $2 -> adopt ($1); $1 -> adopt ($3); $3 -> adopt_sym (NULL, TOK_DECLID); }
            | basetype TOK_IDENT                           { $$ = $1 -> adopt ($2); $2 -> adopt_sym (NULL, TOK_DECLID); }        
+           ;
+
+fnbody     : '{' localdecl statement                      {destroy($1); $$ = $2 -> adopt ($3); }
+           | '}'                                          {destroy($1); }
+           | ';'                                          {destroy($1); }
            ;
 
 basetype   : TOK_VOID                                     { $$ = $1; }

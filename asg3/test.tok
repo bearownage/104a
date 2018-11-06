@@ -21,3 +21,6 @@
 0  4.011 280 TOK_IDENT     link
 0  4.015  59 ';'           ;
 0  5.001 125 '}'           }
+0  7.001 260 TOK_INT       int
+0  7.005 280 TOK_IDENT     main
+0  7.010 294 TOK_PARAM     (
