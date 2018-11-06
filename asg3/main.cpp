@@ -21,7 +21,7 @@ using namespace std;
 const string cpp_name = "/usr/bin/cpp";
 string cpp_command;
 FILE *tokFile;
-
+// Hi there
 // Open a pipe from the C preprocessor.
 // Exit failure if can't.
 // Assigns opened pipe to FILE* yyin.
