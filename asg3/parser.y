@@ -72,7 +72,7 @@ fielddecl  : basetype TOK_IDENT                           { $$ = $1 ->  adopt_sy
 globaldecl : identdec TOK_VARDECL constant ';'            { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-identdec   : basetype TOK_ARRAY TOK_IDENT                 { $$ = $2 -> adopt ($1, $3); $3 -> adopt_sym (NULL, TOK_DECLID); }
+identdec   : basetype TOK_ARRAY TOK_IDENT                 { $$ = $2 -> adopt ($1); $1 -> adopt ($3); $3 -> adopt_sym (NULL, TOK_DECLID); }
            | basetype TOK_IDENT                           { $$ = $1 -> adopt ($2); $2 -> adopt_sym (NULL, TOK_DECLID); }        
            ;
 
@@ -82,7 +82,7 @@ basetype   : TOK_VOID                                     { $$ = $1; }
            | TOK_IDENT                                    { $$ = $1; }
            ;
 
-localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4) $$ = $2 -> adopt ($1, $3); }
+localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
 ifelse     : TOK_IF                                       { $$ = $1; }
