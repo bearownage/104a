@@ -73,7 +73,7 @@ fielddecl  : basetype TOK_IDENT                           { $$ = $1 ->  adopt_sy
 globaldecl : identdec TOK_VARDECL constant ';'            { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-function   : identdec '(' identdeclist ')' fnbody          {destroy($2); destroy($4); $$ = $1 -> adopt ($3); $3 -> adopt ($5); }
+function   : identdec TOK_PARAM identdeclist ')' fnbody    {destroy($4); $$ = $1 -> adopt ($2, $5); $2 -> adopt ($3); }
            | identdec '(' ')' fnbody                       {destroy($2); destroy($3); $$=$1 -> adopt ($4); }
            | identdec '(' ')' '{' '}'                      {destroy($2); destroy($3); destroy($4); destroy($5); $$ = $1; }
            ;                                              

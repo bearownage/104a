@@ -6,6 +6,6 @@ struct node {
 
 int main (int n, int m) 
 {
-
+    int b = 1;
 }
 

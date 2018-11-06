@@ -24,3 +24,14 @@
 0  7.001 260 TOK_INT       int
 0  7.005 280 TOK_IDENT     main
 0  7.010 294 TOK_PARAM     (
+0  7.011 260 TOK_INT       int
+0  7.015 280 TOK_IDENT     n
+0  7.016  44 ','           ,
+0  7.018 260 TOK_INT       int
+0  7.022 280 TOK_IDENT     m
+0  7.023  41 ')'           )
+0  8.001 123 '{'           {
+0  9.005 260 TOK_INT       int
+0  9.009 280 TOK_IDENT     b
+0  9.011 269 TOK_VARDECL   =
+0  9.013 281 TOK_INTCON    1
