@@ -73,15 +73,15 @@ fielddecl  : basetype TOK_IDENT                           { $$ = $1 ->  adopt_sy
 globaldecl : identdec TOK_VARDECL constant ';'            { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-function   : identdec TOK_PARAM identdeclist ')' fnbody    {destroy($4); $$ = $1 -> adopt ($2, $5); $2 -> adopt ($3); }
-           | identdec '(' ')' fnbody                       {destroy($2); destroy($3); $$=$1 -> adopt ($4); }
-           | identdec '(' ')' '{' '}'                      {destroy($2); destroy($3); destroy($4); destroy($5); $$ = $1; }
+function   : identdec TOK_PARAM identList ')' fnbody      {destroy($4); $$ = $1 -> adopt ($2, $5); $2 -> adopt ($3); }
+           | identdec '(' ')' fnbody                      {destroy($2); destroy($3); $$=$1 -> adopt ($4); }
+           | identdec '(' ')' '{' '}'                     {destroy($2); destroy($3); destroy($4); destroy($5); $$ = $1; }
            ;                                              
                                                          
 
-identdeclist   : identdeclist ',' identdec                 {destroy ($2); $$ = $1 -> adopt ($3); }
-               | identdec                                  {$$ = $1;} 
-               ;
+identList  : identList ',' identdec                       {destroy ($2); $$ = $1 -> adopt ($3); }
+           | identdec                                     {$$ = $1;} 
+           ;
 
 identdec   : basetype TOK_ARRAY TOK_IDENT                 { $$ = $2 -> adopt ($1); $1 -> adopt ($3); $3 -> adopt_sym (NULL, TOK_DECLID); }
            | basetype TOK_IDENT                           { $$ = $1 -> adopt ($2); $2 -> adopt_sym (NULL, TOK_DECLID); }        
