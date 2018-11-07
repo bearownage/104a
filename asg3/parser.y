@@ -109,8 +109,8 @@ basetype   : TOK_VOID                                     { $$ = $1; }
 localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-ifelse     : TOK_IF '(' expr ')' statement TOK_ELSE statement { destroy($2, $4); destroy($6); $$ = $1 -> adopt($3, $5); $1 -> adopt($7); }
-           | TOK_IF '(' expr ')' statement                    { destroy($2, $4); $$ = $1 -> adopt($3, $5); } 
+ifelse     : TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement { destroy($2, $4); destroy($6); $$ = $1 -> adopt($3, $5); $1 -> adopt($7); }
+           | TOK_IF TOK_PARAM expr ')' statement                    { destroy($2, $4); $$ = $1 -> adopt($3, $5); } 
            ;
 
 expr       : TOK_NEW allocation                           { $$ = $1 -> adopt ($2); }
