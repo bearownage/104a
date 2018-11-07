@@ -7,5 +7,6 @@ struct node {
 
 int main(int n, int m, string hello) {
         int x = new string(5+5);
-	
+	int z = 6;
+        while ( z > 0) 5+5;
 }
