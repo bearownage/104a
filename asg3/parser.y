@@ -109,7 +109,7 @@ basetype   : TOK_VOID                                     { $$ = $1; }
 localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-ifelse     : TOK_IF                                       { $$ = $1; }
+ifelse     : TOK_IF '(' expr ')' statement TOK_ELSE       { destroy($2, $4); $$ = $1 -> adopt($3, $5); }
            ;
 
 expr       : TOK_NULL                                     { $$ = $1; }
