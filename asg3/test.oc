@@ -4,5 +4,10 @@ struct node {
    node[] link;
 }
 
+
 int main(int n, int m, string hello) {
+         int x = 0;
+	 //if ( x == 0 ) int y = 1;
+
+
 }
