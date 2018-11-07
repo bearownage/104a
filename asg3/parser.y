@@ -73,7 +73,7 @@ fielddecl  : basetype TOK_IDENT                           { $$ = $1 ->  adopt_sy
 globaldecl : identdec TOK_VARDECL constant ';'            { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-function   : func fnbody '}'                             { destroy ($3); } 
+function   : func fnbody '}'                             { destroy ($3); $1 -> adopt ($2); } 
            ;
 
 func       : func ')'                                     { destroy ($2); }
@@ -93,7 +93,11 @@ identdec   : basetype TOK_ARRAY TOK_IDENT                 { $$ = $2 -> adopt ($1
            | basetype TOK_IDENT                           { $$ = $1 -> adopt ($2); $2 -> adopt_sym (NULL, TOK_DECLID); }
            ;
 
-fnbody     : '{'                                          { $$ = $1; $1 -> adopt_sym(NULL, TOK_BLOCK); }
+fnbody     : fnbody statement                             { $$ = $1 -> adopt ($2); }
+           | fnbody localdecl                             { $$ = $1 -> adopt ($2); }
+           | '{' statement                                { $$ = $1 -> adopt_sym ($2, TOK_BLOCK); }
+           | '{' localdecl                                { $$ = $1 -> adopt_sym ($2, TOK_BLOCK); }
+           | '{'                                          { $$ = $1 -> adopt_sym (NULL, TOK_BLOCK); }
            ;
 
 basetype   : TOK_VOID                                     { $$ = $1; }
@@ -114,19 +118,24 @@ expr       : TOK_NULL                                     { $$ = $1; }
 statement  : block                                        { $$ = $1; }
            | while                                        { $$ = $1; }
            | ifelse                                       { $$ = $1; }
-           | TOK_RETURN                                   { $$ = $1; }
+           | TOK_RETURN ';'                               { destroy ($2); $$ = $1; }
+           | TOK_RETURN expr ';'                          { destroy ($3); $$ = $1 -> adopt ($2); }
            | expr ';'                                     { destroy ($2); $$ = $1; }
            | ';'                                          { destroy ($1); } 
            ;
 
-block      : TOK_BLOCK stateList '}'                      { destroy ($3); $$ = $1 -> adopt ($2); }
+block      : blockHelp '}'                                { destroy ($2); }
            ;
 
-stateList  : stateList statement                          { $$ = $1 -> adopt ($2); }
-           | statement                                    { $$ = $1; }
+blockHelp  : blockHelp statement                          { $$ = $1 -> adopt ($2); }
+           | '{' statement                                { $$ = $1 -> adopt_sym ($2, TOK_BLOCK); }
            ;
 
 while      : TOK_WHILE '(' expr ')' statement             { destroy ($2); destroy ($4); $$ = $1 -> adopt ($3, $5); }
+           ;
+
+return     : TOK_RETURN ';'                               { destroy ($2); $$ = $1; }
+           | TOK_RETURN expr ';'                          { destroy ($3); $$ = $1 -> adopt ($2); }
            ;
 
 allocation : TOK_IF                                       { $$ = $1; }
