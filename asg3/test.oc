@@ -6,8 +6,6 @@ struct node {
 
 
 int main(int n, int m, string hello) {
-         int x = 0;
-	 //if ( x == 0 ) int y = 1;
-
-
+        int x = new string(5+5);
+	
 }

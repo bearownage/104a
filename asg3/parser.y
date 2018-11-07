@@ -113,31 +113,31 @@ ifelse     : TOK_IF '(' expr ')' statement TOK_ELSE statement { destroy($2, $4);
            | TOK_IF '(' expr ')' statement                    { destroy($2, $4); $$ = $1 -> adopt($3, $5); } 
            ;
 
-expr       : TOK_NEW allocation    { $$ = $1 -> adopt ($2); }
-           | binop                 { $$ = $1; }
-           | unop                  { $$ = $1; }
-           | call                  { $$ = $1; } 
-           | '(' expr ')'          { destroy($1, $3); $$ = $2; }
-           | variable              { $$ = $1; } 
-           | constant              { $$ = $1; }
+expr       : TOK_NEW allocation                           { $$ = $1 -> adopt ($2); }
+           | binop                                        { $$ = $1; }
+           | unop                                         { $$ = $1; }
+           | call                                         { $$ = $1; } 
+           | '(' expr ')'                                 { destroy($1, $3); $$ = $2; }
+           | variable                                     { $$ = $1; } 
+           | constant                                     { $$ = $1; }
 
 binop      :
-           | expr '=' expr         { $$ = $2->adopt ($1, $3); }
-           | expr '+' expr         { $$ = $2->adopt ($1, $3); }
-           | expr '-' expr         { $$ = $2->adopt ($1, $3); }
-           | expr '*' expr         { $$ = $2->adopt ($1, $3); }
-           | expr '/' expr         { $$ = $2->adopt ($1, $3); }
-           | expr '%' expr         { $$ = $2->adopt ($1, $3); }
-           | expr TOK_EQ expr      { $$ = $2->adopt ($1, $3); }
-           | expr TOK_NE expr      { $$ = $2->adopt ($1, $3); }
-           | expr TOK_LT expr      { $$ = $2->adopt ($1, $3); }
-           | expr TOK_LE expr      { $$ = $2->adopt ($1, $3); }
-           | expr TOK_GT expr      { $$ = $2->adopt ($1, $3); }
-           | expr TOK_GE expr      { $$ = $2->adopt ($1, $3); }
+           | expr '=' expr                                { $$ = $2->adopt ($1, $3); }
+           | expr '+' expr                                { $$ = $2->adopt ($1, $3); }
+           | expr '-' expr                                { $$ = $2->adopt ($1, $3); }
+           | expr '*' expr                                { $$ = $2->adopt ($1, $3); }
+           | expr '/' expr                                { $$ = $2->adopt ($1, $3); }
+           | expr '%' expr                                { $$ = $2->adopt ($1, $3); }
+           | expr TOK_EQ expr                             { $$ = $2->adopt ($1, $3); }
+           | expr TOK_NE expr                             { $$ = $2->adopt ($1, $3); }
+           | expr TOK_LT expr                             { $$ = $2->adopt ($1, $3); }
+           | expr TOK_LE expr                             { $$ = $2->adopt ($1, $3); }
+           | expr TOK_GT expr                             { $$ = $2->adopt ($1, $3); }
+           | expr TOK_GE expr                             { $$ = $2->adopt ($1, $3); }
            ; 
 
-unop:      | '+' expr %prec TOK_POS    { $$ = $1->adopt_sym ($2, TOK_POS); }
-           | '-' expr %prec TOK_NEG    { $$ = $1->adopt_sym ($2, TOK_NEG); }
+unop:      | '+' expr %prec TOK_POS                       { $$ = $1->adopt_sym ($2, TOK_POS); }
+           | '-' expr %prec TOK_NEG                       { $$ = $1->adopt_sym ($2, TOK_NEG); }
            ;
 
 statement  : block                                        { $$ = $1; }
@@ -154,7 +154,7 @@ blockHelp  : blockHelp statement                          { $$ = $1 -> adopt ($2
            | '{' statement                                { $$ = $1 -> adopt_sym ($2, TOK_BLOCK); }
            ;
 
-while      : TOK_WHILE '(' expr ')' statement             { destroy ($2); destroy ($4); $$ = $1 -> adopt ($3, $5); }
+while      : TOK_WHILE TOK_PARAM expr ')' statement             { destroy ($2); destroy ($4); $$ = $1 -> adopt ($3, $5); }
            ;
 
 return     : TOK_RETURN ';'                               { destroy ($2); $$ = $1; }
@@ -162,7 +162,7 @@ return     : TOK_RETURN ';'                               { destroy ($2); $$ = $
            ;
 
 allocation : TOK_IDENT                                    { $$ = $1 -> adopt_sym (NULL, TOK_TYPEID); }
-           | TOK_STRING '(' expr ')'                      { destroy ($2, $4); $$ = $1 -> adopt_sym ($3, TOK_NEWSTR); }
+           | TOK_STRING TOK_PARAM expr ')'                { destroy ($2, $4); $$ = $1 -> adopt_sym ($3, TOK_NEWSTR); }
            | basetype '[' expr ']'                        { destroy ($4); $$ = $2 -> adopt_sym ($1, TOK_NEWARRAY); $2 -> adopt ($3); }  
            ;
  

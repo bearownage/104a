@@ -37,6 +37,12 @@
 0  9.010 260 TOK_INT       int
 0  9.014 280 TOK_IDENT     x
 0  9.016 269 TOK_VARDECL   =
-0  9.018 281 TOK_INTCON    0
-0  9.019  59 ';'           ;
-0 13.001 125 '}'           }
+0  9.018 268 TOK_NEW       new
+0  9.022 261 TOK_STRING    string
+0  9.028 295 TOK_PARAM     (
+0  9.029 281 TOK_INTCON    5
+0  9.030  43 '+'           +
+0  9.031 281 TOK_INTCON    5
+0  9.032  41 ')'           )
+0  9.033  59 ';'           ;
+0 10.001 125 '}'           }
