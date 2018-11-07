@@ -4,8 +4,4 @@ struct node {
    node[] link;
 }
 
-int main (int n, int m) 
-{
-    int b = 1;
-}
-
+int main(int n, int m, string hello) {}

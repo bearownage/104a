@@ -35,7 +35,7 @@
 %token TOK_ROOT TOK_BLOCK TOK_CALL TOK_IFELSE TOK_INITDECL
 %token TOK_POS TOK_NEG TOK_NEWARRAY TOK_TYPEID TOK_FIELD          /* any tokens which are still required? */
 
-%token TOK_PARAM TOK_DECLID
+%token TOK_PARAM TOK_FUNCTION TOK_DECLID
 
 %right  TOK_IF TOK_ELSE                                          /* ifelse? */
 %right  TOK_VARDECL
@@ -73,23 +73,27 @@ fielddecl  : basetype TOK_IDENT                           { $$ = $1 ->  adopt_sy
 globaldecl : identdec TOK_VARDECL constant ';'            { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-function   : identdec TOK_PARAM identList ')' fnbody      {destroy($4); $$ = $1 -> adopt ($2, $5); $2 -> adopt ($3); }
-           | identdec '(' ')' fnbody                      {destroy($2); destroy($3); $$=$1 -> adopt ($4); }
-           | identdec '(' ')' '{' '}'                     {destroy($2); destroy($3); destroy($4); destroy($5); $$ = $1; }
-           ;                                              
-                                                         
+function   : func fnbody '}'                             { destroy ($3); } 
+           ;
 
-identList  : identList ',' identdec                       {destroy ($2); $$ = $1 -> adopt ($3); }
-           | identdec                                     {$$ = $1;} 
+func       : func ')'                                     { destroy ($2); }
+           | func param                                   { $$ = $1 -> adopt ($2); }
+           | identdec                                     { $$ = new astree(TOK_FUNCTION, $1 -> lloc ,""); $$ -> adopt ($1); }
+           ;
+
+param      : param ',' identdec                           { destroy ($2); $$ = $1 -> adopt ($3); }
+           | TOK_PARAM identdec                               { $$ = $1 -> adopt ($2); }
+           ;
+
+identList  : identList ',' identdec                       { destroy ($2); $$ = $3; }
+           | identdec                                     { $$ = $1; } 
            ;
 
 identdec   : basetype TOK_ARRAY TOK_IDENT                 { $$ = $2 -> adopt ($1); $1 -> adopt ($3); $3 -> adopt_sym (NULL, TOK_DECLID); }
-           | basetype TOK_IDENT                           { $$ = $1 -> adopt ($2); $2 -> adopt_sym (NULL, TOK_DECLID); }        
+           | basetype TOK_IDENT                           { $$ = $1 -> adopt ($2); $2 -> adopt_sym (NULL, TOK_DECLID); }
            ;
 
-fnbody     : '{' localdecl statement                      {destroy($1); $$ = $2 -> adopt ($3); }
-           | '}'                                          {destroy($1); }
-           | ';'                                          {destroy($1); }
+fnbody     : '{'                                          { $$ = $1; $1 -> adopt_sym(NULL, TOK_BLOCK); }
            ;
 
 basetype   : TOK_VOID                                     { $$ = $1; }
