@@ -33,11 +33,11 @@
 %token TOK_IDENT TOK_INTCON TOK_CHARCON TOK_STRINGCON
 
 %token TOK_ROOT TOK_BLOCK TOK_CALL TOK_IFELSE TOK_INITDECL
-%token TOK_POS TOK_NEG TOK_NEWARRAY TOK_TYPEID TOK_FIELD          /* any tokens which are still required? */
+%token TOK_POS TOK_NEG TOK_NEWARRAY TOK_TYPEID TOK_FIELD TOK_NEWSTR
 
 %token TOK_PARAM TOK_FUNCTION TOK_DECLID
 
-%right  TOK_IF TOK_ELSE                                          /* ifelse? */
+%right  TOK_IF TOK_ELSE                     
 %right  TOK_VARDECL
 %left   TOK_EQ TOK_NE TOK_LT TOK_LE TOK_GT TOK_GE
 %left   '+' '-'
@@ -118,8 +118,6 @@ expr       : TOK_NULL                                     { $$ = $1; }
 statement  : block                                        { $$ = $1; }
            | while                                        { $$ = $1; }
            | ifelse                                       { $$ = $1; }
-           | TOK_RETURN ';'                               { destroy ($2); $$ = $1; }
-           | TOK_RETURN expr ';'                          { destroy ($3); $$ = $1 -> adopt ($2); }
            | expr ';'                                     { destroy ($2); $$ = $1; }
            | ';'                                          { destroy ($1); } 
            ;
@@ -138,7 +136,9 @@ return     : TOK_RETURN ';'                               { destroy ($2); $$ = $
            | TOK_RETURN expr ';'                          { destroy ($3); $$ = $1 -> adopt ($2); }
            ;
 
-allocation : TOK_IF                                       { $$ = $1; }
+allocation : TOK_IDENT                                    { $$ = $1 -> adopt_sym (NULL, TOK_TYPEID); }
+           | TOK_STRING '(' expr ')'                      { destroy ($2, $4); $$ = $1 -> adopt_sym ($3, TOK_NEWSTR); }
+           | basetype '[' expr ']'                        { destroy ($4); $$ = $2 -> adopt_sym ($1, TOK_NEWARR); $2 -> adopt ($3); }  
            ;
  
 exprList   : exprList ',' expr                            { destroy ($2); $$ = $1 -> adopt ($3); }
