@@ -112,7 +112,7 @@ localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4); $$ = $
 ifelse     : TOK_IF '(' expr ')' statement TOK_ELSE       { destroy($2, $4); $$ = $1 -> adopt($3, $5); }
            ;
 
-expr       : TOK_NULL                                     { $$ = $1; }
+expr       : TOK_NEW allocation                           { $$ = $1 -> adopt ($2); }
            ;
 
 statement  : block                                        { $$ = $1; }
@@ -138,7 +138,7 @@ return     : TOK_RETURN ';'                               { destroy ($2); $$ = $
 
 allocation : TOK_IDENT                                    { $$ = $1 -> adopt_sym (NULL, TOK_TYPEID); }
            | TOK_STRING '(' expr ')'                      { destroy ($2, $4); $$ = $1 -> adopt_sym ($3, TOK_NEWSTR); }
-           | basetype '[' expr ']'                        { destroy ($4); $$ = $2 -> adopt_sym ($1, TOK_NEWARR); $2 -> adopt ($3); }  
+           | basetype '[' expr ']'                        { destroy ($4); $$ = $2 -> adopt_sym ($1, TOK_NEWARRAY); $2 -> adopt ($3); }  
            ;
  
 exprList   : exprList ',' expr                            { destroy ($2); $$ = $1 -> adopt ($3); }

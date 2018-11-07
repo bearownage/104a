@@ -4,13 +4,5 @@ struct node {
    node[] link;
 }
 
-int z = 0;
-if ( z == 0 ) {
-   int x = 0;
-}
-
 int main(int n, int m, string hello) {
-	int z = 0;
-	if ( z == 0 ) int x = 0;
-  
 }
