@@ -122,7 +122,8 @@ localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4); $$ = $
 ifelse     : TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement     { destroy ($2, $4); destroy ($6);
                                                                           $$ = $1 -> adopt_sym (NULL, TOK_IF);
                                                                           $1 -> adopt($3, $5); $1->adopt($7); }
-           | TOK_IF TOK_PARAM expr ')' statement TOK_IF                 { destroy ($2, $4); $$ = $1 -> adopt($3, $5); }
+           | TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF           { destroy ($2, $4); $$ = $1 -> adopt($3, $5); }
+           | TOK_ELSE TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF  { destroy ($3, $5); $$ = $2 -> adopt($4, $6); } 
            ;
 
 expr       : TOK_NEW allocation                           { $$ = $1 -> adopt ($2); }

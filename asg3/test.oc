@@ -13,6 +13,6 @@ int main(int n, int m, string hello) {
         putint (fac (n));
 
 	if ( z == 6 ) 5+5;
-        else 4+4;
+        
 
 }
