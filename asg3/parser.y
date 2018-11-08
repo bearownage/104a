@@ -92,6 +92,7 @@ hfunc      : hfunc ')'                                     { destroy ($2); }
 
 param      : param ',' identdec                           { destroy ($2); $$ = $1 -> adopt ($3); }
            | TOK_PARAM identdec                               { $$ = $1 -> adopt ($2); }
+           | TOK_PARAM                                    { $$ = $1; };
            ;
 
 identList  : identList ',' identdec                       { destroy ($2); $$ = $3; }
