@@ -10,4 +10,6 @@ int main(int n, int m, string hello) {
         int x = new string(5+5);
 	int z = 6;
 
+        putint (fac (n));
+
 }

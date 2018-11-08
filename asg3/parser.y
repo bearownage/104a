@@ -119,8 +119,7 @@ basetype   : TOK_VOID                                     { $$ = $1; }
 localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-ifelse     : TOK_IF TOK_PARAM expr ')' statement else     { destroy($2,  $4); $$ = $1 -> adopt($3, $5); $1 -> adopt($6); }
-           | TOK_IF TOK_PARAM expr ')' statement          { destroy($2, $4); $$ = $1 -> adopt($3, $5); } 
+ifelse     : TOK_IF TOK_PARAM expr ')' statement         { destroy($2, $4); $$ = $1 -> adopt ($3, $5); }
            ;
 
 else       : TOK_ELSE statement                           { destroy ($1); $$ = $2; }
@@ -156,6 +155,7 @@ unop:      | '+' expr %prec TOK_POS                       { $$ = $1->adopt_sym (
 statement  : block                                        { $$ = $1; }
            | while                                        { $$ = $1; }
            | ifelse                                       { $$ = $1; }
+           | return                                       { $$ = $1; } 
            | expr ';'                                     { destroy ($2); $$ = $1; }
            | ';'                                          { destroy ($1); } 
            ;
@@ -179,7 +179,12 @@ allocation : TOK_IDENT                                    { $$ = $1 -> adopt_sym
            | basetype '[' expr ']'                        { destroy ($4); $$ = $2 -> adopt_sym ($1, TOK_NEWARRAY); $2 -> adopt ($3); }  
            ;
  
-call       : TOK_IDENT '(' expr ')'                       { destroy ($2); destroy ($4); $$ = $1 -> adopt ($3); }
+call       : funCall ')'                                  { destroy ($2); $$ = $1; }
+           ;
+
+funCall    : funCall ','                                  { destroy ($2); }
+           | funCall expr                                 { $$ = $1 -> adopt ($2); }
+           | TOK_IDENT TOK_PARAM                          { $$ = $2 -> adopt_sym ($1, TOK_CALL); }
            ;
 
 variable   : TOK_IDENT                                    { $$ = $1; }
