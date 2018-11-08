@@ -35,7 +35,7 @@
 %token TOK_ROOT TOK_BLOCK TOK_CALL TOK_IFELSE TOK_INITDECL
 %token TOK_POS TOK_NEG TOK_NEWARRAY TOK_TYPEID TOK_FIELD TOK_NEWSTR
 
-%token TOK_PARAM TOK_FUNCTION TOK_DECLID
+%token TOK_PARAM TOK_FUNCTION TOK_PROTOTYPE TOK_DECLID
 
 %right  TOK_IF TOK_ELSE                     
 %right  TOK_VARDECL
@@ -77,11 +77,17 @@ globaldecl : identdec TOK_VARDECL constant ';'            { destroy ($4); $$ = $
            ;
 
 function   : func fnbody '}'                             { destroy ($3); $1 -> adopt ($2); } 
+           | func ';'                                    { destroy ($2); $$ = $1 -> adopt_sym (NULL, TOK_PROTOTYPE);}
            ;
 
 func       : func ')'                                     { destroy ($2); }
            | func param                                   { $$ = $1 -> adopt ($2); }
            | identdec                                     { $$ = new astree(TOK_FUNCTION, $1 -> lloc ,""); $$ -> adopt ($1); }
+           ;
+
+hfunc      : hfunc ')'                                     { destroy ($2); }
+           | hfunc param                                   { $$ = $1 -> adopt ($2); }
+           | identdec                                     { $$ = new astree(TOK_PROTOTYPE, $1 -> lloc ,""); $$ -> adopt ($1); }
            ;
 
 param      : param ',' identdec                           { destroy ($2); $$ = $1 -> adopt ($3); }
