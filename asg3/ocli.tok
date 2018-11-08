@@ -1,0 +1,23 @@
+# 1 "oclib.h"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h"
+# 1 "<command-line>"
+# 1 "oclib.h"
+# 29 "oclib.h"
+0 29.001 258 TOK_VOID      void
+0 29.006 280 TOK_IDENT     __assert_fail
+0 29.020 295 TOK_PARAM     (
+0 29.021 261 TOK_STRING    string
+0 29.028 280 TOK_IDENT     expr
+0 29.032  44 ','           ,
+0 29.034 261 TOK_STRING    string
+0 29.041 280 TOK_IDENT     file
+0 29.045  44 ','           ,
+0 29.047 260 TOK_INT       int
+0 29.051 280 TOK_IDENT     line
+0 29.055  44 ','           ,
+0 29.057 261 TOK_STRING    string
+0 29.064 280 TOK_IDENT     func
+0 29.068  41 ')'           )
+0 29.069  59 ';'           ;

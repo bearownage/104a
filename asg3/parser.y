@@ -56,6 +56,9 @@ start      : program                                      {  parser::root = $1; 
 program    : program structdef                            { $$ = $1 -> adopt ($2); }
            | program globaldecl                           { $$ = $1 -> adopt ($2); }
            | program function                             { $$ = $1 -> adopt ($2); }
+           | program statement                            { $$ = $1 -> adopt ($2); }
+           | program error '{'                            { $$ = $1; }
+           | program error ';'                            { $$ = $1; }
            |                                              { $$ = parser::root; }
            ; 
 
@@ -109,8 +112,11 @@ basetype   : TOK_VOID                                     { $$ = $1; }
 localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-ifelse     : TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement { destroy($2, $4); destroy($6); $$ = $1 -> adopt($3, $5); $1 -> adopt($7); }
-           | TOK_IF TOK_PARAM expr ')' statement                    { destroy($2, $4); $$ = $1 -> adopt($3, $5); } 
+ifelse     : TOK_IF TOK_PARAM expr ')' statement else     { destroy($2,  $4); $$ = $1 -> adopt($3, $5); $1 -> adopt($6); }
+           | TOK_IF TOK_PARAM expr ')' statement          { destroy($2, $4); $$ = $1 -> adopt($3, $5); } 
+           ;
+
+else       : TOK_ELSE statement                           { destroy ($1); $$ = $2; }
            ;
 
 expr       : TOK_NEW allocation                           { $$ = $1 -> adopt ($2); }
@@ -166,16 +172,12 @@ allocation : TOK_IDENT                                    { $$ = $1 -> adopt_sym
            | basetype '[' expr ']'                        { destroy ($4); $$ = $2 -> adopt_sym ($1, TOK_NEWARRAY); $2 -> adopt ($3); }  
            ;
  
-exprList   : exprList ',' expr                            { destroy ($2); $$ = $1 -> adopt ($3); }
-           | expr                                         { $$ = $1; }
-           ;
-                
-call       : TOK_IDENT '(' exprList ')'                   { destroy ($2); destroy ($4); $$ = $1 -> adopt ($3); }
+call       : TOK_IDENT '(' expr ')'                       { destroy ($2); destroy ($4); $$ = $1 -> adopt ($3); }
            ;
 
 variable   : TOK_IDENT                                    { $$ = $1; }
-           | expr '[' expr ']'                            { destroy ($2); destroy ($4); $$ = $1 -> adopt ($3); }
-           | expr TOK_ARROW TOK_IDENT                     { $$ = $1 -> adopt ($2) -> adopt_sym ($3, TOK_FIELD); }
+           | expr '[' expr ']'                            { destroy ($2, $4); $$ = $1 -> adopt ($3); }
+           | expr TOK_ARROW TOK_IDENT                     { $$ = $2 -> adopt ($1, $3); $3 -> adopt_sym (NULL, TOK_FIELD); }
            ;
 
 constant   : TOK_INTCON                                   { $$ = $1; }

@@ -1,0 +1,17 @@
+string_set[   1]:   12623033807595961729 0x22f6558->"__assert_fail"
+                   11911796782241914524 0x22fa628->"void"
+string_set[   2]:   13497578857207247412 0x22faad8->"string"
+string_set[   3]:    5344662657899890615 0x22faa68->";"
+string_set[   5]:   12291392672316406109 0x22faea8->"line"
+string_set[   6]:    3729804957429652673 0x22f64e8->"<<ROOT>>"
+string_set[  10]:    9386170080689500517 0x22fab78->"expr"
+string_set[  14]:   12868445110721718657 0x22fb0f8->")"
+                   15816506932648033945 0x22f64c8->"("
+                    6142509188972423790 0x22fa9e8->""
+string_set[  15]:    4706206694200543916 0x22fac58->","
+string_set[  17]:    4017852018407011111 0x22fad48->"file"
+string_set[  18]:    9782517693237612205 0x22fad88->"func"
+string_set[  21]:   12597418120160561823 0x22fabb8->"int"
+load_factor = 0.609
+bucket_count = 23
+max_bucket_size = 3
