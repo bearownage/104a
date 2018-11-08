@@ -154,6 +154,7 @@ unop       : '+' expr %prec TOK_POS                       { $$ = $1->adopt_sym (
            ;
 
 statement  : block                                        { $$ = $1; }
+           | vardecl                                      { $$ = $1; }
            | while                                        { $$ = $1; }
            | ifelse                                       { $$ = $1; }
            | return                                       { $$ = $1; } 
@@ -168,7 +169,10 @@ blockHelp  : blockHelp statement                          { $$ = $1 -> adopt ($2
            | '{' statement                                { $$ = $1 -> adopt_sym ($2, TOK_BLOCK); }
            ;
 
-while      : TOK_WHILE TOK_PARAM expr ')' statement             { destroy ($2); destroy ($4); $$ = $1 -> adopt ($3, $5); }
+vardecl    : identdec '=' expr ';'                        { destroy($4); $$ = $2 -> adopt_sym($2, TOK_VARDECL); $2 -> adopt ($1, $3); }
+           ;
+
+while      : TOK_WHILE TOK_PARAM expr ')' statement       { destroy ($2); destroy ($4); $$ = $1 -> adopt ($3, $5); }
            ;
 
 return     : TOK_RETURN ';'                               { destroy ($2); $$ = $1; }
