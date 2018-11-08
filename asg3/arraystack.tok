@@ -1,0 +1,24 @@
+# 1 "arraystack.oc"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h"
+# 1 "<command-line>"
+# 1 "arraystack.oc"
+# 1 "oclib.h"
+# 29 "oclib.h"
+4 29.001 258 TOK_VOID      void
+4 29.006 280 TOK_IDENT     __assert_fail
+4 29.020 295 TOK_PARAM     (
+4 29.021 261 TOK_STRING    string
+4 29.028 280 TOK_IDENT     expr
+4 29.032  44 ','           ,
+4 29.034 261 TOK_STRING    string
+4 29.041 280 TOK_IDENT     file
+4 29.045  44 ','           ,
+4 29.047 260 TOK_INT       int
+4 29.051 280 TOK_IDENT     line
+4 29.055  44 ','           ,
+4 29.057 261 TOK_STRING    string
+4 29.064 280 TOK_IDENT     func
+4 29.068  41 ')'           )
+4 29.069  59 ';'           ;
