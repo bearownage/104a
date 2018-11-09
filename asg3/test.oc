@@ -1,14 +1,21 @@
-int[] a = 7;
-struct node {
-   string data;
-   node[] link;
+#include "oclib.h"
+#
+#define EMPTY (-1)
+
+struct stack {
+   string[] data;
+   int size;
+   int top;
 }
 
-x = x + 1;
+stack new_stack (int size) {
+   stack stack = new stack; // Zeros out both fields
+   stack->data = new string[size]; // Array of null pointers
+   stack->size = size;
+   stack->top = EMPTY;
+   return stack;
+}
 
-int main(int n) {
-    while (n < 0) {
-        n = n + 1;
-    }
-    return EXIT_SUCCESS;
+int main() {
+    assert(5);
 }

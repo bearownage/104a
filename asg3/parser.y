@@ -92,7 +92,7 @@ hfunc      : hfunc ')'                                     { destroy ($2); }
 
 param      : param ',' identdec                           { destroy ($2); $$ = $1 -> adopt ($3); }
            | TOK_PARAM identdec                               { $$ = $1 -> adopt ($2); }
-           | TOK_PARAM                                    { $$ = $1; };
+           | TOK_PARAM                                    { $$ = $1; }
            ;
 
 identList  : identList ',' identdec                       { destroy ($2); $$ = $3; }
@@ -123,14 +123,15 @@ ifelse     : TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement     { destro
                                                                           $$ = $1 -> adopt_sym (NULL, TOK_IF);
                                                                           $1 -> adopt($3, $5); $1->adopt($7); }
            | TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF           { destroy ($2, $4); $$ = $1 -> adopt($3, $5); }
-           | TOK_ELSE TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF  { destroy($1); destroy ($3, $5); $$ = $2 -> adopt($4, $6); } 
+           | TOK_ELSE TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF  { destroy ($1); destroy ($3, $5); $$ = $2 -> adopt($4, $6); }
+           | TOK_IF TOK_PARAM expr ')' '{' statement '}'                { destroy ($2, $4); destroy ($5, $7); $$ = $1 -> adopt ($3, $6); } 
            ;
 
 expr       : TOK_NEW allocation                           { $$ = $1 -> adopt ($2); }
            | binop                                        { $$ = $1; }
            | unop                                         { $$ = $1; }
            | call                                         { $$ = $1; } 
-           | '(' expr ')'                                 { destroy($1, $3); $$ = $2; }
+           | TOK_PARAM expr ')'                           { destroy($1, $3); $$ = $2; }
            | variable                                     { $$ = $1; } 
            | constant                                     { $$ = $1; }
 
@@ -152,6 +153,7 @@ binop      :
 
 unop       : '+' expr %prec TOK_POS                       { $$ = $1->adopt_sym ($2, TOK_POS); }
            | '-' expr %prec TOK_NEG                       { $$ = $1->adopt_sym ($2, TOK_NEG); }
+           | TOK_NOT expr                                 { $$ = $1->adopt($2); }
            ;
 
 statement  : block                                        { $$ = $1; }
@@ -163,7 +165,8 @@ statement  : block                                        { $$ = $1; }
            | ';'                                          { destroy ($1); } 
            ;
 
-block      : blockHelp '}'                                { destroy ($2); }
+block      : blockHelp '}'                                { destroy($2); }
+           | blockHelp '}' ';'                            { destroy ($2, $3); }
            ;
 
 blockHelp  : blockHelp statement                          { $$ = $1 -> adopt ($2); }

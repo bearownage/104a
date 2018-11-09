@@ -4,7 +4,8 @@
 
 int main (int argc) {
    if (argc == 1) puts ("one");
-   else if (argcc == 2) putstr ("two");
+   else if (argc == 2) putstr ("two");
+   else if (argc == 3) putstr ("three");
    else putstr ("many");
    putchar ('\n');
    return EXIT_SUCCESS;
