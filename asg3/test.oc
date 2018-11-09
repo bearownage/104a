@@ -6,22 +6,9 @@ struct node {
 
 x = x + 1;
 
-int funct(int l, int q, string vineet);
-//while ( x < 0 ) 
-//{
-  // y = y +1; 
-//}
-int main(int n, int m, string hello) {
-        int x = new string(5+5);
-	int z = 6;
-
-        putint (fac (n));
-
-	if ( z == 6 ) 5+5;
-        
-        int z = -5;
-
-        //while ( x < 0 ) { 
-        //  x = x +1;
-        //}
+int main(int n) {
+    while (n < 0) {
+        n = n + 1;
+    }
+    return EXIT_SUCCESS;
 }

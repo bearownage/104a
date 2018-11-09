@@ -136,6 +136,7 @@ expr       : TOK_NEW allocation                           { $$ = $1 -> adopt ($2
 
 binop      :
            | expr '=' expr                                { $$ = $2->adopt ($1, $3); }
+           | expr TOK_VARDECL expr                        { $$ = $2->adopt ($1, $3); $2 -> adopt_sym (NULL, '='); }
            | expr '+' expr                                { $$ = $2->adopt ($1, $3); }
            | expr '-' expr                                { $$ = $2->adopt ($1, $3); }
            | expr '*' expr                                { $$ = $2->adopt ($1, $3); }
