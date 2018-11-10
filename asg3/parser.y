@@ -119,7 +119,7 @@ basetype   : TOK_VOID                                     { $$ = $1; }
 localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-ifelse     : TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement     {  destroy ($2, $4); destroy ($6);
+ifelsey     : TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement     {  destroy ($2, $4); destroy ($6);
                                                                           $$ = $1 -> adopt_sym (NULL, TOK_IF);
                                                                           $1 -> adopt($3, $5); $1->adopt($7); }
            | TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF           { destroy ($2, $4); $$ = $1 -> adopt($3, $5); }
@@ -129,6 +129,11 @@ ifelse     : TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement     {  destr
            | TOK_IF TOK_PARAM expr ')' block %prec TOK_IF               { destroy ($2, $4); $$ = $1 -> adopt ($3, $5); }
            | TOK_IF TOK_PARAM expr ')' block TOK_ELSE block             { destroy ($2, $4); destroy($6); 
                                                                           $$ = $1->adopt($3, $5); $1->adopt($7); }  
+           ;
+
+ifelse     : TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF           { destroy ($2, $4); $$ = $1 -> adopt ($3, $5); }
+           | TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement     { destroy ($2, $4); destroy ($6); $$ = $1 -> adopt ($3, $5); $1 -> adopt ($7); } 
+           | TOK_ELSE TOK_IF TOK_PARAM expr ')' statement               { destroy ($1, $3); destroy ($5); $$ = $2 -> adopt ($4, $6); } 
            ;
 
 ifhelper   : ifhelper statement                           { $$ = $1 -> adopt($2); }

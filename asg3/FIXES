@@ -1,1 +1,3 @@
-insertion.oc
+memory leaks in syntax.oc and unstring.oc
+small tweaks (int[a])
+file numbers and offset

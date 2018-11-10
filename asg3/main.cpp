@@ -115,6 +115,7 @@ int main (int argc, char** argv) {
    astFile = fopen(outFileAst, "w");
    parser::root -> dump_tree(astFile, 0);
    fclose(astFile);
+
    /*
    FILE* astFile;
    astFile = fopen("hello.ast", "w");
@@ -130,7 +131,7 @@ int main (int argc, char** argv) {
    if (parse_rc) {
       errprintf ("parse failed (%d)\n", parse_rc);
    }else {
-   
+      destroy(parser::root); 
    }
    return exec::exit_status;
 }
