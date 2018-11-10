@@ -10,7 +10,6 @@
 
 #include "lyutils.h"
 #include "astree.h"
-
 %}
 
 %debug
@@ -50,7 +49,7 @@
                                                 /* correct? */
 %%
 
-start      : program                                      {  parser::root = $1; parser::root -> dump_tree(stdout, 0); }
+start      : program                                      { $$ = $1 = nullptr; }
            ;
 
 program    : program structdef                            { $$ = $1 -> adopt ($2); }
@@ -120,12 +119,21 @@ basetype   : TOK_VOID                                     { $$ = $1; }
 localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-ifelse     : TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement     { destroy ($2, $4); destroy ($6);
+ifelse     : TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement     {  destroy ($2, $4); destroy ($6);
                                                                           $$ = $1 -> adopt_sym (NULL, TOK_IF);
                                                                           $1 -> adopt($3, $5); $1->adopt($7); }
            | TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF           { destroy ($2, $4); $$ = $1 -> adopt($3, $5); }
            | TOK_ELSE TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF  { destroy ($1); destroy ($3, $5); $$ = $2 -> adopt($4, $6); }
-           | TOK_IF TOK_PARAM expr ')' '{' statement '}'                { destroy ($2, $4); destroy ($5, $7); $$ = $1 -> adopt ($3, $6); } 
+          
+           | TOK_ELSE TOK_IF TOK_PARAM expr ')' block                   { destroy($1); destroy ($3, $5); $$=$2 ->adopt($4, $6); } 
+           | TOK_IF TOK_PARAM expr ')' block %prec TOK_IF               { destroy ($2, $4); $$ = $1 -> adopt ($3, $5); }
+           | TOK_IF TOK_PARAM expr ')' block TOK_ELSE block             { destroy ($2, $4); destroy($6); 
+                                                                          $$ = $1->adopt($3, $5); $1->adopt($7); }  
+           ;
+
+ifhelper   : ifhelper statement                           { $$ = $1 -> adopt($2); }
+           | ifhelper '{'                                 { destroy($2); $$ = $1;}
+           | TOK_IF TOK_PARAM expr ')'                    { destroy($2, $4); $$ = $1 -> adopt ($3); }
            ;
 
 expr       : TOK_NEW allocation                           { $$ = $1 -> adopt ($2); }

@@ -21,7 +21,7 @@ using namespace std;
 const string cpp_name = "/usr/bin/cpp";
 string cpp_command;
 FILE *tokFile;
-// Hi there
+FILE *astFile;
 // Open a pipe from the C preprocessor.
 // Exit failure if can't.
 // Assigns opened pipe to FILE* yyin.
@@ -103,11 +103,18 @@ int main (int argc, char** argv) {
    strFile = fopen(outFileStr, "w");
    string_set::dump(strFile);
    fclose(strFile);
- 
+
+   if(parser::root == nullptr) {
+     printf("nullptr");
+   }
+
+   parser::root -> dump_tree(stdout, 0);
+   /*
    FILE* astFile;
    astFile = fopen("hello.ast", "w");
    parser::root -> dump_tree(astFile, 0);
    fclose(astFile);
+*/
    if (yydebug or yy_flex_debug) {
       fprintf (stderr, "Dumping parser::root:\n");
       if (parser::root != nullptr) parser::root->dump_tree (stderr);
@@ -117,7 +124,7 @@ int main (int argc, char** argv) {
    if (parse_rc) {
       errprintf ("parse failed (%d)\n", parse_rc);
    }else {
-
+   
    }
    return exec::exit_status;
 }
