@@ -87,10 +87,13 @@ int main (int argc, char** argv) {
    filein += filename;
    std::string filenameStr (filein.begin(), filein.end()-3);
    std::string filenameTok (filein.begin(), filein.end()-3);
+   std::string filenameAst (filein.begin(), filein.end()-3);
    filenameStr += ".str";
    filenameTok += ".tok";
+   filenameAst += ".ast";
    const char* outFileTok = filenameTok.c_str();
    const char* outFileStr = filenameStr.c_str();
+   const char* outFileAst = filenameAst.c_str();
    tokFile = fopen(outFileTok, "w+");
    scan_opts (argc, argv);
   
@@ -107,8 +110,11 @@ int main (int argc, char** argv) {
    if(parser::root == nullptr) {
      printf("nullptr");
    }
-
-   parser::root -> dump_tree(stdout, 0);
+    
+   FILE* astFile;
+   astFile = fopen(outFileAst, "w");
+   parser::root -> dump_tree(astFile, 0);
+   fclose(astFile);
    /*
    FILE* astFile;
    astFile = fopen("hello.ast", "w");

@@ -11,6 +11,7 @@
 #include "astree.h"
 #include "string_set.h"
 #include "lyutils.h"
+//extern FILE* astFile;
 
 astree::astree (int symbol_, const location& lloc_, const char* info) {
    symbol = symbol_;
