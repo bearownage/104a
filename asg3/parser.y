@@ -42,8 +42,8 @@
 %left   '+' '-'
 %left   '*' '/' '%'
 %right  TOK_POS TOK_NEG TOK_NOT TOK_NEW
-%left   TOK_ARRAY TOK_ARROW                                      /* correct way to arrange this? */
-%nonassoc '(' ')'
+%left   '[' TOK_ARRAY '.' TOK_ARROW
+%nonassoc   '(' ')'
 
 %start start
                                                 /* correct? */
@@ -56,7 +56,7 @@ program    : program structdef                            { $$ = $1 -> adopt ($2
            | program globaldecl                           { $$ = $1 -> adopt ($2); }
            | program function                             { $$ = $1 -> adopt ($2); }
            | program statement                            { $$ = $1 -> adopt ($2); }
-           | program error '{'                            { $$ = $1; }
+           | program error '{'                            { $$ = $1; destroy ($3);}
            | program error ';'                            { $$ = $1; }
            |                                              { $$ = parser::root; }
            ; 
@@ -85,18 +85,9 @@ func       : func ')'                                     { destroy ($2); }
            | identdec                                     { $$ = new astree(TOK_FUNCTION, $1 -> lloc ,""); $$ -> adopt ($1); }
            ;
 
-hfunc      : hfunc ')'                                     { destroy ($2); }
-           | hfunc param                                   { $$ = $1 -> adopt ($2); }
-           | identdec                                     { $$ = new astree(TOK_PROTOTYPE, $1 -> lloc ,""); $$ -> adopt ($1); }
-           ;
-
 param      : param ',' identdec                           { destroy ($2); $$ = $1 -> adopt ($3); }
            | TOK_PARAM identdec                               { $$ = $1 -> adopt ($2); }
            | TOK_PARAM                                    { $$ = $1; }
-           ;
-
-identList  : identList ',' identdec                       { destroy ($2); $$ = $3; }
-           | identdec                                     { $$ = $1; } 
            ;
 
 identdec   : basetype TOK_ARRAY TOK_IDENT                 { $$ = $2 -> adopt ($1); $1 -> adopt ($3); $3 -> adopt_sym (NULL, TOK_DECLID); }
@@ -119,38 +110,34 @@ basetype   : TOK_VOID                                     { $$ = $1; }
 localdecl  : identdec TOK_VARDECL expr ';'                { destroy ($4); $$ = $2 -> adopt ($1, $3); }
            ;
 
-ifelsey     : TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement     {  destroy ($2, $4); destroy ($6);
-                                                                          $$ = $1 -> adopt_sym (NULL, TOK_IF);
-                                                                          $1 -> adopt($3, $5); $1->adopt($7); }
-           | TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF           { destroy ($2, $4); $$ = $1 -> adopt($3, $5); }
-           | TOK_ELSE TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF  { destroy ($1); destroy ($3, $5); $$ = $2 -> adopt($4, $6); }
-          
-           | TOK_ELSE TOK_IF TOK_PARAM expr ')' block                   { destroy($1); destroy ($3, $5); $$=$2 ->adopt($4, $6); } 
-           | TOK_IF TOK_PARAM expr ')' block %prec TOK_IF               { destroy ($2, $4); $$ = $1 -> adopt ($3, $5); }
-           | TOK_IF TOK_PARAM expr ')' block TOK_ELSE block             { destroy ($2, $4); destroy($6); 
-                                                                          $$ = $1->adopt($3, $5); $1->adopt($7); }  
-           ;
-
 ifelse     : TOK_IF TOK_PARAM expr ')' statement %prec TOK_IF           { destroy ($2, $4); $$ = $1 -> adopt ($3, $5); }
            | TOK_IF TOK_PARAM expr ')' statement TOK_ELSE statement     { destroy ($2, $4); destroy ($6); $$ = $1 -> adopt ($3, $5); $1 -> adopt ($7); } 
            | TOK_ELSE TOK_IF TOK_PARAM expr ')' statement               { destroy ($1, $3); destroy ($5); $$ = $2 -> adopt ($4, $6); } 
            ;
 
-ifhelper   : ifhelper statement                           { $$ = $1 -> adopt($2); }
-           | ifhelper '{'                                 { destroy($2); $$ = $1;}
-           | TOK_IF TOK_PARAM expr ')'                    { destroy($2, $4); $$ = $1 -> adopt ($3); }
-           ;
-
 expr       : TOK_NEW allocation                           { $$ = $1 -> adopt ($2); }
-           | binop                                        { $$ = $1; }
+           | expr binop expr                              { $$ = $2 -> adopt ($1, $3); }
            | unop                                         { $$ = $1; }
            | call                                         { $$ = $1; } 
            | TOK_PARAM expr ')'                           { destroy($1, $3); $$ = $2; }
            | variable                                     { $$ = $1; } 
            | constant                                     { $$ = $1; }
 
-binop      :
-           | expr '=' expr                                { $$ = $2->adopt ($1, $3); }
+binop      : TOK_VARDECL                                  { $$ = $1; }
+           | '+'                                          { $$ = $1; }
+           | '-'                                          { $$ = $1; }
+           | '*'                                          { $$ = $1; }
+           | '/'                                          { $$ = $1; }
+           | '%'                                          { $$ = $1; }
+           | TOK_EQ                                       { $$ = $1; }
+           | TOK_NE                                       { $$ = $1; }
+           | TOK_LT                                       { $$ = $1; }
+           | TOK_LE                                       { $$ = $1; }
+           | TOK_GT                                       { $$ = $1; }
+           | TOK_GE                                       { $$ = $1; }
+           ;
+          
+binopy      :
            | expr TOK_VARDECL expr                        { $$ = $2->adopt ($1, $3); $2 -> adopt_sym (NULL, '='); }
            | expr '+' expr                                { $$ = $2->adopt ($1, $3); }
            | expr '-' expr                                { $$ = $2->adopt ($1, $3); }
