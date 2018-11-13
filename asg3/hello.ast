@@ -1,0 +1,63 @@
+ROOT "" 0.0.0
+| PROTOTYPE "" 5.29.1
+| | VOID "void" 5.29.1
+| | | DECLID "__assert_fail" 5.29.6
+| | PARAM "(" 5.29.20
+| | | STRING "string" 5.29.21
+| | | | DECLID "expr" 5.29.28
+| | | STRING "string" 5.29.34
+| | | | DECLID "file" 5.29.41
+| | | INT "int" 5.29.47
+| | | | DECLID "line" 5.29.51
+| | | STRING "string" 5.29.57
+| | | | DECLID "func" 5.29.64
+| PROTOTYPE "" 5.30.1
+| | VOID "void" 5.30.1
+| | | DECLID "putchar" 5.30.6
+| | PARAM "(" 5.30.14
+| | | INT "int" 5.30.15
+| | | | DECLID "c" 5.30.19
+| PROTOTYPE "" 5.31.1
+| | VOID "void" 5.31.1
+| | | DECLID "putint" 5.31.6
+| | PARAM "(" 5.31.13
+| | | INT "int" 5.31.14
+| | | | DECLID "i" 5.31.18
+| PROTOTYPE "" 5.32.1
+| | VOID "void" 5.32.1
+| | | DECLID "putstr" 5.32.6
+| | PARAM "(" 5.32.13
+| | | STRING "string" 5.32.14
+| | | | DECLID "s" 5.32.21
+| PROTOTYPE "" 5.33.1
+| | INT "int" 5.33.1
+| | | DECLID "getchar" 5.33.5
+| | PARAM "(" 5.33.12
+| PROTOTYPE "" 5.34.1
+| | STRING "string" 5.34.1
+| | | DECLID "getword" 5.34.8
+| | PARAM "(" 5.34.15
+| PROTOTYPE "" 5.35.1
+| | STRING "string" 5.35.1
+| | | DECLID "getln" 5.35.8
+| | PARAM "(" 5.35.13
+| PROTOTYPE "" 5.36.1
+| | VOID "void" 5.36.1
+| | | DECLID "endl" 5.36.6
+| | PARAM "(" 5.36.10
+| PROTOTYPE "" 5.37.1
+| | VOID "void" 5.37.1
+| | | DECLID "exit" 5.37.6
+| | PARAM "(" 5.37.11
+| | | INT "int" 5.37.12
+| | | | DECLID "status" 5.37.16
+| FUNCTION "" 1.6.1
+| | INT "int" 1.6.1
+| | | DECLID "main" 1.6.5
+| | PARAM "(" 1.6.9
+| | BLOCK "{" 1.6.12
+| | | CALL "(" 1.7.11
+| | | | IDENT "putstr" 1.7.4
+| | | | STRINGCON ""Hello, world!\n"" 1.7.12
+| | | RETURN "return" 1.8.4
+| | | | INTCON "0" 1.8.11

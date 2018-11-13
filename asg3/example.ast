@@ -1,0 +1,107 @@
+ROOT "" 0.0.0
+| PROTOTYPE "" 5.29.1
+| | VOID "void" 5.29.1
+| | | DECLID "__assert_fail" 5.29.6
+| | PARAM "(" 5.29.20
+| | | STRING "string" 5.29.21
+| | | | DECLID "expr" 5.29.28
+| | | STRING "string" 5.29.34
+| | | | DECLID "file" 5.29.41
+| | | INT "int" 5.29.47
+| | | | DECLID "line" 5.29.51
+| | | STRING "string" 5.29.57
+| | | | DECLID "func" 5.29.64
+| PROTOTYPE "" 5.30.1
+| | VOID "void" 5.30.1
+| | | DECLID "putchar" 5.30.6
+| | PARAM "(" 5.30.14
+| | | INT "int" 5.30.15
+| | | | DECLID "c" 5.30.19
+| PROTOTYPE "" 5.31.1
+| | VOID "void" 5.31.1
+| | | DECLID "putint" 5.31.6
+| | PARAM "(" 5.31.13
+| | | INT "int" 5.31.14
+| | | | DECLID "i" 5.31.18
+| PROTOTYPE "" 5.32.1
+| | VOID "void" 5.32.1
+| | | DECLID "putstr" 5.32.6
+| | PARAM "(" 5.32.13
+| | | STRING "string" 5.32.14
+| | | | DECLID "s" 5.32.21
+| PROTOTYPE "" 5.33.1
+| | INT "int" 5.33.1
+| | | DECLID "getchar" 5.33.5
+| | PARAM "(" 5.33.12
+| PROTOTYPE "" 5.34.1
+| | STRING "string" 5.34.1
+| | | DECLID "getword" 5.34.8
+| | PARAM "(" 5.34.15
+| PROTOTYPE "" 5.35.1
+| | STRING "string" 5.35.1
+| | | DECLID "getln" 5.35.8
+| | PARAM "(" 5.35.13
+| PROTOTYPE "" 5.36.1
+| | VOID "void" 5.36.1
+| | | DECLID "endl" 5.36.6
+| | PARAM "(" 5.36.10
+| PROTOTYPE "" 5.37.1
+| | VOID "void" 5.37.1
+| | | DECLID "exit" 5.37.6
+| | PARAM "(" 5.37.11
+| | | INT "int" 5.37.12
+| | | | DECLID "status" 5.37.16
+| FUNCTION "" 1.2.1
+| | INT "int" 1.2.1
+| | | DECLID "fac" 1.2.5
+| | PARAM "(" 1.2.9
+| | | INT "int" 1.2.10
+| | | | DECLID "n" 1.2.14
+| | BLOCK "{" 1.2.17
+| | | VARDECL "=" 1.3.10
+| | | | INT "int" 1.3.4
+| | | | | DECLID "f" 1.3.8
+| | | | INTCON "1" 1.3.12
+| | | WHILE "while" 1.4.4
+| | | | GT ">" 1.4.13
+| | | | | IDENT "n" 1.4.11
+| | | | | INTCON "1" 1.4.15
+| | | | BLOCK "{" 1.4.18
+| | | | | '=' "=" 1.5.9
+| | | | | | IDENT "f" 1.5.7
+| | | | | | '*' "*" 1.5.12
+| | | | | | | IDENT "f" 1.5.11
+| | | | | | | IDENT "n" 1.5.13
+| | | | | '=' "=" 1.6.9
+| | | | | | IDENT "n" 1.6.7
+| | | | | | '-' "-" 1.6.12
+| | | | | | | IDENT "n" 1.6.11
+| | | | | | | INTCON "1" 1.6.13
+| | | RETURN "return" 1.8.4
+| | | | IDENT "f" 1.8.11
+| FUNCTION "" 1.10.1
+| | INT "int" 1.10.1
+| | | DECLID "main" 1.10.5
+| | PARAM "(" 1.10.9
+| | BLOCK "{" 1.10.12
+| | | VARDECL "=" 1.11.9
+| | | | INT "int" 1.11.4
+| | | | | DECLID "n" 1.11.8
+| | | | INTCON "1" 1.11.10
+| | | WHILE "while" 1.12.4
+| | | | LE "<=" 1.12.13
+| | | | | IDENT "n" 1.12.11
+| | | | | INTCON "5" 1.12.16
+| | | | BLOCK "{" 1.12.19
+| | | | | CALL "(" 1.13.14
+| | | | | | IDENT "putint" 1.13.7
+| | | | | | CALL "(" 1.13.19
+| | | | | | | IDENT "fac" 1.13.15
+| | | | | | | IDENT "n" 1.13.20
+| | | | | '=' "=" 1.14.9
+| | | | | | IDENT "n" 1.14.7
+| | | | | | '+' "+" 1.14.12
+| | | | | | | IDENT "n" 1.14.11
+| | | | | | | INTCON "1" 1.14.13
+| | | RETURN "return" 1.16.4
+| | | | INTCON "0" 1.16.11

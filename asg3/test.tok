@@ -1,0 +1,61 @@
+# 1 "test.oc"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h"
+# 1 "<command-line>"
+# 1 "test.oc"
+0  1.001 260 TOK_INT       int
+0  1.005 280 TOK_IDENT     main
+0  1.009 295 TOK_PARAM     (
+0  1.010  41 ')'           )
+0  1.012 123 '{'           {
+0  2.005 281 TOK_INTCON    1
+0  2.007  43 '+'           +
+0  2.009 281 TOK_INTCON    2
+0  2.011  43 '+'           +
+0  2.013 281 TOK_INTCON    4
+0  2.014  59 ';'           ;
+0  3.001 125 '}'           }
+0  5.001 258 TOK_VOID      void
+0  5.005 270 TOK_ARRAY     []
+0  5.008 280 TOK_IDENT     f
+0  5.009 295 TOK_PARAM     (
+0  5.010  41 ')'           )
+0  5.012 123 '{'           {
+0  5.013 125 '}'           }
+0  5.014  59 ';'           ;
+0  7.001 260 TOK_INT       int
+0  7.005 280 TOK_IDENT     main
+0  7.009 295 TOK_PARAM     (
+0  7.010  41 ')'           )
+0  7.012 123 '{'           {
+0  8.004 260 TOK_INT       int
+0  8.008 280 TOK_IDENT     c
+0  8.010  61 '='           =
+0  8.012 280 TOK_IDENT     a
+0  8.014  43 '+'           +
+0  8.016 280 TOK_IDENT     b
+0  8.017  59 ';'           ;
+0  9.004 258 TOK_VOID      void
+0  9.009 280 TOK_IDENT     n
+0  9.011  61 '='           =
+0  9.013 267 TOK_NULL      null
+0  9.017  59 ';'           ;
+0 10.004 280 TOK_IDENT     bool
+0 10.009 280 TOK_IDENT     x
+0 10.011  61 '='           =
+0 10.013 280 TOK_IDENT     a
+0 10.015 275 TOK_LT        <
+0 10.017 280 TOK_IDENT     b
+0 10.018  59 ';'           ;
+0 11.004 280 TOK_IDENT     bool
+0 11.009 280 TOK_IDENT     y
+0 11.011  61 '='           =
+0 11.013 280 TOK_IDENT     a
+0 11.014 273 TOK_EQ        ==
+0 11.016 280 TOK_IDENT     b
+0 11.017  59 ';'           ;
+0 12.004 265 TOK_RETURN    return
+0 12.011 283 TOK_STRINGCON "foobar"
+0 12.019  59 ';'           ;
+0 13.001 125 '}'           }

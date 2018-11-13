@@ -1,0 +1,45 @@
+ROOT "" 0.0.0
+| FUNCTION "" 1.1.1
+| | INT "int" 1.1.1
+| | | DECLID "main" 1.1.5
+| | PARAM "(" 1.1.9
+| | BLOCK "{" 1.1.12
+| | | '+' "+" 1.2.11
+| | | | '+' "+" 1.2.7
+| | | | | INTCON "1" 1.2.5
+| | | | | INTCON "2" 1.2.9
+| | | | INTCON "4" 1.2.13
+| PROTOTYPE "" 1.5.5
+| | ARRAY "[]" 1.5.5
+| | | VOID "void" 1.5.1
+| | | | DECLID "f" 1.5.8
+| | PARAM "(" 1.5.9
+| FUNCTION "" 1.7.1
+| | INT "int" 1.7.1
+| | | DECLID "main" 1.7.5
+| | PARAM "(" 1.7.9
+| | BLOCK "{" 1.7.12
+| | | VARDECL "=" 1.8.10
+| | | | INT "int" 1.8.4
+| | | | | DECLID "c" 1.8.8
+| | | | '+' "+" 1.8.14
+| | | | | IDENT "a" 1.8.12
+| | | | | IDENT "b" 1.8.16
+| | | VARDECL "=" 1.9.11
+| | | | VOID "void" 1.9.4
+| | | | | DECLID "n" 1.9.9
+| | | | NULL "null" 1.9.13
+| | | VARDECL "=" 1.10.11
+| | | | IDENT "bool" 1.10.4
+| | | | | DECLID "x" 1.10.9
+| | | | LT "<" 1.10.15
+| | | | | IDENT "a" 1.10.13
+| | | | | IDENT "b" 1.10.17
+| | | VARDECL "=" 1.11.11
+| | | | IDENT "bool" 1.11.4
+| | | | | DECLID "y" 1.11.9
+| | | | EQ "==" 1.11.14
+| | | | | IDENT "a" 1.11.13
+| | | | | IDENT "b" 1.11.16
+| | | RETURN "return" 1.12.4
+| | | | STRINGCON ""foobar"" 1.12.11
