@@ -54,7 +54,7 @@ BADCHAR         ('([^\\'\n]|\\[\\'"0nt]))
 {IDENT}         { return yylval_token (TOK_IDENT); }
 {CHAR}          { return yylval_token (TOK_CHARCON); }
 
-"="             { return yylval_token (TOK_VARDECL); }
+"="             { return yylval_token ('='); }
 "+"             { return yylval_token ('+'); }
 "-"             { return yylval_token ('-'); }
 "*"             { return yylval_token ('*'); }
