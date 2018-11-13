@@ -57,11 +57,11 @@ program    : program structdef                            { $$ = $1 -> adopt ($2
            | program function                             { $$ = $1 -> adopt ($2); }
            | program statement                            { $$ = $1 -> adopt ($2); }
            | program error '{'                            { $$ = $1; destroy ($3);}
-           | program error ';'                            { $$ = $1; }
+           | program error ';'                            { $$ = $1; destroy ($3);}
            |                                              { $$ = parser::root; }
            ; 
 
-structdef  : struc '}'                                    { destroy ($2); }
+structdef  : struc '}'                                    { destroy ($2); $$ = $1;}
            ;
 
 struc      : struc fielddecl ';'                          { destroy ($3); $$ = $1 -> adopt ($2); } 
@@ -76,14 +76,14 @@ globaldecl : identdec '=' constant ';'            { destroy ($4); $$ = $2 -> ado
            | identdec '=' expr ';'                { destroy ($4); $$ = $2 -> adopt ($1, $3); $2 -> adopt_sym (NULL, TOK_VARDECL); }
            ;
 
-function   : func fnbody '}' ';'                           { destroy ($4); $1 -> adopt ($2); } 
-           | func fnbody '}'                             { destroy ($3); $1 -> adopt ($2); }  
-           | func '{' '}'                                { destroy ($3); $1 -> adopt ($2); $2 -> adopt_sym (NULL, TOK_BLOCK); }
+function   : func fnbody '}' ';'                           { destroy ($3, $4); $$ = $1 -> adopt ($2); } 
+           | func fnbody '}'                             { destroy ($3); $$ = $1 -> adopt ($2); }  
+           | func '{' '}'                                { destroy ($3); $$ = $1 -> adopt ($2); $2 -> adopt_sym (NULL, TOK_BLOCK); }
            | func '{' '}' ';'                            { destroy ($2, $3); destroy ($4); $$ = $1 -> adopt_sym (NULL, TOK_PROTOTYPE); }
            | func ';'                                    { destroy ($2); $$ = $1 -> adopt_sym (NULL, TOK_PROTOTYPE);}
            ;
 
-func       : func ')'                                     { destroy ($2); }
+func       : func ')'                                     { destroy ($2); $$ = $1; }
            | func param                                   { $$ = $1 -> adopt ($2); }
            | identdec                                     { $$ = new astree(TOK_FUNCTION, $1 -> lloc ,""); $$ -> adopt ($1); }
            ;
@@ -138,20 +138,6 @@ expr       : TOK_NEW allocation                           { $$ = $1 -> adopt ($2
            | variable                                     { $$ = $1; } 
            | constant                                     { $$ = $1; }
 
-binop      : '='                                          { $$ = $1; }
-           | '+'                                          { $$ = $1; }
-           | '-'                                          { $$ = $1; }
-           | '*'                                          { $$ = $1; }
-           | '/'                                          { $$ = $1; }
-           | '%'                                          { $$ = $1; }
-           | TOK_EQ                                       { $$ = $1; }
-           | TOK_NE                                       { $$ = $1; }
-           | TOK_LT                                       { $$ = $1; }
-           | TOK_LE                                       { $$ = $1; }
-           | TOK_GT                                       { $$ = $1; }
-           | TOK_GE                                       { $$ = $1; }
-           ;
-
 unop       : '+' expr %prec TOK_POS                       { $$ = $1->adopt_sym ($2, TOK_POS); }
            | '-' expr %prec TOK_NEG                       { $$ = $1->adopt_sym ($2, TOK_NEG); }
            | TOK_NOT expr                                 { $$ = $1->adopt($2); }
@@ -162,11 +148,11 @@ statement  : block                                        { $$ = $1; }
            | ifelse                                       { $$ = $1; }
            | return                                       { $$ = $1; } 
            | expr ';'                                     { destroy ($2); $$ = $1; }
-           | ';'                                          { destroy ($1); } 
+           | ';'                                          { destroy ($1); $$ = NULL; } 
            ;
 
-block      : blockHelp '}'                                { destroy($2); }
-           | blockHelp '}' ';'                            { destroy ($2, $3); }
+block      : blockHelp '}'                                { destroy($2); $$ = $1; }
+           | blockHelp '}' ';'                            { destroy ($2, $3); $$ = $1; }
            ;
 
 blockHelp  : blockHelp statement                          { $$ = $1 -> adopt ($2); }
@@ -187,11 +173,6 @@ allocation : TOK_IDENT                                    { $$ = $1 -> adopt_sym
            ;
  
 call       : funCall ')'                                  { destroy ($2); $$ = $1; }
-           ;
-
-funCally    : funCall ','                                  { destroy ($2); }
-           | funCall expr                                 { $$ = $1 -> adopt ($2); }
-           | TOK_IDENT TOK_PARAM                          { $$ = $2 -> adopt_sym ($1, TOK_CALL); }
            ;
 
 funCall    : funCall ',' expr                             { destroy ($2); $$ = $1 -> adopt ($3); }

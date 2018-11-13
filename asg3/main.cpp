@@ -131,7 +131,8 @@ int main (int argc, char** argv) {
    if (parse_rc) {
       errprintf ("parse failed (%d)\n", parse_rc);
    }else {
-      destroy(parser::root); 
+      destroy(parser::root);
+      parser::root = nullptr; 
    }
    return exec::exit_status;
 }
