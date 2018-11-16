@@ -34,7 +34,7 @@
 %token TOK_ROOT TOK_BLOCK TOK_CALL TOK_IFELSE TOK_INITDECL
 %token TOK_POS TOK_NEG TOK_NEWARRAY TOK_TYPEID TOK_FIELD TOK_NEWSTR
 
-%token TOK_PARAM TOK_FUNCTION TOK_PROTOTYPE TOK_DECLID
+%token TOK_PARAM TOK_FUNCTION TOK_PROTOTYPE TOK_DECLID TOK_INDEX
 
 %right  TOK_IF TOK_ELSE                     
 %right  '='
@@ -91,7 +91,7 @@ function   : func fnbody '}' ';'
              { destroy ($3); $$ = $1 -> adopt ($2); }  
            | func '{' '}'                                
              { destroy ($3); $$ = $1 -> adopt ($2); 
-               $2 -> adopt_sym (NULL, TOK_BLOCK); }
+               $2 -> adopt_sym (NULL, TOK_BLOCK); } 
            | func '{' '}' ';'                            
              { destroy ($2, $3); destroy ($4); 
                $$ = $1 -> adopt_sym (NULL, TOK_PROTOTYPE); }
@@ -164,7 +164,7 @@ expr       : TOK_NEW allocation         { $$ = $1 -> adopt ($2); }
            | expr TOK_GT expr           { $$ = $2 -> adopt ($1, $3); }
            | expr TOK_GE expr           { $$ = $2 -> adopt ($1, $3); }
            | unop                       { $$ = $1; }
-           | call                       { $$ = $1; } 
+           | call                       { $$ = $1; }
            | TOK_PARAM expr ')'         { destroy($1, $3); $$ = $2; }
            | variable                   { $$ = $1; } 
            | constant                   { $$ = $1; }
@@ -216,7 +216,7 @@ allocation : TOK_IDENT
              { destroy ($4); $$ = $2 -> adopt_sym ($1, TOK_NEWARRAY); 
                $2 -> adopt ($3); }  
            ;
- 
+
 call       : funCall ')'                                  
                 { destroy ($2); $$ = $1; }
            ;
@@ -228,9 +228,9 @@ funCall    : funCall ',' expr
            | TOK_IDENT TOK_PARAM                          
              { $$ = $2 -> adopt_sym ($1, TOK_CALL); }
 
-variable   : TOK_IDENT                                    { $$ = $1; }
+variable   : TOK_IDENT                                    { $$ = $1 -> adopt_sym (NULL, TOK_DECLID); }
            | expr '[' expr ']'                            
-             { destroy ($2, $4); $$ = $1 -> adopt ($3); }
+             { destroy ($4); $$ = $2 -> adopt_sym ($1, TOK_INDEX); $2 -> adopt ($3);  }
            | expr TOK_ARROW TOK_IDENT                     
              { $$ = $2 -> adopt ($1, $3); 
                $3 -> adopt_sym (NULL, TOK_FIELD); }

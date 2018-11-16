@@ -2,12 +2,6 @@ int main() {
     1 + 2 + 4;
 }
 
-void[] f() {}; // can't have void[]
-
 int main() {
-   int c = a + b; // can't add arrays
-   void n = null; // can't have void vars
-   bool x = a < b; // can't compare pointers <
-   bool y = a==b; // this is ok
-   return "foobar";
+   array[0];
 }

@@ -2,6 +2,6 @@
 # $Id: mk.tests,v 1.1 2018-10-17 14:07:55-07 - - $
 for file in *.oc
 do
-   ./oc $file
+   valgrind --leak-check=full ./oc $file
 done
 

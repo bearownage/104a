@@ -106,19 +106,9 @@ int main (int argc, char** argv) {
    strFile = fopen(outFileStr, "w");
    string_set::dump(strFile);
    fclose(strFile);
-
-   if(parser::root == nullptr) {
-     printf("nullptr");
-   }
-    
+/*
    FILE* astFile;
    astFile = fopen(outFileAst, "w");
-   parser::root -> dump_tree(astFile, 0);
-   fclose(astFile);
-
-   /*
-   FILE* astFile;
-   astFile = fopen("hello.ast", "w");
    parser::root -> dump_tree(astFile, 0);
    fclose(astFile);
 */
@@ -131,6 +121,10 @@ int main (int argc, char** argv) {
    if (parse_rc) {
       errprintf ("parse failed (%d)\n", parse_rc);
    }else {
+      FILE* astFile;
+      astFile = fopen(outFileAst, "w");
+      parser::root -> dump_tree(astFile, 0);
+      fclose(astFile);
       destroy(parser::root);
       parser::root = nullptr; 
    }

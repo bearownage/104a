@@ -37,16 +37,16 @@ BADCHAR         ('([^\\'\n]|\\[\\'"0nt]))
 [ \t]+          { }
 \n              { lexer::newline(); }
 
-"if"            { return yylval_token (TOK_IF); }                                                                                                                    
-"else"          { return yylval_token (TOK_ELSE); }                                                                                                                  
-"while"         { return yylval_token (TOK_WHILE); }                                                                                                                 
-"return"        { return yylval_token (TOK_RETURN); }                                                                                                                
-"int"           { return yylval_token (TOK_INT); }                                                                                                                   
-"string"        { return yylval_token (TOK_STRING); }                                                                                                                
-"struct"        { return yylval_token (TOK_STRUCT); }                                                                                                                
-"void"          { return yylval_token (TOK_VOID); }                                                                                                                  
-"new"           { return yylval_token (TOK_NEW); }                                                                                                                   
-"null"          { return yylval_token (TOK_NULL); }                                                                                                                  
+"if"            { return yylval_token (TOK_IF); } 
+"else"          { return yylval_token (TOK_ELSE); }
+"while"         { return yylval_token (TOK_WHILE); }
+"return"        { return yylval_token (TOK_RETURN); }
+"int"           { return yylval_token (TOK_INT); } 
+"string"        { return yylval_token (TOK_STRING); } 
+"struct"        { return yylval_token (TOK_STRUCT); }
+"void"          { return yylval_token (TOK_VOID); }
+"new"           { return yylval_token (TOK_NEW); }
+"null"          { return yylval_token (TOK_NULL); } 
 "not"           { return yylval_token (TOK_NOT); }
  
 {NUMBER}        { return yylval_token (TOK_INTCON); }
