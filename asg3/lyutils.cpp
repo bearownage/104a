@@ -33,12 +33,11 @@ void lexer::newfilename (const string& filename) {
     }
   
    lexer::lloc.filenr = remDup.size();
-   //lexer::filenames.push_back (filename);
+   
    int counter = 0;
    for (const auto & vec : remDup) {
        if (!vec.compare(filename)) {
-          lexer::lloc.filenr = counter;
-          //fprintf(tokFile, "COUNTER: %d\n", counter);
+          lexer::lloc.filenr = counter - 1;
           break;
        }
        counter++;
@@ -46,10 +45,6 @@ void lexer::newfilename (const string& filename) {
     
 
 
-/*
-   lexer::lloc.filenr = lexer::filenames.size();
-   lexer::filenames.push_back (filename);
-*/
 }
 
 void lexer::advance() {
@@ -86,7 +81,7 @@ int yylval_token (int symbol) {
    yylval = new astree (symbol, lexer::lloc, yytext);
    int curr = symbol;
    fprintf(tokFile, "%lu %2lu.%03lu %3d %-13s %s\n", 
-   lexer::lloc.filenr-1,lexer::lloc.linenr, lexer::lloc.offset, 
+   lexer::lloc.filenr,lexer::lloc.linenr, lexer::lloc.offset, 
    curr, parser::get_tname(curr), yytext);
   // delete yylval;
    return symbol;
