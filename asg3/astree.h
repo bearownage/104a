@@ -4,18 +4,21 @@
 #ifndef __ASTREE_H__
 #define __ASTREE_H__
 
+#include <bitset>
 #include <string>
 #include <vector>
 using namespace std;
 
 #include "auxlib.h"
 #include "string_set.h"
+
 struct location {
    size_t filenr;
    size_t linenr;
    size_t offset;
 };
 
+using attr_bitset = bitset<15>;
 struct astree {
 
    // Fields.
@@ -23,6 +26,12 @@ struct astree {
    location lloc;            // source location
    const string* lexinfo;    // pointer to lexical information
    vector<astree*> children; // children of this n-way node
+
+   attr_bitset attributes;
+   size_t block_nr;
+   const string* struc;
+   const string* field;
+   const string* funct;
 
    // Functions.
    astree (int symbol, const location&, const char* lexinfo);

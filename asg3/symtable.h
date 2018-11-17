@@ -11,12 +11,13 @@ using namespace std;
 #include "lyutils.h"
 #include "auxlib.h"
 #include "astree.h"
-
+/*
 enum class attr: unsigned {
        VOID, INT, NULLX, STRING, STRUCT, ARRAY, FUNCTION, VARIABLE,
        FIELD, TYPEID, PARAM, LVAL, CONST, VREG, VADDR, BITSET_SIZE,
 };
-using attr_bitset = bitset<unsigned(attr::BITSET_SIZE)>;
+*/
+using attr_bitset = bitset<15>;
 
 struct symbol {
    attr_bitset attributes;
