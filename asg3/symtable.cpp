@@ -7,8 +7,8 @@ using namespace std;
 #include "astree.h"
 #include "symtable.h"
 
-int blockCounter = 0;
 int blocknr = 0;
+int next_block = 1;
 
 symbol_table types;
 symbol_table variables;
@@ -69,10 +69,33 @@ const string attrString(astree* node) {
     return attrString;
 }
 
+symbol* newSym(astree* node) {
+   symbol* sym = new symbol();
+   sym -> attributes = node -> attributes;
+   sym -> sequence = 0;
+   sym -> fields = nullptr;
+   sym -> lloc = node -> lloc;
+   sym -> block_nr = node -> block_nr;
+   sym -> parameters = nullptr;
+   return sym;    
+}
 
+void traversal(astree* root) {
 
+  for (astree* childNode: root -> children) {
+      printf("Token: %s\n", parser::get_tname(childNode -> symbol)); 
+      switch(childNode -> symbol) {
+         case TOK_STRUCT :
+            childNode -> attributes[unsigned(attr::STRUCT)] = 1;
+            break;
+         case TOK_TYPEID :
+            childNode -> attributes[unsigned(attr::TYPEID)] = 1;
+            break;
+      }
+      traversal(childNode);
+  }
 
-
+}
 
 
 

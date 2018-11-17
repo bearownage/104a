@@ -17,6 +17,7 @@ using namespace std;
 #include "auxlib.h"
 #include "lyutils.h"
 #include "string_set.h"
+#include "symtable.h"
 
 const string cpp_name = "/usr/bin/cpp";
 string cpp_command;
@@ -124,6 +125,8 @@ int main (int argc, char** argv) {
       FILE* astFile;
       astFile = fopen(outFileAst, "w");
       parser::root -> dump_tree(astFile, 0);
+      traversal(parser::root);
+      parser::root -> dump_tree(stdout, 0);
       fclose(astFile);
       destroy(parser::root);
       parser::root = nullptr; 

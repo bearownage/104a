@@ -32,5 +32,7 @@ struct symbol {
 using symbol_table = unordered_map<string*, symbol*>;
 using symbol_entry = pair<const string*, symbol*>;
 
+const string attrString(astree* node);
+void traversal(astree* node);
 
 #endif

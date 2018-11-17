@@ -11,6 +11,7 @@
 #include "astree.h"
 #include "string_set.h"
 #include "lyutils.h"
+#include "symtable.h"
 //extern FILE* astFile;
 
 astree::astree (int symbol_, const location& lloc_, const char* info) {
@@ -47,9 +48,9 @@ astree* astree::adopt_sym (astree* child, int symbol_) {
 void astree::dump_node (FILE* outfile) {
    const char *tname = parser::get_tname (symbol);
    if (strstr (tname, "TOK_") == tname) tname += 4;
-   fprintf (outfile, "%s \"%s\" %zd.%zd.%zd",
+   fprintf (outfile, "%s \"%s\" %zd.%zd.%zd %s",
             tname, lexinfo->c_str(), lloc.filenr, 
-            lloc.linenr, lloc.offset);
+            lloc.linenr, lloc.offset, attrString(this).c_str());
    for (size_t child = 0; child < children.size(); ++child) {
     //  fprintf (outfile, " %p", children.at(child));
    }
