@@ -1,6 +1,0 @@
-NE__ __DATE__ __TIME__
-foo2.h, line 3.
-foo2.h, line 4.
-// Comment.
-foo2.h, line 6. /* Comment */ last line
-#define FOO2 "foo2"

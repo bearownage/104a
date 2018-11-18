@@ -1,7 +1,0 @@
-int main() {
-    1 + 2 + 4;
-}
-
-int main() {
-   array[0];
-}
