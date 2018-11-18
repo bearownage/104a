@@ -77,6 +77,7 @@ symbol* newSym(astree* node) {
    sym -> lloc = node -> lloc;
    sym -> block_nr = node -> block_nr;
    sym -> parameters = nullptr;
+   //sym -> structName = nullptr;
    return sym;    
 }
 
@@ -87,9 +88,18 @@ void traversal(astree* root) {
       switch(childNode -> symbol) {
          case TOK_STRUCT :
             childNode -> attributes[unsigned(attr::STRUCT)] = 1;
+            const string* structName = childNode->children[0];
+            printf("%s", structName.c_str());
             break;
          case TOK_TYPEID :
             childNode -> attributes[unsigned(attr::TYPEID)] = 1;
+            break;
+         case TOK_FIELD : 
+            childNode -> attributes[unsigned(attr::FIELD)] = 1;
+            break;
+         case TOK_FUNCTION :
+            childNode -> attributes[unsigned(attr::STRUCT)] = 1;
+            childNode -> block_nr++;
             break;
       }
       traversal(childNode);

@@ -1,0 +1,19 @@
+ROOT "" 0.0.0
+| FUNCTION "" 0.1.1
+| | INT "int" 0.1.1
+| | | DECLID "main" 0.1.5
+| | PARAM "(" 0.1.9
+| | BLOCK "{" 0.1.12
+| | | '+' "+" 0.2.11
+| | | | '+' "+" 0.2.7
+| | | | | INTCON "1" 0.2.5
+| | | | | INTCON "2" 0.2.9
+| | | | INTCON "4" 0.2.13
+| FUNCTION "" 0.5.1
+| | INT "int" 0.5.1
+| | | DECLID "main" 0.5.5
+| | PARAM "(" 0.5.9
+| | BLOCK "{" 0.5.12
+| | | INDEX "[" 0.6.9
+| | | | DECLID "array" 0.6.4
+| | | | INTCON "0" 0.6.10

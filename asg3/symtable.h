@@ -27,6 +27,7 @@ struct symbol {
    location lloc;
    size_t block_nr;
    vector<symbol*>* parameters;
+   //const string* structName;
 };
 
 using symbol_table = unordered_map<string*, symbol*>;
