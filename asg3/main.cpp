@@ -125,7 +125,8 @@ int main (int argc, char** argv) {
       FILE* astFile;
       astFile = fopen(outFileAst, "w");
       parser::root -> dump_tree(astFile, 0);
-      traversal(parser::root);
+      //traversal(parser::root);
+      updateAttr(parser::root);
       parser::root -> dump_tree(stdout, 0);
       fclose(astFile);
       destroy(parser::root);
