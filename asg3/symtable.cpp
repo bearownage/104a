@@ -1,7 +1,8 @@
 #include <bitset>
 #include <string>
 #include <vector>
-
+#include <stdio.h>
+#include <string.h>
 using namespace std;
 
 #include "astree.h"
@@ -119,16 +120,42 @@ void traversal(astree* root) {
 void updateAttr(astree* root) {
    for (astree* childNode: root -> children) {
       switch(childNode -> symbol) {
+         case TOK_ROOT : 
+            break;
          case TOK_STRUCT : {
             childNode -> attributes[unsigned(attr::STRUCT)] = 1;
             childNode -> children[0] -> attributes[unsigned(attr::TYPEID)] = 1;
             break;
          }
+         case TOK_TYPEID : 
+            childNode -> attributes[unsigned(attr::TYPEID)] = 1;
+            break;
          case TOK_FIELD : {
             childNode -> children[0] -> attributes[unsigned(attr::FIELD)] = 1;
+            if ( childNode -> lexinfo -> compare("int") == 0 ) {
+               childNode -> children[0] -> attributes[unsigned(attr::INT)] = 1;
+            }
+            if ( childNode -> lexinfo -> compare("string") == 0 ) {
+               childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;
+            } 
             break;
          }
-
+         case TOK_VOID :
+            childNode -> children[0] -> attributes[unsigned(attr::VOID)] = 1; 
+            break;
+         case TOK_INT : 
+            childNode -> children[0] -> attributes[unsigned(attr::INT)] = 1;
+            break;
+         case TOK_NULL : 
+            childNode -> children[0] -> attributes[unsigned(attr::NULLX)] = 1;
+            break;
+         case TOK_STRING : 
+            childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;
+            break;
+         case TOK_IDENT : 
+            break;
+         default : 
+           printf("Press F to pay respect");
       }
       updateAttr(childNode);
    }   

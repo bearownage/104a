@@ -22,17 +22,17 @@ using attr_bitset = bitset<15>;
 struct symbol {
    attr_bitset attributes;
    size_t sequence;
-   using symbol_table = unordered_map<string*, symbol*>;
+   using symbol_table = unordered_map<const string*, symbol*>;
    symbol_table* fields;
    location lloc;
    size_t block_nr;
    vector<symbol*>* parameters;
 };
 
-using symbol_table = unordered_map<string*, symbol*>;
+using symbol_table = unordered_map<const string*, symbol*>;
 using symbol_entry = pair<const string*, symbol*>;
 
 const string attrString(astree* node);
 void traversal(astree* node);
-
+void updateAttr(astree* root);
 #endif
