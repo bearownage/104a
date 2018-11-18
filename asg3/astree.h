@@ -29,7 +29,7 @@ struct astree {
 
    attr_bitset attributes;
    size_t block_nr;
-   const string* struc;
+   const string* strucname;
    const string* field;
    const string* funct;
 

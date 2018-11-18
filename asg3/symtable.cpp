@@ -82,14 +82,20 @@ symbol* newSym(astree* node) {
 
 void traversal(astree* root) {
 
+  const string* str; 
   for (astree* childNode: root -> children) {
-      printf("Token: %s\n", parser::get_tname(childNode -> symbol)); 
+      printf("Token: %s\n", parser::get_tname(childNode -> symbol));
+      auto* sym = newSym(childNode); 
       switch(childNode -> symbol) {
          case TOK_STRUCT :
             childNode -> attributes[unsigned(attr::STRUCT)] = 1;
+            childNode -> strucname = childNode -> children[0] -> lexinfo;
+            
             break;
          case TOK_TYPEID :
             childNode -> attributes[unsigned(attr::TYPEID)] = 1;
+            break;
+         default :
             break;
       }
       traversal(childNode);
