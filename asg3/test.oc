@@ -1,4 +1,4 @@
 struct node {
-   int foo;
+   int [] foo;
    string link;
 }

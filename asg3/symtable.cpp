@@ -135,7 +135,7 @@ void updateAttr(astree* root) {
             }
             if ( childNode -> lexinfo -> compare("string") == 0 ) {
                childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;
-            } 
+            }
             break;
          }
          case TOK_VOID :
@@ -151,6 +151,9 @@ void updateAttr(astree* root) {
             childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;
             break;
          case TOK_IDENT : 
+            break;
+         case TOK_ARRAY : 
+            childNode -> children[0] -> children[0] -> attributes[unsigned(attr::ARRAY)] = 1;
             break;
          default : 
            printf("Press F to pay respect");

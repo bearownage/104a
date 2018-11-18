@@ -1,7 +1,8 @@
 ROOT "" 0.0.0 
 | STRUCT "struct" 0.1.1 
 | | TYPEID "node" 0.1.8 
-| | FIELD "int" 0.2.4 
-| | | IDENT "foo" 0.2.8 
+| | ARRAY "[]" 0.2.8 
+| | | FIELD "int" 0.2.4 
+| | | | IDENT "foo" 0.2.11 
 | | FIELD "string" 0.3.4 
 | | | IDENT "link" 0.3.11 
