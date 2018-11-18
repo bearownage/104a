@@ -93,9 +93,16 @@ void traversal(astree* root) {
             auto* sym = newSym(childNode);
             sym -> lloc = childNode -> children[0] -> lloc;
             
+            int counter = 0;
+            sym -> fields = new symbol_table();
             for (astree* fieldNode: childNode -> children) { 
-               symbol_entry fieldEntry = pair(name, sym); 
+               auto* fieldSym = newSym(fieldNode);
+               fieldSym -> sequence = counter;
+               sym -> fields -> insert(std::make_pair(name, fieldSym));
+               counter++;
             }
+            //types -> insert(name, sym);
+            
             break;
          }
          case TOK_TYPEID :
@@ -106,6 +113,25 @@ void traversal(astree* root) {
       }
       traversal(childNode);
   }
+
+}
+
+void updateAttr(astree* root) {
+   for (astree* childNode: root -> children) {
+      switch(childNode -> symbol) {
+         case TOK_STRUCT : {
+            childNode -> attributes[unsigned(attr::STRUCT)] = 1;
+            childNode -> children[0] -> attributes[unsigned(attr::TYPEID)] = 1;
+            break;
+         }
+         case TOK_FIELD : {
+            childNode -> children[0] -> attributes[unsigned(attr::FIELD)] = 1;
+            break;
+         }
+
+      }
+      updateAttr(childNode);
+   }   
 
 }
 
