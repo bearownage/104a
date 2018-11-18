@@ -1,4 +1,0 @@
-struct node {
-   int foo;
-   node link;
-}
