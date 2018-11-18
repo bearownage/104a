@@ -87,7 +87,6 @@ void traversal(astree* root) {
       printf("Token: %s\n", parser::get_tname(childNode -> symbol));
       switch(childNode -> symbol) {
          case TOK_STRUCT : {
-            childNode -> attributes[unsigned(attr::STRUCT)] = 1;
             const string* name = childNode -> children[0] -> lexinfo;
             childNode -> strucname = name;
             childNode -> block_nr = 0;
@@ -123,8 +122,7 @@ void updateAttr(astree* root) {
          case TOK_ROOT : 
             break;
          case TOK_STRUCT : {
-            childNode -> attributes[unsigned(attr::STRUCT)] = 1;
-            childNode -> children[0] -> attributes[unsigned(attr::TYPEID)] = 1;
+            childNode -> children[0] -> attributes[unsigned(attr::STRUCT)] = 1;
             break;
          }
          case TOK_TYPEID : 
