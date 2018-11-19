@@ -27,6 +27,8 @@ struct symbol {
    location lloc;
    size_t block_nr;
    vector<symbol*>* parameters;
+   
+   const string* strucname;
 };
 
 using symbol_table = unordered_map<const string*, symbol*>;
@@ -35,4 +37,5 @@ using symbol_entry = pair<const string*, symbol*>;
 const string attrString(astree* node);
 void traversal(astree* node);
 void updateAttr(astree* root);
+void printTable(symbol_table* table);
 #endif

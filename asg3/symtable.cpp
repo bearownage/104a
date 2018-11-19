@@ -11,7 +11,7 @@ using namespace std;
 int blocknr = 0;
 int next_block = 1;
 
-symbol_table types;
+symbol_table* types = new symbol_table;
 symbol_table variables;
 symbol_table globaldecs;
 
@@ -70,6 +70,56 @@ const string attrString(astree* node) {
     return attrString;
 }
 
+const string attrStringSym(symbol* node) {
+    string attrString = "";
+    if(node->attributes[unsigned(attr::VOID)]) {
+       attrString += "void ";
+    }
+    if(node->attributes[unsigned(attr::INT)]) {
+       attrString += "int ";
+    }
+    if(node->attributes[unsigned(attr::NULLX)]) {
+       attrString += "null ";
+    }
+    if(node->attributes[unsigned(attr::STRING)]) {
+       attrString += "string ";
+    }
+    if(node->attributes[unsigned(attr::STRUCT)]) {
+       attrString += "struct ";
+    }
+    if(node->attributes[unsigned(attr::ARRAY)]) {
+       attrString += "array ";
+    }
+    if(node->attributes[unsigned(attr::FUNCTION)]) {
+       attrString += "function ";
+    }
+    if(node->attributes[unsigned(attr::VARIABLE)]) {                                                                                                                                         
+       attrString += "variable ";                                                                                                                                                            
+    }
+    if(node->attributes[unsigned(attr::FIELD)]) {                                                                                                                                            
+       attrString += "field ";                                                                                                                                                               
+    }
+    if(node->attributes[unsigned(attr::TYPEID)]) {                                                                                                                                           
+       attrString += "typeid ";                                                                                                                                                              
+    }
+    if(node->attributes[unsigned(attr::PARAM)]) {
+       attrString += "param ";
+    }
+    if(node->attributes[unsigned(attr::LVAL)]) {
+       attrString += "lval ";                                                                                                                                                                
+    }
+    if(node->attributes[unsigned(attr::CONST)]) {                                                                                                                                            
+       attrString += "const ";                                                                                                                                                               
+    }
+    if(node->attributes[unsigned(attr::VREG)]) {                                                                                                                                             
+       attrString += "vreg ";                                                                                                                                                                
+    }
+    if(node->attributes[unsigned(attr::VADDR)]) {                                                                                                                                            
+       attrString += "vaddr ";                                                                                                                                                               
+    }
+    return attrString;
+}
+
 symbol* newSym(astree* node) {
    symbol* sym = new symbol();
    sym -> attributes = node -> attributes;
@@ -78,30 +128,44 @@ symbol* newSym(astree* node) {
    sym -> lloc = node -> lloc;
    sym -> block_nr = node -> block_nr;
    sym -> parameters = nullptr;
+   sym -> strucname = node -> strucname;
    return sym;    
 }
 
-void traversal(astree* root) {
+void printTable(symbol_table* table) { 
+     
+    for ( auto it = table -> cbegin(); it != table -> cend(); it++ ) {                                                                                                                         
+        printf("%s (%lu.%lu.%lu) {%lu} %s\n", it->first->c_str(), it->second->lloc.filenr, 
+        it->second->lloc.linenr, it->second->lloc.offset, it->second->block_nr, 
+        attrStringSym(it->second).c_str());
+        if(it->second->fields != nullptr) {
+           printTable(it->second->fields);
+        } 
+    }                                                                                                                                                                                        
+}
 
+void traversal(astree* root) {
+  
   for (astree* childNode: root -> children) {
       printf("Token: %s\n", parser::get_tname(childNode -> symbol));
       switch(childNode -> symbol) {
          case TOK_STRUCT : {
-            const string* name = childNode -> children[0] -> lexinfo;
-            childNode -> strucname = name;
+            childNode -> strucname = childNode -> children[0] -> lexinfo;
             childNode -> block_nr = 0;
             auto* sym = newSym(childNode);
             sym -> lloc = childNode -> children[0] -> lloc;
-            
+            sym -> attributes = childNode -> children[0] -> attributes;
             int counter = 0;
             sym -> fields = new symbol_table();
             for (astree* fieldNode: childNode -> children) { 
-               auto* fieldSym = newSym(fieldNode);
-               fieldSym -> sequence = counter;
-               sym -> fields -> insert(std::make_pair(name, fieldSym));
-               counter++;
+               if (fieldNode -> symbol == TOK_FIELD) {
+                 auto* fieldSym = newSym(fieldNode -> children[0]);
+                 fieldSym -> sequence = counter;
+                 sym -> fields -> insert(std::make_pair(fieldNode -> children[0] -> lexinfo, fieldSym)); 
+                 counter++;
+               }
             }
-            //types -> insert(name, sym);
+            types -> insert(std::make_pair(childNode -> children[0] -> lexinfo, sym));
             
             break;
          }
@@ -113,6 +177,7 @@ void traversal(astree* root) {
       }
       traversal(childNode);
   }
+
 
 }
 
@@ -162,9 +227,13 @@ void updateAttr(astree* root) {
    }   
 
 }
-
-
-
+/*
+void printTable(symbol_table* table) {
+    for ( auto it = table -> begin(); it != table -> end(); ++it ) {
+        printf("%s\n", it->first -> c_str());
+    }
+}
+*/
 
 
 

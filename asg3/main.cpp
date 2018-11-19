@@ -23,6 +23,7 @@ const string cpp_name = "/usr/bin/cpp";
 string cpp_command;
 FILE *tokFile;
 FILE *astFile;
+extern symbol_table* types;
 // Open a pipe from the C preprocessor.
 // Exit failure if can't.
 // Assigns opened pipe to FILE* yyin.
@@ -107,12 +108,7 @@ int main (int argc, char** argv) {
    strFile = fopen(outFileStr, "w");
    string_set::dump(strFile);
    fclose(strFile);
-/*
-   FILE* astFile;
-   astFile = fopen(outFileAst, "w");
-   parser::root -> dump_tree(astFile, 0);
-   fclose(astFile);
-*/
+   
    if (yydebug or yy_flex_debug) {
       fprintf (stderr, "Dumping parser::root:\n");
       if (parser::root != nullptr) parser::root->dump_tree (stderr);
@@ -125,8 +121,9 @@ int main (int argc, char** argv) {
       FILE* astFile;
       astFile = fopen(outFileAst, "w");
       parser::root -> dump_tree(astFile, 0);
-      //traversal(parser::root);
       updateAttr(parser::root);
+      traversal(parser::root);
+      printTable(types);
       parser::root -> dump_tree(stdout, 0);
       fclose(astFile);
       destroy(parser::root);
