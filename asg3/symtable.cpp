@@ -37,6 +37,8 @@ const string attrString(astree* node) {
     }
     if(node->attributes[unsigned(attr::STRUCT)]) {
        attrString += "struct ";
+       attrString += node->strucname -> c_str();
+       attrString += " ";
     }
     if(node->attributes[unsigned(attr::ARRAY)]) {
        attrString += "array ";
@@ -87,6 +89,8 @@ const string attrStringSym(symbol* node) {
     }
     if(node->attributes[unsigned(attr::STRUCT)]) {
        attrString += "struct ";
+       attrString += node->strucname -> c_str();
+       attrString += " ";
     }
     if(node->attributes[unsigned(attr::ARRAY)]) {
        attrString += "array ";
@@ -118,6 +122,7 @@ const string attrStringSym(symbol* node) {
     if(node->attributes[unsigned(attr::VADDR)]) {                                                                                                                                            
        attrString += "vaddr ";                                                                                                                                                               
     }
+    attrString = attrString.substr(0, attrString.size()-1);
     return attrString;
 }
 
@@ -135,12 +140,16 @@ symbol* newSym(astree* node) {
 
 // Print the symbols for .sym
 void printTable(symbol_table* table) { 
-    for ( auto it = table -> cbegin(); it != table -> cend(); it++ ) {                                                                                                                         
+    for ( auto it = table -> cbegin(); it != table -> cend(); it++ ) {
         printf("%s (%lu.%lu.%lu) {%lu} %s\n", it->first->c_str(), it->second->lloc.filenr, 
         it->second->lloc.linenr, it->second->lloc.offset, it->second->block_nr, 
         attrStringSym(it->second).c_str());
-        if(it->second->fields != nullptr) {
-           printTable(it->second->fields);
+        if (it->second->fields != nullptr) {
+           for (auto field = it->second->fields->cbegin(); field != it->second->fields->cend(); field++) {
+               printf("    %s (%lu.%lu.%lu) %s %lu\n", field->first->c_str(), field->second->lloc.filenr, 
+               field->second->lloc.linenr, field->second->lloc.offset, 
+               attrStringSym(field->second).c_str(), field->second->sequence);
+           }
         } 
     }                                                                                                                                                                                        
 }
@@ -159,10 +168,16 @@ void traversal(astree* root) {
             sym -> fields = new symbol_table();
             vector <astree*> v;
             for (astree* fieldNode: childNode -> children) { 
-               if (fieldNode -> symbol == TOK_FIELD) {
+               if (fieldNode -> children.size() >= 1 && fieldNode -> children[0] -> symbol == TOK_FIELD) {
                  v.push_back(fieldNode);
+                 counter++;
                }
+              else if (fieldNode -> symbol == TOK_ARRAY) {
+                 v.push_back(fieldNode -> children[0]);
+                 counter++;
+              }
             }
+            counter -= 1;
             // Use vector to print in the right order 
 	    while (!v.empty()) {
                 astree* tmpNode = nullptr;
@@ -171,13 +186,18 @@ void traversal(astree* root) {
                 auto* fieldSym = newSym(tmpNode -> children[0]);
                 fieldSym -> sequence = counter;
                 sym -> fields -> insert(std::make_pair(tmpNode -> children[0] -> lexinfo, fieldSym));
-                counter++;
+                counter--;
 	    }
             types -> insert(std::make_pair(childNode -> children[0] -> lexinfo, sym));
+            for(astree* child : childNode -> children) {
+               if(child -> symbol == TOK_TYPEID) {
+                  
+               } 
+            } 
             break;
          }
          case TOK_TYPEID :
-            childNode -> attributes[unsigned(attr::TYPEID)] = 1;
+            //childNode -> attributes[unsigned(attr::TYPEID)] = 1;
             break;
          default :
             break;
@@ -195,19 +215,17 @@ void updateAttr(astree* root) {
             break;
          case TOK_STRUCT : {
             childNode -> children[0] -> attributes[unsigned(attr::STRUCT)] = 1;
+            childNode -> children[0] -> strucname = childNode -> children[0] -> lexinfo;
             break;
          }
-         case TOK_TYPEID : 
-            childNode -> attributes[unsigned(attr::TYPEID)] = 1;
+         case TOK_TYPEID : {
+            if(childNode -> attributes[unsigned(attr::STRUCT)] == 0) { 
+               childNode -> attributes[unsigned(attr::TYPEID)] = 1;
+            }
             break;
+         }
          case TOK_FIELD : {
-            childNode -> children[0] -> attributes[unsigned(attr::FIELD)] = 1;
-            if ( childNode -> lexinfo -> compare("int") == 0 ) {
-               childNode -> children[0] -> attributes[unsigned(attr::INT)] = 1;
-            }
-            if ( childNode -> lexinfo -> compare("string") == 0 ) {
-               childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;
-            }
+            childNode -> attributes[unsigned(attr::FIELD)] = 1;
             break;
          }
          case TOK_VOID :
@@ -234,20 +252,3 @@ void updateAttr(astree* root) {
    }   
 
 }
-/*
-void printTable(symbol_table* table) {
-    for ( auto it = table -> begin(); it != table -> end(); ++it ) {
-        printf("%s\n", it->first -> c_str());
-    }
-}
-*/
-
-
-
-
-
-
-
-
-
-

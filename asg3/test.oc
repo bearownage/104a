@@ -1,5 +1,6 @@
 struct node {
-   int foo;
-   string link;
-   string hi;
+   int[] foo;
+   string bar;
+   node link;
 }
+

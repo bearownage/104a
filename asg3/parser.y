@@ -72,9 +72,9 @@ struc      : struc fielddecl ';'
            ;
 
 fielddecl  : basetype TOK_IDENT                           
-             { $$ = $1 ->  adopt_sym ($2, TOK_FIELD); } 
+             { $$ = $1 ->  adopt ($2); $2 -> adopt_sym(NULL, TOK_FIELD); } 
            | basetype TOK_ARRAY TOK_IDENT                 
-             { $$ = $2 -> adopt ($1); $1 -> adopt_sym ($3, TOK_FIELD);}
+             { $$ = $2 -> adopt ($1); $1 -> adopt ($3); $3 -> adopt_sym(NULL, TOK_FIELD);}
            ;
 
 globaldecl : identdec '=' constant ';'               
@@ -132,7 +132,8 @@ fnbody     : fnbody statement    { $$ = $1 -> adopt ($2); }
 basetype   : TOK_VOID                                     { $$ = $1; }
            | TOK_INT                                      { $$ = $1; }
            | TOK_STRING                                   { $$ = $1; }
-           | TOK_IDENT                                    { $$ = $1; }
+           | TOK_IDENT                                    
+           { $$ = $1 -> adopt_sym (NULL, TOK_TYPEID); }
            ;
 
 localdecl  : identdec '=' expr ';'                

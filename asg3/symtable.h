@@ -27,7 +27,8 @@ struct symbol {
    location lloc;
    size_t block_nr;
    vector<symbol*>* parameters;
-   
+  
+   const string* type; 
    const string* strucname;
 };
 
