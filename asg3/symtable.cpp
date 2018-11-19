@@ -228,6 +228,19 @@ void updateAttr(astree* root) {
             childNode -> attributes[unsigned(attr::FIELD)] = 1;
             break;
          }
+         case TOK_FUNCTION : {
+              childNode -> children[0] -> attributes[unsigned(attr::FUNCTION)] = 1;
+              for (auto parameters: childNode->children[1]->children){
+		  parameters->children[0]->attributes[unsigned(attr::VARIABLE)] = 1;
+                  parameters->children[0]->attributes[unsigned(attr::LVAL)] = 1;
+                  parameters->children[0]->attributes[unsigned(attr::PARAM)] = 1;
+	      }  
+              break;
+         }
+         case TOK_VARDECL :
+              childNode -> children[0] -> attributes[unsigned(attr::VARIABLE)] = 1;
+              childNode -> children[0] -> attributes[unsigned(attr::LVAL)] = 1; 
+	      break;
          case TOK_VOID :
             childNode -> children[0] -> attributes[unsigned(attr::VOID)] = 1; 
             break;
@@ -236,6 +249,7 @@ void updateAttr(astree* root) {
             break;
          case TOK_NULL : 
             childNode -> children[0] -> attributes[unsigned(attr::NULLX)] = 1;
+            childNode -> children[0] -> attributes[unsigned(attr::CONST)] = 1;
             break;
          case TOK_STRING : 
             childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;
@@ -245,6 +259,17 @@ void updateAttr(astree* root) {
          case TOK_ARRAY : 
             childNode -> children[0] -> children[0] -> attributes[unsigned(attr::ARRAY)] = 1;
             break;
+         case TOK_INTCON:
+            childNode -> children[0] -> attributes[unsigned(attr::CONST)] = 1;
+            break;
+         case TOK_STRINGCON :
+            childNode -> children[0] -> attributes[unsigned(attr::CONST)] = 1;
+            break;
+         /*
+         * @TODO Add Vreg will be on the 
+         * + and - nodes as they hold the computer values. 
+         *       
+         */
          default : 
            printf("Press F to pay respect");
       }

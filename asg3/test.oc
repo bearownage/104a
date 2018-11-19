@@ -4,3 +4,7 @@ struct node {
    node link;
 }
 
+int fibonacci (int n, int m) {
+
+}
+
