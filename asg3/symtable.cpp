@@ -3,6 +3,7 @@
 #include <vector>
 #include <stdio.h>
 #include <string.h>
+#include <stack>
 using namespace std;
 
 #include "astree.h"
@@ -132,8 +133,8 @@ symbol* newSym(astree* node) {
    return sym;    
 }
 
+// Print the symbols for .sym
 void printTable(symbol_table* table) { 
-     
     for ( auto it = table -> cbegin(); it != table -> cend(); it++ ) {                                                                                                                         
         printf("%s (%lu.%lu.%lu) {%lu} %s\n", it->first->c_str(), it->second->lloc.filenr, 
         it->second->lloc.linenr, it->second->lloc.offset, it->second->block_nr, 
@@ -145,7 +146,6 @@ void printTable(symbol_table* table) {
 }
 
 void traversal(astree* root) {
-  
   for (astree* childNode: root -> children) {
       printf("Token: %s\n", parser::get_tname(childNode -> symbol));
       switch(childNode -> symbol) {
@@ -157,16 +157,23 @@ void traversal(astree* root) {
             sym -> attributes = childNode -> children[0] -> attributes;
             int counter = 0;
             sym -> fields = new symbol_table();
+            vector <astree*> v;
             for (astree* fieldNode: childNode -> children) { 
                if (fieldNode -> symbol == TOK_FIELD) {
-                 auto* fieldSym = newSym(fieldNode -> children[0]);
-                 fieldSym -> sequence = counter;
-                 sym -> fields -> insert(std::make_pair(fieldNode -> children[0] -> lexinfo, fieldSym)); 
-                 counter++;
+                 v.push_back(fieldNode);
                }
             }
+            // Use vector to print in the right order 
+	    while (!v.empty()) {
+                astree* tmpNode = nullptr;
+                tmpNode = v.back();
+                v.pop_back();
+                auto* fieldSym = newSym(tmpNode -> children[0]);
+                fieldSym -> sequence = counter;
+                sym -> fields -> insert(std::make_pair(tmpNode -> children[0] -> lexinfo, fieldSym));
+                counter++;
+	    }
             types -> insert(std::make_pair(childNode -> children[0] -> lexinfo, sym));
-            
             break;
          }
          case TOK_TYPEID :
