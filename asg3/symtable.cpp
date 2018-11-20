@@ -248,8 +248,8 @@ void updateAttr(astree* root) {
               break;
          }
          case TOK_VARDECL :
-              childNode -> children[0] -> attributes[unsigned(attr::VARIABLE)] = 1;
-              childNode -> children[0] -> attributes[unsigned(attr::LVAL)] = 1; 
+              childNode -> children[0] -> children[0] -> attributes[unsigned(attr::VARIABLE)] = 1;
+              childNode -> children[0] -> children[0] -> attributes[unsigned(attr::LVAL)] = 1; 
 	      break;
          case TOK_VOID :
             childNode -> children[0] -> attributes[unsigned(attr::VOID)] = 1; 
@@ -270,10 +270,10 @@ void updateAttr(astree* root) {
             childNode -> children[0] -> children[0] -> attributes[unsigned(attr::ARRAY)] = 1;
             break;
          case TOK_INTCON:
-            childNode -> children[0] -> attributes[unsigned(attr::CONST)] = 1;
+            childNode -> attributes[unsigned(attr::CONST)] = 1;
             break;
          case TOK_STRINGCON :
-            childNode -> children[0] -> attributes[unsigned(attr::CONST)] = 1;
+            childNode -> attributes[unsigned(attr::CONST)] = 1;
             break;
          /*
          * @TODO Add Vreg will be on the 
