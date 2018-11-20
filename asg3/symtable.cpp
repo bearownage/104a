@@ -405,6 +405,19 @@ void updateAttr(astree* root) {
             errprintf("Error %d.%d.%d: " "None integer arithmetic operation \n", childNode->lloc.filenr, childNode->lloc.linenr, childNode->lloc.offset);
 	    break;
          }
+         case TOK_EQ: 
+         case TOK_NE: 
+         case TOK_LT: 
+         case TOK_LE: 
+         case TOK_GT: 
+         case TOK_GE: {
+	      childNode -> attributes[unsigned(attr::INT)] = 1;
+              childNode -> attributes[unsigned(attr::VREG)] = 1;
+              break;
+         }
+         case TOK_ARROW : 
+              childNode -> children[0] -> attributes[unsigned(attr::LVAL)] = 1;
+              break;
          default : 
            printf("Press F to pay respect: %s\n", parser::get_tname(childNode->symbol));
       }
