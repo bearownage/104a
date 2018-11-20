@@ -309,18 +309,49 @@ void updateAttr(astree* root) {
             childNode -> children[0] -> children[0] -> attributes[unsigned(attr::ARRAY)] = 1;
             break;
          case TOK_INTCON:
+            childNode -> attributes[unsigned(attr::INT)] = 1;
             childNode -> attributes[unsigned(attr::CONST)] = 1;
             break;
          case TOK_STRINGCON :
+            childNode -> attributes[unsigned(attr::INT)] = 1;
             childNode -> attributes[unsigned(attr::CONST)] = 1;
             break;
          case TOK_BLOCK :
             break;
-         /*
-         * @TODO Add Vreg will be on the 
-         * + and - nodes as they hold the computer values. 
-         *       
-         */
+         case '+' :
+         case '-' : {
+             childNode -> attributes[unsigned(attr::INT)] = 1;
+             childNode -> attributes[unsigned(attr::VREG)] = 1;
+             if ( childNode -> children[1] == nullptr ) 
+             {
+             	if (childNode -> children[0] -> attributes[unsigned(attr::INT)] != 1)
+                {
+                    errprintf("Error %d.%d.%d: " "None integer arithmetic operation \n", childNode->lloc.filenr, childNode->lloc.linenr, childNode->lloc.offset);
+                    break;
+                }
+             }
+             
+             if ( childNode -> children[0] -> attributes[unsigned(attr::INT)]  == 0 && 
+                childNode -> children[1] -> attributes[unsigned(attr::INT)]  == 0 )
+             {
+                break;
+             }
+             errprintf("Error %d.%d.%d: " "None integer arithmetic operation \n", childNode->lloc.filenr, childNode->lloc.linenr, childNode->lloc.offset); 
+             break; 
+         }
+         case '/' : 
+         case '%' : 
+         case '*' : {
+            childNode -> attributes[unsigned(attr::INT)] = 1;
+            childNode -> attributes[unsigned(attr::VREG)] = 1;
+            if ( childNode -> children[0] -> attributes[unsigned(attr::INT)]  == 0 && 
+                childNode -> children[1] -> attributes[unsigned(attr::INT)]  == 0 )
+            {
+		break;
+	    }
+            errprintf("Error %d.%d.%d: " "None integer arithmetic operation \n", childNode->lloc.filenr, childNode->lloc.linenr, childNode->lloc.offset);
+	    break;
+         }
          default : 
            printf("Press F to pay respect: %s\n", parser::get_tname(childNode->symbol));
       }

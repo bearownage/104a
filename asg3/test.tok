@@ -1,0 +1,52 @@
+# 1 "test.oc"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h"
+# 1 "<command-line>"
+# 1 "test.oc"
+0  1.001 266 TOK_STRUCT    struct
+0  1.008 280 TOK_IDENT     node
+0  1.013 123 '{'           {
+0  2.004 260 TOK_INT       int
+0  2.008 280 TOK_IDENT     foo
+0  2.011  59 ';'           ;
+0  3.004 280 TOK_IDENT     node
+0  3.009 280 TOK_IDENT     link
+0  3.013  59 ';'           ;
+0  4.001 125 '}'           }
+0  6.001 280 TOK_IDENT     node
+0  6.006 280 TOK_IDENT     func
+0  6.011 295 TOK_PARAM     (
+0  6.012 280 TOK_IDENT     node
+0  6.017 280 TOK_IDENT     head
+0  6.021  44 ','           ,
+0  6.023 260 TOK_INT       int
+0  6.027 280 TOK_IDENT     length
+0  6.033  41 ')'           )
+0  6.035 123 '{'           {
+0  7.004 260 TOK_INT       int
+0  7.008 280 TOK_IDENT     i
+0  7.010  61 '='           =
+0  7.012 281 TOK_INTCON    0
+0  7.013  59 ';'           ;
+0  8.004 281 TOK_INTCON    5
+0  8.006  45 '-'           -
+0  8.008 280 TOK_IDENT     a
+0  8.009  59 ';'           ;
+0  9.004 281 TOK_INTCON    5
+0  9.006  43 '+'           +
+0  9.008 280 TOK_IDENT     b
+0  9.009  59 ';'           ;
+0 10.004 281 TOK_INTCON    5
+0 10.006  42 '*'           *
+0 10.008 280 TOK_IDENT     c
+0 10.009  59 ';'           ;
+0 11.004 281 TOK_INTCON    5
+0 11.006  37 '%'           %
+0 11.008 280 TOK_IDENT     d
+0 11.009  59 ';'           ;
+0 12.004 281 TOK_INTCON    5
+0 12.006  47 '/'           /
+0 12.008 280 TOK_IDENT     e
+0 12.009  59 ';'           ;
+0 13.001 125 '}'           }
