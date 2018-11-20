@@ -1,10 +1,19 @@
+struct tree {
+  int test;
+  string hi;
+}
 struct node {
-   int[] foo;
-   string bar;
+   int foo;
+   tree[] bar;
+   node[] baz;
    node link;
+   tree leaf;
 }
-
-int fibonacci (int n, int m) {
-
+struct bob {
+   int one;
+   string there;
+   string hi;
+   int my;
+   bob three;
+   bob two;
 }
-

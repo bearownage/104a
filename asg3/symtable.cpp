@@ -156,7 +156,7 @@ void printTable(symbol_table* table) {
 
 void traversal(astree* root) {
   for (astree* childNode: root -> children) {
-      printf("Token: %s\n", parser::get_tname(childNode -> symbol));
+      //printf("Token: %s\n", parser::get_tname(childNode -> symbol));
       switch(childNode -> symbol) {
          case TOK_STRUCT : {
             childNode -> strucname = childNode -> children[0] -> lexinfo;
@@ -167,33 +167,43 @@ void traversal(astree* root) {
             int counter = 0;
             sym -> fields = new symbol_table();
             vector <astree*> v;
-            for (astree* fieldNode: childNode -> children) { 
+            types -> insert(std::make_pair(childNode -> children[0] -> lexinfo, sym));
+            printf("%s (%lu.%lu.%lu) {%lu} %s\n", sym->strucname->c_str(), sym->lloc.filenr,
+            sym->lloc.linenr, sym->lloc.offset, sym->block_nr,
+            attrStringSym(sym).c_str());
+            for (astree* fieldNode: childNode -> children) {
                if (fieldNode -> children.size() >= 1 && fieldNode -> children[0] -> symbol == TOK_FIELD) {
-                 v.push_back(fieldNode);
+                 const string* id = fieldNode->children[0]->lexinfo;
+                 auto* fieldSym = newSym(fieldNode->children[0]);
+                 fieldSym->sequence = counter;
+                 sym->fields->insert(std::make_pair(fieldNode->children[0]->lexinfo, fieldSym));
+                 if(fieldNode->symbol == TOK_TYPEID) {
+                    symbol* temp = types->find(fieldNode->lexinfo)->second;
+                    symbol* val = sym->fields->find(fieldNode->children[0]->lexinfo)->second;
+                    val->attributes[unsigned(attr::STRUCT)] = 1;
+                    val->strucname = temp->strucname;
+                 }
+                 printf("    %s (%lu.%lu.%lu) %s %lu\n", id->c_str(), fieldSym->lloc.filenr,
+                 fieldSym->lloc.linenr, fieldSym->lloc.offset,
+                 attrStringSym(fieldSym).c_str(), fieldSym->sequence);
                  counter++;
                }
               else if (fieldNode -> symbol == TOK_ARRAY) {
-                 v.push_back(fieldNode -> children[0]);
+                 auto* fieldSym = newSym(fieldNode->children[0]->children[0]);
+                 fieldSym->sequence = counter;
+                 sym->fields->insert(std::make_pair(fieldNode->children[0]->children[0]->lexinfo, fieldSym));
+                 if(fieldNode->children[0]->symbol == TOK_TYPEID) {
+                    symbol* temp = types->find(fieldNode->children[0]->lexinfo)->second;
+                    symbol* val = sym->fields->find(fieldNode->children[0]->children[0]->lexinfo)->second;
+                    val->attributes[unsigned(attr::STRUCT)] = 1;
+                    val->strucname = temp->strucname;
+                 }
+                 printf("    %s (%lu.%lu.%lu) %s %lu\n", fieldNode->children[0]->children[0]->lexinfo->c_str(), fieldSym->lloc.filenr,
+                 fieldSym->lloc.linenr, fieldSym->lloc.offset,
+                 attrStringSym(fieldSym).c_str(), fieldSym->sequence);
                  counter++;
               }
             }
-            counter -= 1;
-            // Use vector to print in the right order 
-	    while (!v.empty()) {
-                astree* tmpNode = nullptr;
-                tmpNode = v.back();
-                v.pop_back();
-                auto* fieldSym = newSym(tmpNode -> children[0]);
-                fieldSym -> sequence = counter;
-                sym -> fields -> insert(std::make_pair(tmpNode -> children[0] -> lexinfo, fieldSym));
-                counter--;
-	    }
-            types -> insert(std::make_pair(childNode -> children[0] -> lexinfo, sym));
-            for(astree* child : childNode -> children) {
-               if(child -> symbol == TOK_TYPEID) {
-                  
-               } 
-            } 
             break;
          }
          case TOK_TYPEID :
