@@ -235,6 +235,8 @@ variable   : TOK_IDENT                                    { $$ = $1 -> adopt_sym
            | expr TOK_ARROW TOK_IDENT                     
              { $$ = $2 -> adopt ($1, $3); 
                $3 -> adopt_sym (NULL, TOK_FIELD); }
+           | expr '.' TOK_IDENT {$$ = $2; $2 -> adopt ($1, $3); 
+                                 $3 -> adopt_sym(NULL, TOK_FIELD); }
            ;
 
 constant   : TOK_INTCON                                   { $$ = $1; }

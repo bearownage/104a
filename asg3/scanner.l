@@ -60,6 +60,7 @@ BADCHAR         ('([^\\'\n]|\\[\\'"0nt]))
 "*"             { return yylval_token ('*'); }
 "/"             { return yylval_token ('/'); }
 "^"             { return yylval_token ('^'); }
+"."             { return yylval_token ('.'); }
 "("             { return yylval_token (TOK_PARAM); }
 ")"             { return yylval_token (')'); }
 ";"             { return yylval_token (';'); }
