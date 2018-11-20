@@ -1,24 +1,8 @@
-struct tree {
-  int test;
-  string hi;
-}
 struct node {
    int foo;
-   tree[] bar;
-   node[] baz;
    node link;
-   tree leaf;
-}
-struct bob {
-   int one;
-   string there;
-   string hi;
-   int my;
-   bob three;
-   bob two;
 }
 
-node fibonacci(int m, int n) {
-     int i = 0;
-
+node func (node head, int length) {
+   int i = 0;
 }

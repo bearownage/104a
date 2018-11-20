@@ -13,7 +13,7 @@ int blocknr = 0;
 int next_block = 1;
 
 symbol_table* types = new symbol_table;
-symbol_table variables;
+symbol_table* variables = new symbol_table;
 symbol_table globaldecs;
 
 enum class attr: unsigned {
@@ -55,11 +55,11 @@ const string attrString(astree* node) {
     if(node->attributes[unsigned(attr::TYPEID)]) {
        attrString += "typeid ";
     }
-    if(node->attributes[unsigned(attr::PARAM)]) {
-       attrString += "param ";
-    }
     if(node->attributes[unsigned(attr::LVAL)]) {
        attrString += "lval ";
+    }
+    if(node->attributes[unsigned(attr::PARAM)]) {
+      attrString += "param ";
     }
     if(node->attributes[unsigned(attr::CONST)]) {
        attrString += "const ";
@@ -107,11 +107,11 @@ const string attrStringSym(symbol* node) {
     if(node->attributes[unsigned(attr::TYPEID)]) {                                                                                                                                           
        attrString += "typeid ";                                                                                                                                                              
     }
-    if(node->attributes[unsigned(attr::PARAM)]) {
-       attrString += "param ";
-    }
     if(node->attributes[unsigned(attr::LVAL)]) {
        attrString += "lval ";                                                                                                                                                                
+    }
+    if(node->attributes[unsigned(attr::PARAM)]) {
+      attrString += "param ";
     }
     if(node->attributes[unsigned(attr::CONST)]) {                                                                                                                                            
        attrString += "const ";                                                                                                                                                               
@@ -135,6 +135,7 @@ symbol* newSym(astree* node) {
    sym -> block_nr = node -> block_nr;
    sym -> parameters = nullptr;
    sym -> strucname = node -> strucname;
+   sym -> funcname = nullptr;
    return sym;    
 }
 
@@ -193,8 +194,8 @@ void traversal(astree* root) {
                  sym->fields->insert(std::make_pair(fieldNode->children[0]->lexinfo, fieldSym));
                  if(fieldNode->symbol == TOK_TYPEID) {
                     const string* strucID = fieldNode->lexinfo;
-                    const string* id = fieldNode->children[0]->lexinfo;
-                    addStruct(sym, strucID, id, fieldNode->children[0]);
+                    const string* ident = fieldNode->children[0]->lexinfo;
+                    addStruct(sym, strucID, ident, fieldNode->children[0]);
                  }
                  printf("    %s (%lu.%lu.%lu) %s %lu\n", id->c_str(), fieldSym->lloc.filenr,
                  fieldSym->lloc.linenr, fieldSym->lloc.offset,
@@ -217,6 +218,26 @@ void traversal(astree* root) {
               }
             }
             break;
+         }
+         case TOK_FUNCTION : {
+            symbol* sym = newSym(childNode);
+            sym -> attributes = childNode->children[0]->children[0]->attributes;
+            sym -> funcname = childNode->children[0]->children[0]->lexinfo;
+            sym -> lloc = childNode->children[0]->children[0]->lloc;
+            if(childNode->children[0]->symbol == TOK_TYPEID) {
+              symbol* temp = findTypeid(childNode->children[0]->lexinfo);
+              sym->attributes[unsigned(attr::STRUCT)] = 1;
+              sym->strucname = temp->strucname;
+             // sym->attributes[unsigned(attr::VARIABLE)] = 0;
+             // childNode->children[0]->children[0]->attributes = sym->attributes;
+              childNode->children[0]->children[0]->strucname = temp->strucname;
+            }
+            sym->attributes[unsigned(attr::VARIABLE)] = 0;
+            childNode->children[0]->children[0]->attributes = sym->attributes;
+            variables->insert(std::make_pair(sym->funcname, sym));
+            printf("%s (%lu.%lu.%lu) {%lu} %s\n", sym->funcname->c_str(), sym->lloc.filenr,
+            sym->lloc.linenr, sym->lloc.offset, sym->block_nr,
+            attrStringSym(sym).c_str());
          }
          case TOK_TYPEID :
             //childNode -> attributes[unsigned(attr::TYPEID)] = 1;
@@ -251,12 +272,7 @@ void updateAttr(astree* root) {
             break;
          }
          case TOK_FUNCTION : {
-              childNode -> children[0] -> attributes[unsigned(attr::FUNCTION)] = 1;
-              for (auto parameters: childNode->children[1]->children){
-		  parameters->children[0]->attributes[unsigned(attr::VARIABLE)] = 1;
-                  parameters->children[0]->attributes[unsigned(attr::LVAL)] = 1;
-                  parameters->children[0]->attributes[unsigned(attr::PARAM)] = 1;
-	      }  
+              childNode -> children[0] -> children[0] -> attributes[unsigned(attr::FUNCTION)] = 1;
               break;
          }
          case TOK_VARDECL :
@@ -276,6 +292,17 @@ void updateAttr(astree* root) {
          case TOK_STRING : 
             childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;
             break;
+         case TOK_PARAM : {
+            for (astree* parameters : childNode -> children) {
+                parameters->children[0]->attributes[unsigned(attr::LVAL)] = 1;
+                parameters->children[0]->attributes[unsigned(attr::PARAM)] = 1;
+            }
+            break;
+         }
+         case TOK_DECLID : {
+            childNode -> attributes[unsigned(attr::VARIABLE)] = 1;
+            break;   
+         }
          case TOK_IDENT : 
             break;
          case TOK_ARRAY : 
@@ -286,6 +313,8 @@ void updateAttr(astree* root) {
             break;
          case TOK_STRINGCON :
             childNode -> attributes[unsigned(attr::CONST)] = 1;
+            break;
+         case TOK_BLOCK :
             break;
          /*
          * @TODO Add Vreg will be on the 

@@ -28,7 +28,7 @@ struct symbol {
    size_t block_nr;
    vector<symbol*>* parameters;
   
-   const string* type; 
+   const string* funcname; 
    const string* strucname;
 };
 
