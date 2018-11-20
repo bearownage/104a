@@ -26,10 +26,11 @@ struct symbol {
    symbol_table* fields;
    location lloc;
    size_t block_nr;
-   vector<symbol*>* parameters;
+   vector<symbol*> parameters;
   
    const string* funcname; 
    const string* strucname;
+   const string* param_name;
 };
 
 using symbol_table = unordered_map<const string*, symbol*>;

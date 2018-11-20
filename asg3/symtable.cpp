@@ -133,7 +133,7 @@ symbol* newSym(astree* node) {
    sym -> fields = nullptr;
    sym -> lloc = node -> lloc;
    sym -> block_nr = node -> block_nr;
-   sym -> parameters = nullptr;
+   //sym -> parameters = nullptr;
    sym -> strucname = node -> strucname;
    sym -> funcname = nullptr;
    return sym;    
@@ -216,7 +216,9 @@ void traversal(astree* root) {
                  attrStringSym(fieldSym).c_str(), fieldSym->sequence);
                  counter++;
               }
+              
             }
+            printf("\n");
             break;
          }
          case TOK_FUNCTION : {
@@ -224,12 +226,12 @@ void traversal(astree* root) {
             sym -> attributes = childNode->children[0]->children[0]->attributes;
             sym -> funcname = childNode->children[0]->children[0]->lexinfo;
             sym -> lloc = childNode->children[0]->children[0]->lloc;
+            sym -> block_nr = blocknr;
+            blocknr++; 
             if(childNode->children[0]->symbol == TOK_TYPEID) {
               symbol* temp = findTypeid(childNode->children[0]->lexinfo);
               sym->attributes[unsigned(attr::STRUCT)] = 1;
               sym->strucname = temp->strucname;
-             // sym->attributes[unsigned(attr::VARIABLE)] = 0;
-             // childNode->children[0]->children[0]->attributes = sym->attributes;
               childNode->children[0]->children[0]->strucname = temp->strucname;
             }
             sym->attributes[unsigned(attr::VARIABLE)] = 0;
@@ -238,6 +240,51 @@ void traversal(astree* root) {
             printf("%s (%lu.%lu.%lu) {%lu} %s\n", sym->funcname->c_str(), sym->lloc.filenr,
             sym->lloc.linenr, sym->lloc.offset, sym->block_nr,
             attrStringSym(sym).c_str());
+           
+            astree* params = childNode->children[1];
+            int paraCounter = 0;
+            
+            for(astree* parameter : params->children) {
+               astree* ident = parameter->children[0];
+               if(parameter->symbol == TOK_ARRAY) {
+                 ident = ident->children[0];
+               }
+               symbol* currParam;
+               if(parameter->symbol != TOK_ARRAY) {
+                  currParam = newSym(parameter->children[0]);
+               }
+               else {
+                  currParam = newSym(parameter->children[0]->children[0]);
+               }
+               currParam->sequence = paraCounter;
+               currParam->block_nr = blocknr;
+               paraCounter++;
+               if(parameter->symbol != TOK_ARRAY) {
+                  if(parameter->symbol == TOK_TYPEID) {
+                     symbol* struc = findTypeid(parameter->lexinfo);
+                     parameter->children[0]->attributes[unsigned(attr::STRUCT)] = 1;
+                     parameter->children[0]->strucname = struc->strucname; 
+                     currParam->attributes = parameter->children[0]->attributes;
+                     currParam->strucname = struc->strucname; 
+                  }
+                  currParam->param_name = parameter->children[0]->lexinfo;
+                  sym->parameters.push_back(currParam);
+               }
+               else {
+                  if(parameter->children[0]->symbol == TOK_TYPEID) {
+                     symbol* struc = findTypeid(parameter->children[0]->lexinfo);
+                     parameter->children[0]->children[0]->attributes[unsigned(attr::STRUCT)] = 1;
+                     parameter->children[0]->children[0]->strucname = struc->strucname;
+                     currParam->attributes = parameter->children[0]->children[0]->attributes;
+                     currParam->strucname = struc->strucname;
+                  }
+                  currParam->param_name = parameter->children[0]->children[0]->lexinfo;
+                  sym->parameters.push_back(currParam); 
+               }
+               printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", currParam->param_name->c_str(), currParam->lloc.filenr,
+               currParam->lloc.linenr, currParam->lloc.offset, currParam->block_nr,
+               attrStringSym(currParam).c_str(), currParam->sequence);
+            }
          }
          case TOK_TYPEID :
             //childNode -> attributes[unsigned(attr::TYPEID)] = 1;
@@ -286,7 +333,7 @@ void updateAttr(astree* root) {
             childNode -> children[0] -> attributes[unsigned(attr::INT)] = 1;
             break;
          case TOK_NULL : 
-            childNode -> children[0] -> attributes[unsigned(attr::NULLX)] = 1;
+            childNode -> attributes[unsigned(attr::NULLX)] = 1;
             childNode -> children[0] -> attributes[unsigned(attr::CONST)] = 1;
             break;
          case TOK_STRING : 
@@ -294,8 +341,14 @@ void updateAttr(astree* root) {
             break;
          case TOK_PARAM : {
             for (astree* parameters : childNode -> children) {
-                parameters->children[0]->attributes[unsigned(attr::LVAL)] = 1;
-                parameters->children[0]->attributes[unsigned(attr::PARAM)] = 1;
+                if(parameters->symbol != TOK_ARRAY) {
+                   parameters->children[0]->attributes[unsigned(attr::LVAL)] = 1;
+                   parameters->children[0]->attributes[unsigned(attr::PARAM)] = 1;
+                }
+                else {
+                   parameters->children[0]->children[0]->attributes[unsigned(attr::LVAL)] = 1;
+                   parameters->children[0]->children[0]->attributes[unsigned(attr::PARAM)] = 1;
+                }
             }
             break;
          }
