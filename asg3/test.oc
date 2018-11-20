@@ -18,7 +18,7 @@ struct bob {
    bob two;
 }
 
-int fibonacci(int m, int n) {
+node fibonacci(int m, int n) {
      int i = 0;
 
 }

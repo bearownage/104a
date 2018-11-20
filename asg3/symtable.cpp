@@ -154,6 +154,20 @@ void printTable(symbol_table* table) {
     }                                                                                                                                                                                        
 }
 
+void addStruct(symbol* currStruc, const string* strucID, const string* id, astree* node) {
+    symbol* temp = types->find(strucID)->second;
+    symbol* val = currStruc->fields->find(id)->second;
+    val->attributes[unsigned(attr::STRUCT)] = 1;
+    val->strucname = temp->strucname;
+    node->attributes = val->attributes;
+    node->strucname = temp->strucname;
+}
+
+symbol* findTypeid(const string* strucID) {
+    symbol* temp = types->find(strucID)->second;
+    return temp;
+}
+
 void traversal(astree* root) {
   for (astree* childNode: root -> children) {
       //printf("Token: %s\n", parser::get_tname(childNode -> symbol));
@@ -178,10 +192,9 @@ void traversal(astree* root) {
                  fieldSym->sequence = counter;
                  sym->fields->insert(std::make_pair(fieldNode->children[0]->lexinfo, fieldSym));
                  if(fieldNode->symbol == TOK_TYPEID) {
-                    symbol* temp = types->find(fieldNode->lexinfo)->second;
-                    symbol* val = sym->fields->find(fieldNode->children[0]->lexinfo)->second;
-                    val->attributes[unsigned(attr::STRUCT)] = 1;
-                    val->strucname = temp->strucname;
+                    const string* strucID = fieldNode->lexinfo;
+                    const string* id = fieldNode->children[0]->lexinfo;
+                    addStruct(sym, strucID, id, fieldNode->children[0]);
                  }
                  printf("    %s (%lu.%lu.%lu) %s %lu\n", id->c_str(), fieldSym->lloc.filenr,
                  fieldSym->lloc.linenr, fieldSym->lloc.offset,
@@ -193,10 +206,9 @@ void traversal(astree* root) {
                  fieldSym->sequence = counter;
                  sym->fields->insert(std::make_pair(fieldNode->children[0]->children[0]->lexinfo, fieldSym));
                  if(fieldNode->children[0]->symbol == TOK_TYPEID) {
-                    symbol* temp = types->find(fieldNode->children[0]->lexinfo)->second;
-                    symbol* val = sym->fields->find(fieldNode->children[0]->children[0]->lexinfo)->second;
-                    val->attributes[unsigned(attr::STRUCT)] = 1;
-                    val->strucname = temp->strucname;
+                    const string* strucID = fieldNode->children[0]->lexinfo;
+                    const string* id = fieldNode->children[0]->children[0]->lexinfo;
+                    addStruct(sym, strucID, id, fieldNode->children[0]->children[0]);
                  }
                  printf("    %s (%lu.%lu.%lu) %s %lu\n", fieldNode->children[0]->children[0]->lexinfo->c_str(), fieldSym->lloc.filenr,
                  fieldSym->lloc.linenr, fieldSym->lloc.offset,
@@ -281,7 +293,7 @@ void updateAttr(astree* root) {
          *       
          */
          default : 
-           printf("Press F to pay respect");
+           printf("Press F to pay respect: %s\n", parser::get_tname(childNode->symbol));
       }
       updateAttr(childNode);
    }   
