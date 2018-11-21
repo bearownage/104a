@@ -17,7 +17,7 @@ enum class attr: unsigned {
        FIELD, TYPEID, PARAM, LVAL, CONST, VREG, VADDR, BITSET_SIZE,
 };
 */
-using attr_bitset = bitset<15>;
+using attr_bitset = bitset<16>;
 
 struct symbol {
    attr_bitset attributes;

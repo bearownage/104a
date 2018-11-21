@@ -18,7 +18,7 @@ struct location {
    size_t offset;
 };
 
-using attr_bitset = bitset<15>;
+using attr_bitset = bitset<16>;
 struct astree {
 
    // Fields.

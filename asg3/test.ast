@@ -16,5 +16,20 @@ ROOT "" 0.0.0
 | | BLOCK "{" 0.6.35 
 | | | VARDECL "=" 0.7.10 
 | | | | INT "int" 0.7.4 
-| | | | | DECLID "i" 0.7.8 
+| | | | | DECLID "a" 0.7.8 
 | | | | INTCON "0" 0.7.12 
+| | | VARDECL "=" 0.8.13 
+| | | | STRING "string" 0.8.4 
+| | | | | DECLID "b" 0.8.11 
+| | | | STRINGCON """" 0.8.15 
+| | | VARDECL "=" 0.9.11 
+| | | | TYPEID "node" 0.9.4 
+| | | | | DECLID "c" 0.9.9 
+| | | | NEW "new" 0.9.13 
+| | | | | CALL "(" 0.9.21 
+| | | | | | IDENT "node" 0.9.17 
+| | | VARDECL "=" 0.10.12 
+| | | | ARRAY "[]" 0.10.7 
+| | | | | INT "int" 0.10.4 
+| | | | | | DECLID "d" 0.10.10 
+| | | | INTCON "5" 0.10.14 

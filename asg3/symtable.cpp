@@ -18,7 +18,7 @@ symbol_table globaldecs;
 
 enum class attr: unsigned {
        VOID, INT, NULLX, STRING, STRUCT, ARRAY, FUNCTION, VARIABLE,
-       FIELD, TYPEID, PARAM, LVAL, CONST, VREG, VADDR, BITSET_SIZE,
+       FIELD, TYPEID, PARAM, LOCAL, LVAL, CONST, VREG, VADDR, BITSET_SIZE,
 };
 
 const string attrString(astree* node) {
@@ -60,6 +60,9 @@ const string attrString(astree* node) {
     }
     if(node->attributes[unsigned(attr::PARAM)]) {
       attrString += "param ";
+    }
+    if(node->attributes[unsigned(attr::LOCAL)]) {
+      attrString += "local ";
     }
     if(node->attributes[unsigned(attr::CONST)]) {
        attrString += "const ";
@@ -112,6 +115,9 @@ const string attrStringSym(symbol* node) {
     }
     if(node->attributes[unsigned(attr::PARAM)]) {
       attrString += "param ";
+    }
+    if(node->attributes[unsigned(attr::LOCAL)]) {
+      attrString += "local ";
     }
     if(node->attributes[unsigned(attr::CONST)]) {                                                                                                                                            
        attrString += "const ";                                                                                                                                                               
@@ -284,6 +290,29 @@ void traversal(astree* root) {
                printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", currParam->param_name->c_str(), currParam->lloc.filenr,
                currParam->lloc.linenr, currParam->lloc.offset, currParam->block_nr,
                attrStringSym(currParam).c_str(), currParam->sequence);
+            }
+            
+            astree* block = childNode -> children[2];
+            int blockCounter = 0;
+            for (astree* block : block->children) {
+            	if ( block->symbol == TOK_VARDECL ) {
+                   if ( block->children[0]->symbol == TOK_TYPEID ) {
+                      symbol* struc = findTypeid(block->children[0]->lexinfo);
+                      block->children[0]->children[0]->attributes[unsigned(attr::STRUCT)] = 1;
+                      block->children[0]->children[0]->strucname = struc->strucname;
+                   }
+       
+                   block->children[0]->children[0]->attributes[unsigned(attr::LOCAL)] = 1;
+                   symbol* dec = newSym(block->children[0]->children[0]);
+                   dec -> sequence = blockCounter;
+                   dec -> block_nr = blocknr;
+                   blockCounter++;
+                   variables->insert(std::make_pair(block->children[0]->children[0]->lexinfo, dec)); 
+                   printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", block->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
+                   dec->lloc.linenr, dec->lloc.offset, dec->block_nr,
+                   attrStringSym(dec).c_str(), dec->sequence);
+                   //printf("%s", block->children[0]->children[0]->lexinfo->c_str());    
+                } 
             }
          }
          case TOK_TYPEID :
