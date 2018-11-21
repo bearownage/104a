@@ -175,7 +175,52 @@ symbol* findTypeid(const string* strucID) {
     return temp;
 }
 
-//bool typecheck(sym* symbol);
+symbol* findVariable(const string* varID) {
+    symbol* temp = variables->find(varID)->second;
+    return temp;
+}
+
+bool typecheckMath(astree* node) {
+        // Left child is an operand and right child isn't
+        if ( node->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 && node->children[1]->attributes[unsigned(attr::VARIABLE)] == 0 )
+        {
+            symbol* temp = findVariable(node->children[0]->lexinfo);
+            if ( temp -> attributes[unsigned(attr::INT)] == 1 ) 
+            {
+                return true;
+            }
+            return false;
+        }
+        // Right operand is a variable and left one isn't
+        if ( node->children[0]->attributes[unsigned(attr::VARIABLE)] == 0 && node->children[1]->attributes[unsigned(attr::VARIABLE)] == 1 )
+        {
+            symbol* temp = findVariable(node->children[1]->lexinfo);
+            if ( temp -> attributes[unsigned(attr::INT)] == 1 )
+            {
+                return true;
+            }
+            return false;
+        }
+        //both variables
+        if ( node->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 && node->children[1]->attributes[unsigned(attr::VARIABLE)] == 1 )
+        {
+            symbol* temp = findVariable(node->children[0]->lexinfo);
+            symbol* temp2 = findVariable(node->children[1]->lexinfo);
+            if ( temp -> attributes[unsigned(attr::INT)] == 1 && temp2 -> attributes[unsigned(attr::INT)] == 1 )
+            {
+                return true;
+            }
+            return false;
+        }
+	// Just integer
+        if ( node->children[0]->attributes[unsigned(attr::INT)] != 1 || node->children[1]->attributes[unsigned(attr::INT)] != 1 ) 
+        {
+		return false;
+	}
+        return true;
+
+
+}
 
 void traversal(astree* root) {
   for (astree* childNode: root -> children) {
@@ -342,17 +387,21 @@ void traversal(astree* root) {
             break;
          case '+':
          case '-': {
-	     break;
-	     //typecheck(symbol);
+	     if (typecheckMath(childNode) )
+             {
+		break;
+             }
+             printf("Non Int operands used at: (%lu.%lu.%lu) \n", childNode->lloc.filenr, childNode->lloc.linenr, childNode->lloc.offset);
+             break;
          }
          default :
             break;
       }
       traversal(childNode);
   }
-
-
 }
+
+
 
 void updateAttr(astree* root) {
    for (astree* childNode: root -> children) {

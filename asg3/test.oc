@@ -6,8 +6,14 @@ struct node {
 node func (node head, int length) {
    int a = 0;
    string b = "";
-   node c = new node();
-   node[] d = 5;
+   //node c = new node();
+   //node[] d = 5;
+   5 + 5;
+   5 + a; 
+   a + 5; 
+   a + a;
+   a + b;
+   b + b;
 }
 
 
