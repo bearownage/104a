@@ -7,7 +7,7 @@ node func (node head, int length) {
    int a = 0;
    string b = "";
    node c = new node();
-   int[] d = 5;
+   node[] d = 5;
 }
 
 
