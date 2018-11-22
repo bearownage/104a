@@ -7,6 +7,18 @@ node func (node head, int length) {
    int a = 0;
    string b = "";
    node c = new node;
+   if ( 0 < a ) {
+      a = length;
+      c = c.link; 
+   }
+    //if ( 0 < foo ) {
+    //  a = length;
+    //}
+ 
+     else { 
+     if ( 0==0 ) a = 8;
+          else b = "foo";
+    }
 }
 
 int hi (node[] length) {

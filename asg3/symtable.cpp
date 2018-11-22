@@ -218,10 +218,40 @@ bool typecheckMath(astree* node) {
 		return false;
 	}
         return true;
-
-
 }
 
+bool typecheckExpr(astree* node) {
+     if ( node->children[0]->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 && node->children[0]->children[1]->attributes[unsigned(attr::VARIABLE)] == 0 )
+     {
+         symbol* temp = findVariable(node->children[0]->children[0]->lexinfo);
+         if ( temp -> attributes[unsigned(attr::INT)] == 1 ) {
+             return true;
+         }
+         return false;
+     }
+     if ( node->children[0]->children[0]->attributes[unsigned(attr::VARIABLE)] == 0 && node->children[0]->children[1]->attributes[unsigned(attr::VARIABLE)] == 1 )
+     {
+        symbol* temp = findVariable(node->children[0]->children[1]->lexinfo);
+        if ( temp -> attributes[unsigned(attr::INT)] == 1 ) {
+            return true;
+        }
+        return false;
+     }
+     if ( node->children[0]->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 && node->children[0]->children[1]->attributes[unsigned(attr::VARIABLE)] == 1 )
+     {
+        symbol* temp = findVariable(node->children[0]->children[0]->lexinfo);
+        symbol* temp2 = findVariable(node->children[0]->children[1]->lexinfo);
+        if ( temp -> attributes[unsigned(attr::INT)] == 1 && temp2 -> attributes[unsigned(attr::INT)] == 1 ) {
+           return true;
+        }
+        return false;
+     }
+     if ( node->children[0]->children[0]->attributes[unsigned(attr::INT)] != 1 || node->children[0]->children[1]->attributes[unsigned(attr::INT)] != 1 )
+     {
+         return false;
+     } 
+     return true;
+}
 
 void handleBlock(astree* blockNode) {
     for (astree* block : blockNode->children) {
@@ -268,6 +298,13 @@ void handleBlock(astree* blockNode) {
                 break;
             }
             case TOK_IF :
+                //printf("%s", block->children[0]->lexinfo->c_str());
+                if ( typecheckExpr(block) )
+                {
+                    handleBlock(block);
+                    break;
+                }
+                printf("Non Int operands used at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                 break;
             case TOK_CALL :
                 break;      
