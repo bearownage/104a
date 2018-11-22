@@ -182,6 +182,16 @@ symbol* findVariable(const string* varID) {
 
 bool typecheckMath(astree* node) {
         // Left child is an operand and right child isn't
+        if ( node->children[1] == nullptr ) 
+        {
+           if ( node->children[0]->attributes[unsigned(attr::INT)] != 1 )
+              {
+                return false;
+              }
+              return true;
+        }
+        else { 
+        
         if ( node->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 && node->children[1]->attributes[unsigned(attr::VARIABLE)] == 0 )
         {
             symbol* temp = findVariable(node->children[0]->lexinfo);
@@ -218,39 +228,51 @@ bool typecheckMath(astree* node) {
 		return false;
 	}
         return true;
+     }
 }
 
-bool typecheckExpr(astree* node) {
+bool typecheckExpr(astree* node) { 
+     //printf("%d", unsigned(attr::FUNCTION));
      if ( node->children[0]->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 && node->children[0]->children[1]->attributes[unsigned(attr::VARIABLE)] == 0 )
      {
          symbol* temp = findVariable(node->children[0]->children[0]->lexinfo);
-         if ( temp -> attributes[unsigned(attr::INT)] == 1 ) {
-             return true;
+         for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {  
+             if ( temp -> attributes[i] != node->children[0]->children[1]->attributes[i] ) {
+                 return false;
+             }
          }
-         return false;
+         return true;
      }
-     if ( node->children[0]->children[0]->attributes[unsigned(attr::VARIABLE)] == 0 && node->children[0]->children[1]->attributes[unsigned(attr::VARIABLE)] == 1 )
+     else if ( node->children[0]->children[0]->attributes[unsigned(attr::VARIABLE)] == 0 && node->children[0]->children[1]->attributes[unsigned(attr::VARIABLE)] == 1 )
      {
         symbol* temp = findVariable(node->children[0]->children[1]->lexinfo);
-        if ( temp -> attributes[unsigned(attr::INT)] == 1 ) {
-            return true;
+        for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
+        if ( temp -> attributes[i] != node->children[0]->children[0]->attributes[i] ) {
+             return false;
+           }
         }
-        return false;
+        return true;
      }
-     if ( node->children[0]->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 && node->children[0]->children[1]->attributes[unsigned(attr::VARIABLE)] == 1 )
+     else if ( node->children[0]->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 && node->children[0]->children[1]->attributes[unsigned(attr::VARIABLE)] == 1 )
      {
         symbol* temp = findVariable(node->children[0]->children[0]->lexinfo);
         symbol* temp2 = findVariable(node->children[0]->children[1]->lexinfo);
-        if ( temp -> attributes[unsigned(attr::INT)] == 1 && temp2 -> attributes[unsigned(attr::INT)] == 1 ) {
-           return true;
+        for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {  
+        if ( temp -> attributes[i] !=  temp2 -> attributes[i] ) {
+           return false;
+           }  
         }
-        return false;
+        return true;
      }
-     if ( node->children[0]->children[0]->attributes[unsigned(attr::INT)] != 1 || node->children[0]->children[1]->attributes[unsigned(attr::INT)] != 1 )
+     else 
      {
-         return false;
-     } 
-     return true;
+         for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) { 
+         if ( node->children[0]->children[0]->attributes[i] != node->children[0]->children[1]->attributes[i] ) { 
+             return false;
+         }
+      } 
+      return true;
+     }
 }
 
 void handleBlock(astree* blockNode) {
@@ -304,7 +326,7 @@ void handleBlock(astree* blockNode) {
                     handleBlock(block);
                     break;
                 }
-                printf("Non Int operands used at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                printf("Comparing two different types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                 break;
             case TOK_CALL :
                 break;      
@@ -542,11 +564,14 @@ void updateAttr(astree* root) {
             childNode -> attributes[unsigned(attr::CONST)] = 1;
             break;
          case TOK_STRINGCON :
-            childNode -> attributes[unsigned(attr::INT)] = 1;
+            childNode -> attributes[unsigned(attr::STRING)] = 1;
             childNode -> attributes[unsigned(attr::CONST)] = 1;
             break;
          case TOK_BLOCK :
             break;
+         case '=' :
+             childNode -> attributes[unsigned(attr::VREG)] = 1;
+             break; 
          case '+' :
          case '-' : {
              childNode -> attributes[unsigned(attr::INT)] = 1;

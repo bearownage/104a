@@ -42,9 +42,9 @@
 0  9.021  59 ';'           ;
 0 10.004 262 TOK_IF        if
 0 10.007 295 TOK_PARAM     (
-0 10.009 281 TOK_INTCON    0
+0 10.009 280 TOK_IDENT     a
 0 10.011 275 TOK_LT        <
-0 10.013 280 TOK_IDENT     a
+0 10.013 280 TOK_IDENT     b
 0 10.015  41 ')'           )
 0 10.017 123 '{'           {
 0 11.007 280 TOK_IDENT     a
@@ -66,12 +66,12 @@
 0 19.012 273 TOK_EQ        ==
 0 19.014 281 TOK_INTCON    0
 0 19.016  41 ')'           )
-0 19.018 280 TOK_IDENT     a
+0 19.018 280 TOK_IDENT     b
 0 19.020  61 '='           =
 0 19.022 281 TOK_INTCON    8
 0 19.023  59 ';'           ;
 0 20.011 263 TOK_ELSE      else
-0 20.016 280 TOK_IDENT     b
+0 20.016 280 TOK_IDENT     a
 0 20.018  61 '='           =
 0 20.020 283 TOK_STRINGCON "foo"
 0 20.025  59 ';'           ;
