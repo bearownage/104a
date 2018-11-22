@@ -48,9 +48,12 @@ astree* astree::adopt_sym (astree* child, int symbol_) {
 void astree::dump_node (FILE* outfile) {
    const char *tname = parser::get_tname (symbol);
    if (strstr (tname, "TOK_") == tname) tname += 4;
-   fprintf (outfile, "%s \"%s\" %zd.%zd.%zd %s",
+   fprintf (outfile, "%s \"%s\" (%zd.%zd.%zd) {%lu} %s",
             tname, lexinfo->c_str(), lloc.filenr, 
-            lloc.linenr, lloc.offset, attrString(this).c_str());
+            lloc.linenr, lloc.offset, block_nr, attrString(this).c_str());
+   if(boolLoc) {
+      fprintf (outfile, "(%zd.%zd.%zd) ", decLloc.filenr, decLloc.linenr, decLloc.offset);
+   }
    for (size_t child = 0; child < children.size(); ++child) {
     //  fprintf (outfile, " %p", children.at(child));
    }

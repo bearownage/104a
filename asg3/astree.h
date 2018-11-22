@@ -28,7 +28,9 @@ struct astree {
    vector<astree*> children; // children of this n-way node
 
    attr_bitset attributes;
-   size_t block_nr;
+   size_t block_nr = 0;
+   int boolLoc = 0;
+   location decLloc; 
    const string* strucname;
    const string* field;
    const string* funct;

@@ -216,7 +216,6 @@ allocation : TOK_IDENT
            | basetype '[' expr ']'                        
              { destroy ($4); $$ = $2 -> adopt_sym ($1, TOK_NEWARRAY); 
                $2 -> adopt ($3); } 
-           | call { $$ = $1; }  
            ;
 
 call       : funCall ')'                                  
