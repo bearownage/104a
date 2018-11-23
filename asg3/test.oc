@@ -7,7 +7,8 @@ node func (node head, int length) {
    int a = 0;
    string b = "";
    node c = new node;
-   if ( a < b ) {
+   int[] d = 0;
+   if ( a < "hi" ) {
       a = length;
       c = c.link; 
    }

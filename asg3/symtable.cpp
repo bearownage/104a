@@ -180,17 +180,14 @@ symbol* findVariable(const string* varID) {
     return temp;
 }
 
+bool typecheckUnop(astree* node) {
+     if ( node->children[0]->attributes[unsigned(attr::INT)] != 1 ) {
+        return false;
+     }
+     return true;
+}
+
 bool typecheckMath(astree* node) {
-        // Left child is an operand and right child isn't
-        if ( node->children[1] == nullptr ) 
-        {
-           if ( node->children[0]->attributes[unsigned(attr::INT)] != 1 )
-              {
-                return false;
-              }
-              return true;
-        }
-        else { 
         
         if ( node->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 && node->children[1]->attributes[unsigned(attr::VARIABLE)] == 0 )
         {
@@ -228,7 +225,6 @@ bool typecheckMath(astree* node) {
 		return false;
 	}
         return true;
-     }
 }
 
 bool typecheckExpr(astree* node) { 
@@ -329,7 +325,18 @@ void handleBlock(astree* blockNode) {
                 printf("Comparing two different types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                 break;
             case TOK_CALL :
-                break;      
+                break;
+            case TOK_POS :
+            case TOK_NEG :
+              //printf("%s", block->children[0]->lexinfo->c_str());
+              if ( typecheckUnop(block) ) 
+              {
+                  //printf("%s", block->children[0]->lexinfo->c_str());
+                  handleBlock(block);
+                  break;
+              } 
+              printf("Non Integer on unop expression at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+              break;       
         }
          
     }
@@ -479,7 +486,10 @@ void traversal(astree* root) {
             //childNode -> attributes[unsigned(attr::TYPEID)] = 1;
             break;
          case '+':
-         case '-': {
+         case '-': 
+         case '*':
+         case '%':
+         case '/': {
 	     if (typecheckMath(childNode) )
              {
 		break;
@@ -576,21 +586,6 @@ void updateAttr(astree* root) {
          case '-' : {
              childNode -> attributes[unsigned(attr::INT)] = 1;
              childNode -> attributes[unsigned(attr::VREG)] = 1;
-             if ( childNode -> children[1] == nullptr ) 
-             {
-             	if (childNode -> children[0] -> attributes[unsigned(attr::INT)] != 1)
-                {
-                    errprintf("Error %d.%d.%d: " "None integer arithmetic operation \n", childNode->lloc.filenr, childNode->lloc.linenr, childNode->lloc.offset);
-                    break;
-                }
-             }
-             
-             if ( childNode -> children[0] -> attributes[unsigned(attr::INT)]  == 0 && 
-                childNode -> children[1] -> attributes[unsigned(attr::INT)]  == 0 )
-             {
-                break;
-             }
-             errprintf("Error %d.%d.%d: " "None integer arithmetic operation \n", childNode->lloc.filenr, childNode->lloc.linenr, childNode->lloc.offset); 
              break; 
          }
          case '/' : 
@@ -598,13 +593,13 @@ void updateAttr(astree* root) {
          case '*' : {
             childNode -> attributes[unsigned(attr::INT)] = 1;
             childNode -> attributes[unsigned(attr::VREG)] = 1;
-            if ( childNode -> children[0] -> attributes[unsigned(attr::INT)]  == 0 && 
-                childNode -> children[1] -> attributes[unsigned(attr::INT)]  == 0 )
-            {
-		break;
-	    }
-            errprintf("Error %d.%d.%d: " "None integer arithmetic operation \n", childNode->lloc.filenr, childNode->lloc.linenr, childNode->lloc.offset);
 	    break;
+         }
+         case TOK_POS: 
+         case TOK_NEG: { 
+              childNode->attributes[unsigned(attr::INT)] = 1;
+              childNode->attributes[unsigned(attr::VREG)]=1;
+              break;
          }
          case TOK_EQ: 
          case TOK_NE: 
