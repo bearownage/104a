@@ -22,8 +22,9 @@ node func (node head, int length) {
     }
 }
 
-int hi (node[] length) {
+void hi (node[] length) {
    node[] ucsc = 10;
+   return "yes";
 }
 
 

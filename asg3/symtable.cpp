@@ -271,7 +271,7 @@ bool typecheckExpr(astree* node) {
      }
 }
 
-void handleBlock(astree* blockNode) {
+void handleBlock(astree* blockNode, astree* returnType) {
     for (astree* block : blockNode->children) {
         switch (block -> symbol) {
             case TOK_VARDECL : {
@@ -319,7 +319,7 @@ void handleBlock(astree* blockNode) {
                 //printf("%s", block->children[0]->lexinfo->c_str());
                 if ( typecheckExpr(block) )
                 {
-                    handleBlock(block);
+                    handleBlock(block, returnType);
                     break;
                 }
                 printf("Comparing two different types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
@@ -327,16 +327,37 @@ void handleBlock(astree* blockNode) {
             case TOK_CALL :
                 break;
             case TOK_POS :
-            case TOK_NEG :
+            case TOK_NEG : {
               //printf("%s", block->children[0]->lexinfo->c_str());
               if ( typecheckUnop(block) ) 
               {
                   //printf("%s", block->children[0]->lexinfo->c_str());
-                  handleBlock(block);
+                  handleBlock(block, returnType);
                   break;
               } 
               printf("Non Integer on unop expression at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
               break;       
+           }
+           case TOK_RETURN : 
+                //printf("%s", returnType->lexinfo->c_str());
+                if ( returnType->attributes[unsigned(attr::VOID)] == 1 ) 
+                {
+                    //handleBlock(block, returnType);
+                    printf("Return type in void function at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                    handleBlock(block, returnType);
+                    break;
+                }
+                
+                for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) { 
+                    if (returnType->attributes[i] != block->children[0]->attributes[i] ) 
+                    {
+                    	printf("Not compatible return types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.filenr, block->lloc.offset);
+                        handleBlock(block, returnType);
+                        break;
+                    }
+                }
+                handleBlock(block, returnType);
+                break;
         }
          
     }
@@ -477,7 +498,8 @@ void traversal(astree* root) {
             }
             
             astree* block = childNode -> children[2];
-            handleBlock(block);
+            astree* returnType = childNode->children[0]->children[0];
+            handleBlock(block, returnType);
             printf("\n");
             break;
          }  
