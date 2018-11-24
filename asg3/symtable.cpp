@@ -338,7 +338,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
               printf("Non Integer on unop expression at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
               break;       
            }
-           case TOK_RETURN : 
+           case TOK_RETURN : { 
                 //printf("%s", returnType->lexinfo->c_str());
                 if ( returnType->attributes[unsigned(attr::VOID)] == 1 ) 
                 {
@@ -357,6 +357,24 @@ void handleBlock(astree* blockNode, astree* returnType) {
                     }
                 }
                 handleBlock(block, returnType);
+                break;
+            }
+            case '=':
+		if ( block->children[1]->attributes[unsigned(attr::NULLX)] == 1 ) 
+                {
+                    handleBlock(block, returnType);
+                    break;
+                }
+                
+                symbol* temp = findVariable(block->children[0]->lexinfo);
+                for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
+                   if (temp->attributes[i] != block->children[1]->attributes[i] ) {
+                      printf("Not compatible assigment to variable at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.filenr, block->lloc.offset);
+                      handleBlock(block, returnType);
+                      break;
+                    }
+                }
+                handleBlock(block, returnType);                
                 break;
         }
          

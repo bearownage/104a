@@ -8,6 +8,7 @@ node func (node head, int length) {
    string b = "";
    node c = new node;
    int[] d = 0;
+   a = "yes";
    if ( a < "hi" ) {
       a = length;
       c = c.link; 
