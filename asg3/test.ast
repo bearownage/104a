@@ -5,26 +5,33 @@ ROOT "" (0.0.0) {0}
 | | | FIELD "foo" (0.2.8) {0} 
 | | TYPEID "node" (0.3.4) {0} 
 | | | FIELD "link" (0.3.9) {0} 
-| FUNCTION "" (0.8.1) {0} 
-| | TYPEID "node" (0.8.1) {0} 
-| | | DECLID "func" (0.8.6) {0} 
-| | PARAM "(" (0.8.11) {0} 
-| | | TYPEID "node" (0.8.12) {0} 
-| | | | DECLID "head" (0.8.17) {0} 
-| | | INT "int" (0.8.23) {0} 
-| | | | DECLID "length" (0.8.27) {0} 
-| | BLOCK "{" (0.8.35) {0} 
-| | | ARROW "->" (0.9.8) {0} 
-| | | | DECLID "node" (0.9.4) {0} 
-| | | | FIELD "foo" (0.9.10) {0} 
-| | | VARDECL "=" (0.10.10) {0} 
-| | | | INT "int" (0.10.4) {0} 
-| | | | | DECLID "a" (0.10.8) {0} 
-| | | | STRINGCON ""yes"" (0.10.12) {0} 
-| | | VARDECL "=" (0.11.13) {0} 
-| | | | STRING "string" (0.11.4) {0} 
-| | | | | DECLID "b" (0.11.11) {0} 
-| | | | STRINGCON """" (0.11.15) {0} 
+| | STRING "string" (0.4.4) {0} 
+| | | FIELD "bar" (0.4.11) {0} 
+| FUNCTION "" (0.7.1) {0} 
+| | TYPEID "node" (0.7.1) {0} 
+| | | DECLID "func" (0.7.6) {0} 
+| | PARAM "(" (0.7.11) {0} 
+| | | TYPEID "node" (0.7.12) {0} 
+| | | | DECLID "head" (0.7.17) {0} 
+| | | INT "int" (0.7.23) {0} 
+| | | | DECLID "length" (0.7.27) {0} 
+| | BLOCK "{" (0.7.35) {0} 
+| | | VARDECL "=" (0.8.10) {0} 
+| | | | INT "int" (0.8.4) {0} 
+| | | | | DECLID "a" (0.8.8) {0} 
+| | | | INTCON "0" (0.8.12) {0} 
+| | | '=' "=" (0.9.6) {0} 
+| | | | DECLID "a" (0.9.4) {0} 
+| | | | ARROW "->" (0.9.12) {0} 
+| | | | | DECLID "node" (0.9.8) {0} 
+| | | | | FIELD "bar" (0.9.14) {0} 
+| | | VARDECL "=" (0.10.13) {0} 
+| | | | STRING "string" (0.10.4) {0} 
+| | | | | DECLID "b" (0.10.11) {0} 
+| | | | STRINGCON """" (0.10.15) {0} 
+| | | INDEX "[" (0.11.5) {0} 
+| | | | DECLID "b" (0.11.4) {0} 
+| | | | INTCON "5" (0.11.6) {0} 
 | | | VARDECL "=" (0.12.11) {0} 
 | | | | TYPEID "node" (0.12.4) {0} 
 | | | | | DECLID "c" (0.12.9) {0} 

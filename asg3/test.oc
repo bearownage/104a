@@ -1,14 +1,14 @@
 struct node {
    int foo;
    node link;
+   string bar;
 }
 
-//int func();
-
 node func (node head, int length) {
-   node->foo;
-   int a = "yes";
+   int a = 0;
+   a = node->bar;
    string b = "";
+   b[5];
    node c = new node;
    int[] d = 0;
    b = "yes";
