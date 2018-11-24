@@ -3,7 +3,10 @@ struct node {
    node link;
 }
 
+//int func();
+
 node func (node head, int length) {
+   node->foo;
    int a = "yes";
    string b = "";
    node c = new node;
