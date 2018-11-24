@@ -4,11 +4,12 @@ struct node {
 }
 
 node func (node head, int length) {
-   int a = 0;
-   string b = null;
+   int a = "yes";
+   string b = "";
    node c = new node;
    int[] d = 0;
-   a = "yes";
+   b = "yes";
+   func(yus, yus);
    if ( a < "hi" ) {
       a = length;
       c = c.link; 
