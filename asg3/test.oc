@@ -5,7 +5,7 @@ struct node {
 
 node func (node head, int length) {
    int a = 0;
-   string b = "";
+   string b = null;
    node c = new node;
    int[] d = 0;
    a = "yes";

@@ -372,8 +372,12 @@ void handleBlock(astree* blockNode, astree* returnType) {
                       printf("Not compatible assigment to variable at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.filenr, block->lloc.offset);
                       handleBlock(block, returnType);
                       break;
-                    }
+                   }
+                   if (temp->attributes[i] == 1 && block->children[1]->attributes[i] == 1 ) { 
+                      block->attributes[i] = 1;
+                     }
                 }
+                
                 handleBlock(block, returnType);                
                 break;
         }
@@ -582,7 +586,7 @@ void updateAttr(astree* root) {
             break;
          case TOK_NULL : 
             childNode -> attributes[unsigned(attr::NULLX)] = 1;
-            childNode -> children[0] -> attributes[unsigned(attr::CONST)] = 1;
+            childNode -> attributes[unsigned(attr::CONST)] = 1;
             break;
          case TOK_STRING : 
             childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;

@@ -32,8 +32,8 @@
 0  8.004 261 TOK_STRING    string
 0  8.011 280 TOK_IDENT     b
 0  8.013  61 '='           =
-0  8.015 283 TOK_STRINGCON ""
-0  8.017  59 ';'           ;
+0  8.015 267 TOK_NULL      null
+0  8.019  59 ';'           ;
 0  9.004 280 TOK_IDENT     node
 0  9.009 280 TOK_IDENT     c
 0  9.011  61 '='           =
