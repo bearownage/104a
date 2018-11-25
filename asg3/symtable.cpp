@@ -287,6 +287,72 @@ void checkVarDecl(astree* block)  {
       return;
 }
 
+void checkArrow(astree* block) {
+    if ( findTypeid(block->children[0]->lexinfo) == NULL ) {
+         printf("Non existent structure");
+         return;
+      }
+      symbol* temp = findTypeid(block->children[0]->lexinfo);
+      if ( temp->attributes[unsigned(attr::STRUCT)] == 1 ){
+        symbol* lookup = temp->fields->find(block->children[1]->lexinfo)->second;
+        for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
+           if ( lookup->attributes[i] == 1 ) {
+                    block->attributes[i] = 1;
+           }
+        }
+        block->attributes[unsigned(attr::VADDR)] = 1;
+        block->attributes[unsigned(attr::LVAL)]  = 1;
+        return;
+        }
+        printf("Improper use of field selector at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+        return;
+}
+
+void checkIndex(astree* block) {
+                   symbol* temp = findVariable(block->children[0]->lexinfo);
+                   if ( temp->attributes[unsigned(attr::STRING)] == 1 ) {
+
+                       block->attributes[unsigned(attr::INT)] = 1;
+                       block->attributes[unsigned(attr::VADDR)] = 1;
+                       block->attributes[unsigned(attr::LVAL)] = 1;
+                       return;
+                   }
+                   for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++ i ) {
+                       if ( temp->attributes[i] == 1 ) {
+                           block->attributes[i] = 1;
+                       }
+                   }
+                   block->attributes[unsigned(attr::VADDR)] = 1;
+                   block->attributes[unsigned(attr::LVAL)] = 1;
+                   return;
+}
+
+
+void checkIndexArrow(astree* block) {
+      symbol* temp = findTypeid(block->children[0]->children[0]->lexinfo);
+      if ( temp->attributes[unsigned(attr::STRUCT)] == 1 ){
+        symbol* lookup = temp->fields->find(block->children[0]->children[1]->lexinfo)->second;
+        if ( lookup ->attributes[unsigned(attr::STRING)] == 1 ) { 
+              block->attributes[unsigned(attr::INT)] = 1;
+                       block->attributes[unsigned(attr::VADDR)] = 1;
+                       block->attributes[unsigned(attr::LVAL)] = 1;
+                       return;
+        }
+        for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
+           if ( lookup->attributes[i] == 1 ) {
+                    block->attributes[i] = 1;
+           }
+        }
+        block->attributes[unsigned(attr::VADDR)] = 1;
+        return;
+        }
+        printf("Improper use of field selector at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+        return;
+}
+
+
+
+
 void handleBlock(astree* blockNode, astree* returnType) {
     for (astree* block : blockNode->children) {
         switch (block -> symbol) {
@@ -356,15 +422,29 @@ void handleBlock(astree* blockNode, astree* returnType) {
               break;       
            }
            case TOK_RETURN : { 
-                //printf("%s", returnType->lexinfo->c_str());
-                if ( returnType->attributes[unsigned(attr::VOID)] == 1 ) 
+                //printf("%s", block->children[0]->lexinfo->c_str());
+                
+                if ( block->children[0]->symbol == TOK_ARROW ) {
+                     printf("hi again");
+                     //checkArrow(block->children[0]);
+                     //handleBlock(block, returnType);
+                     break;
+                } 
+                if ( block->children[0]->children[0]->symbol == TOK_ARROW ) { 
+                     printf("hi");
+                     //checkArrow(block->children[0]->children[0]);
+                     //handleBlock(block, returnType);
+                     break;
+                }
+                
+
+                if ( returnType->attributes[unsigned(attr::VOID)] == 1 )
                 {
-                    //handleBlock(block, returnType);
                     printf("Return type in void function at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                     handleBlock(block, returnType);
                     break;
                 }
-                
+
                 for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) { 
                     if (returnType->attributes[i] != block->children[0]->attributes[i] ) 
                     {
@@ -377,6 +457,36 @@ void handleBlock(astree* blockNode, astree* returnType) {
                 break;
             }
             case '=' : {
+                if ( block->children[0]->symbol == TOK_INDEX ) {
+                   if ( block->children[0]->children[0]->symbol == TOK_ARROW) {
+                        //checkIndex(block->children[0]);
+                        checkIndexArrow(block->children[0]);
+                        checkArrow(block->children[0]->children[0]);
+                        checkArrow(block->children[0]->children[1]);
+                        for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
+                           if ( block->children[0]->children[0]->attributes[i] == 1 ) {
+                              block->attributes[i] = 1;
+                           }
+                        } 
+                        //handleBlock(block, returnType);
+                        break;
+                    } 
+                    else {
+                    checkIndex(block->children[0]);
+                    handleBlock(block, returnType);
+                    break;
+                    }
+                }
+                if ( block->children[0]->symbol == TOK_ARROW ) { 
+                     checkArrow(block->children[0]);
+                     for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
+                           if ( block->children[0]->attributes[i] == 1 ) {
+                              block->attributes[i] = 1;
+                           }
+                        }
+                     handleBlock(block, returnType);
+                     break;
+                }
 		if ( block->children[1]->attributes[unsigned(attr::NULLX)] == 1 ) 
                 {
                     block->attributes[unsigned(attr::NULLX)] = 1;
@@ -401,51 +511,21 @@ void handleBlock(astree* blockNode, astree* returnType) {
                 break;
              }
              case TOK_ARROW : {
-                  // ADD SEGFAULT HANDLING
-                  if ( findTypeid(block->children[0]->lexinfo) == NULL ) {
-                       printf("Non existent structure");
-                       handleBlock(block, returnType);
-                  } 
-                  symbol* temp = findTypeid(block->children[0]->lexinfo);
-                  if ( temp->attributes[unsigned(attr::STRUCT)] == 1 ){ 
-                     //printf("lift off");
-                     symbol* lookup = temp->fields->find(block->children[1]->lexinfo)->second; 
-                     // Add segfault handling
-                     for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) { 
-                         if ( lookup->attributes[i] == 1 ) {
-                             block->attributes[i] = 1;
-                         }
-                     }
-                     block->attributes[unsigned(attr::VADDR)] = 1;
-                     block->attributes[unsigned(attr::LVAL)]  = 1;
-                     handleBlock(block, returnType);
-                     break;
-                  }
-                  printf("Improper use of field selector at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                  checkArrow(block);
                   handleBlock(block, returnType);
                   break;
-               } 
+              } 
               case TOK_INDEX : {
-                   symbol* temp = findVariable(block->children[0]->lexinfo);
-                   //printf("%lu", temp->attributes[unsigned(attr::STRING)].to_string());
-                   if ( temp->attributes[unsigned(attr::STRING)] == 1 ) {
-                  
-                       block->attributes[unsigned(attr::INT)] = 1;
-                       block->attributes[unsigned(attr::VADDR)] = 1; 
-                       block->attributes[unsigned(attr::LVAL)] = 1;
-                       handleBlock(block, returnType);
-                       break;
-                   }
-                   for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++ i ) { 
-                       if ( temp->attributes[i] == 1 ) { 
-                           block->attributes[i] = 1;
-                       }
-                   }
-                   block->attributes[unsigned(attr::VADDR)] = 1;
-                   block->attributes[unsigned(attr::LVAL)] = 1;
-                   handleBlock(block, returnType); 
-		   break;
+                   checkIndex(block);
+                   handleBlock(block, returnType);
+                   break;
+             }
+              case TOK_IDENT : { 
+                  symbol* temp = findVariable(block->children[0]->lexinfo);
+                  break;
               }
+              case TOK_NEW : 
+                   break;
         }
          
     }
@@ -723,6 +803,12 @@ void updateAttr(astree* root) {
          }
          case TOK_ARROW : 
               childNode -> children[0] -> attributes[unsigned(attr::LVAL)] = 1;
+              break;
+         case TOK_NEW : 
+              break;
+         case TOK_NEWARRAY : 
+              childNode -> attributes[unsigned(attr::VREG)] = 1;
+              childNode -> attributes[unsigned(attr::ARRAY)] = 1;
               break;
          default : 
            printf("Press F to pay respect: %s\n", parser::get_tname(childNode->symbol));

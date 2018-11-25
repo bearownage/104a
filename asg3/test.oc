@@ -1,16 +1,22 @@
+#include "oclib.h"
+
+
 struct node {
    int foo;
    node link;
    string bar;
+   string[] data;
 }
 
 node func (node head, int length) {
    int a = 0;
    a = node->bar;
    string b = "";
-   b[5];
+   //node->data = new string[foo];
    node c = new node;
    int[] d = 0;
+   node->foo;
+   d[5] = 5;
    b = "yes";
    func(yus, yus);
    if ( a < "hi" ) {
@@ -27,7 +33,7 @@ node func (node head, int length) {
     }
 }
 
-void hi (node[] length) {
+bool hi (node[] length) {
    node[] ucsc = 10;
    return "yes";
 }
