@@ -407,6 +407,8 @@ void handleBlock(astree* blockNode, astree* returnType) {
                 }
                 printf("Comparing two different types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                 break;
+            case TOK_WHILE : {
+                break; }
             case TOK_CALL :
                 break;
             case TOK_POS :
@@ -679,6 +681,7 @@ void traversal(astree* root) {
                printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", currParam->param_name->c_str(), currParam->lloc.filenr,
                currParam->lloc.linenr, currParam->lloc.offset, currParam->block_nr,
                attrStringSym(currParam).c_str(), currParam->sequence);
+               variables->insert(std::make_pair(currParam->param_name, currParam));
             }
             
             astree* block = childNode -> children[2];
