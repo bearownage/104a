@@ -426,16 +426,16 @@ void handleBlock(astree* blockNode, astree* returnType) {
                 
                 if ( block->children[0]->symbol == TOK_ARROW ) {
                      printf("hi again");
-                     //checkArrow(block->children[0]);
-                     //handleBlock(block, returnType);
+                     checkArrow(block->children[0]);
+                     handleBlock(block, returnType);
                      break;
-                } 
+                }/* 
                 if ( block->children[0]->children[0]->symbol == TOK_ARROW ) { 
                      printf("hi");
                      //checkArrow(block->children[0]->children[0]);
                      //handleBlock(block, returnType);
                      break;
-                }
+                }*/
                 
 
                 if ( returnType->attributes[unsigned(attr::VOID)] == 1 )
