@@ -37,7 +37,7 @@ const string attrString(astree* node) {
     }
     if(node->attributes[unsigned(attr::STRUCT)]) {
        attrString += "struct ";
-       attrString += node->strucname -> c_str();
+       if(node->strucname != nullptr) {attrString += node->strucname -> c_str();}
        attrString += " ";
     }
     if(node->attributes[unsigned(attr::ARRAY)]) {
@@ -288,6 +288,34 @@ void checkVarDecl(astree* block)  {
 }
 
 void checkArrow(astree* block) {
+    if( block->children[0]->symbol == TOK_ARROW ) {
+       // handle double -> here
+       return;
+    }
+    symbol* temp = findVariable(block->children[0]->lexinfo);
+    const string* lookupName = temp->strucname;
+    //printf("LOOKUP NAME: %s\n", lookupName->c_str());
+    if( findTypeid(lookupName) == NULL ) {
+       fprintf(stderr, "Nonexistent structure referenced");
+       return;
+    }
+    symbol* tempStruct = findTypeid(lookupName);
+    symbol* fieldSym = tempStruct->fields->find(block->children[1]->lexinfo)->second;
+    //printf("%s\n", attrStringSym(fieldSym).c_str());
+    for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
+       if ( fieldSym->attributes[i] == 1 ) {
+          block->attributes[i] = 1;
+       }
+    }
+    block->children[0]->attributes[unsigned(attr::STRUCT)] = 1;
+    block->children[0]->strucname = lookupName;
+    block->attributes[unsigned(attr::STRUCT)] = 0;
+    block->attributes[unsigned(attr::VADDR)] = 1;                                                                                               
+    block->attributes[unsigned(attr::LVAL)]  = 1;
+    return;      
+}
+/*
+void checkArrow(astree* block) {
     if ( findTypeid(block->children[0]->lexinfo) == NULL ) {
          printf("Non existent structure");
          return;
@@ -300,6 +328,7 @@ void checkArrow(astree* block) {
                     block->attributes[i] = 1;
            }
         }
+        
         block->attributes[unsigned(attr::VADDR)] = 1;
         block->attributes[unsigned(attr::LVAL)]  = 1;
         return;
@@ -307,7 +336,7 @@ void checkArrow(astree* block) {
         printf("Improper use of field selector at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
         return;
 }
-
+*/
 void checkIndex(astree* block) {
                    symbol* temp = findVariable(block->children[0]->lexinfo);
                    if ( temp->attributes[unsigned(attr::STRING)] == 1 ) {
@@ -396,6 +425,9 @@ void handleBlock(astree* blockNode, astree* returnType) {
                     dec->lloc.linenr, dec->lloc.offset, dec->block_nr,
                     attrStringSym(dec).c_str(), dec->sequence);
                 }
+                if ( block->children[1]->symbol == TOK_ARROW ) {
+                    checkArrow(block->children[1]);
+                }
                 break;
             }
             case TOK_IF :
@@ -426,7 +458,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
            case TOK_RETURN : { 
                 //printf("%s", block->children[0]->lexinfo->c_str());
                 
-                if ( block->children[0]->symbol == TOK_ARROW ) {
+                if ( block->children.size() > 0 && block->children[0]->symbol == TOK_ARROW ) {
                      printf("hi again");
                      checkArrow(block->children[0]);
                      handleBlock(block, returnType);
@@ -756,7 +788,7 @@ void updateAttr(astree* root) {
             childNode -> attributes[unsigned(attr::CONST)] = 1;
             break;
          case TOK_STRING : 
-            //childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;
+            if(childNode->children.size() > 0) { childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1; }
             break;
          case TOK_PARAM : {
             for (astree* parameters : childNode -> children) {
