@@ -487,6 +487,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                      handleBlock(block, returnType);
                      break;
                 }
+                /*
 		if ( block->children[1]->attributes[unsigned(attr::NULLX)] == 1 ) 
                 {
                     block->attributes[unsigned(attr::NULLX)] = 1;
@@ -506,7 +507,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                        block->attributes[i] = 1;
                    }
                 } 
-                
+                */
                 handleBlock(block, returnType);                
                 break;
              }
@@ -735,7 +736,7 @@ void updateAttr(astree* root) {
             childNode -> attributes[unsigned(attr::CONST)] = 1;
             break;
          case TOK_STRING : 
-            childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;
+            //childNode -> children[0] -> attributes[unsigned(attr::STRING)] = 1;
             break;
          case TOK_PARAM : {
             for (astree* parameters : childNode -> children) {
