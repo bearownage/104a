@@ -1,13 +1,27 @@
 #include "oclib.h"
 
-#define EMPTY (-1)
-
-struct stack {
-   string[] data;
-   int size;
-   int top;
+int dot_product (int size, int[] vec1, int[] vec2) {
+   int index = 0;
+   int dot = 0;
+   while (index < size) {
+      dot = dot + vec1[index] * vec2[index];
+      index = index + 1;
+   }
+   return dot;
 }
 
-stack new_stack (int size) {
-   stack->data = new string[10];
-}
+#define SIZE 10
+
+int main() {
+   int[] vec1 = new int[SIZE];
+   //int[] vec2 = new int[SIZE];
+   //int i = 0;
+   //while (i < SIZE) {
+     // vec1[i] = i + 10;
+     // vec2[i] = i * 10;
+     // i = i + 1;
+   //}
+   //putint (dot_product (SIZE, vec1, vec2));
+   //putchar ('\n');
+   //return 0;
+} 

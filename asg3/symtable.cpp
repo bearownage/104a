@@ -444,6 +444,21 @@ void handleBlock(astree* blockNode, astree* returnType) {
                     handleBlock(block, returnType);
                     break;
                 }
+ 
+                if ( block->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 )
+               {
+                  symbol* temp = findVariable(block->children[0]->lexinfo);
+                  for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
+                      if (returnType->attributes[i] != temp->attributes[i] ) {
+
+                             printf("Not compatible return types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                             handleBlock(block, returnType);
+                             break;
+                          }
+                  }
+                  handleBlock(block, returnType);
+                  break;
+                }
 
                 for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) { 
                     if (returnType->attributes[i] != block->children[0]->attributes[i] ) 
@@ -487,7 +502,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                      handleBlock(block, returnType);
                      break;
                 }
-                /*
+                
 		if ( block->children[1]->attributes[unsigned(attr::NULLX)] == 1 ) 
                 {
                     block->attributes[unsigned(attr::NULLX)] = 1;
@@ -507,7 +522,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                        block->attributes[i] = 1;
                    }
                 } 
-                */
+                
                 handleBlock(block, returnType);                
                 break;
              }
@@ -728,8 +743,10 @@ void updateAttr(astree* root) {
          case TOK_VOID :
             childNode -> children[0] -> attributes[unsigned(attr::VOID)] = 1; 
             break;
-         case TOK_INT : 
-            childNode -> children[0] -> attributes[unsigned(attr::INT)] = 1;
+         case TOK_INT :
+            if(childNode->children.size() > 0) { 
+               childNode -> children[0] -> attributes[unsigned(attr::INT)] = 1;
+            }
             break;
          case TOK_NULL : 
             childNode -> attributes[unsigned(attr::NULLX)] = 1;
