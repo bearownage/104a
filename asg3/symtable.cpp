@@ -14,7 +14,7 @@ int next_block = 1;
 
 symbol_table* types = new symbol_table;
 symbol_table* variables = new symbol_table;
-symbol_table globaldecs;
+symbol_table* globaldecs = new symbol_table;
 
 enum class attr: unsigned {
        VOID, INT, NULLX, STRING, STRUCT, ARRAY, FUNCTION, VARIABLE,
@@ -171,12 +171,22 @@ void addStruct(symbol* currStruc, const string* strucID, const string* id, astre
 }
 
 symbol* findTypeid(const string* strucID) {
-    symbol* temp = types->find(strucID)->second;
+    symbol* temp;
+    if(types->find(strucID) == types->end()) {
+        temp = nullptr;
+        return temp;
+    }
+    temp = types->find(strucID)->second;
     return temp;
 }
 
 symbol* findVariable(const string* varID) {
-    symbol* temp = variables->find(varID)->second;
+    symbol* temp;
+    if(variables->find(varID) == variables->end()) {
+        temp = nullptr;
+        return temp;
+    }
+    temp = variables->find(varID)->second;
     return temp;
 }
 
@@ -274,13 +284,18 @@ bool typecheckExpr(astree* node) {
 }
 
 void checkVarDecl(astree* block)  {
+        if (block->children[0]->symbol == TOK_VOID) {
+          fprintf(stderr, "Variable of type void at : (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+          return;
+      }
       if ( block->children[1]->attributes[unsigned(attr::NULLX)] == 1)
       {
           return;
       }
+      
       for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i) {
            if (block->children[0]->children[0]->attributes[i] != block->children[1]->attributes[i] ) {
-               printf("Not compatible variable declaration at : (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+               fprintf(stderr, "Incompatible variable declaration at : (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                return;
             }
       }
@@ -293,9 +308,15 @@ void checkArrow(astree* block) {
        return;
     }
     symbol* temp = findVariable(block->children[0]->lexinfo);
+    if(temp == nullptr) {
+        fprintf(stderr, "Variable reference at (%lu.%lu.%lu) was not found.\n", 
+        block->children[0]->lloc.filenr, block->children[0]->lloc.linenr, 
+        block->children[0]->lloc.offset);
+        return;
+    }
     const string* lookupName = temp->strucname;
     //printf("LOOKUP NAME: %s\n", lookupName->c_str());
-    if( findTypeid(lookupName) == NULL ) {
+    if( findTypeid(lookupName) == nullptr ) {
        fprintf(stderr, "Nonexistent structure referenced");
        return;
     }
@@ -314,29 +335,7 @@ void checkArrow(astree* block) {
     block->attributes[unsigned(attr::LVAL)]  = 1;
     return;      
 }
-/*
-void checkArrow(astree* block) {
-    if ( findTypeid(block->children[0]->lexinfo) == NULL ) {
-         printf("Non existent structure");
-         return;
-      }
-      symbol* temp = findTypeid(block->children[0]->lexinfo);
-      if ( temp->attributes[unsigned(attr::STRUCT)] == 1 ){
-        symbol* lookup = temp->fields->find(block->children[1]->lexinfo)->second;
-        for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
-           if ( lookup->attributes[i] == 1 ) {
-                    block->attributes[i] = 1;
-           }
-        }
-        
-        block->attributes[unsigned(attr::VADDR)] = 1;
-        block->attributes[unsigned(attr::LVAL)]  = 1;
-        return;
-        }
-        printf("Improper use of field selector at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
-        return;
-}
-*/
+
 void checkIndex(astree* block) {
                    symbol* temp = findVariable(block->children[0]->lexinfo);
                    if ( temp->attributes[unsigned(attr::STRING)] == 1 ) {
@@ -410,6 +409,12 @@ void handleBlock(astree* blockNode, astree* returnType) {
                 else {
                     if ( block->children[0]->symbol == TOK_TYPEID ) {
                         symbol* struc = findTypeid(block->children[0]->lexinfo);
+                        if(struc == nullptr) {
+                            fprintf(stderr, "Struct reference at (%lu.%lu.%lu) was not found.\n", 
+                            block->children[0]->lloc.filenr, block->children[0]->lloc.linenr, 
+                            block->children[0]->lloc.offset);
+                            break;
+                        }
                         block->children[0]->children[0]->attributes[unsigned(attr::STRUCT)] = 1;
                         block->children[0]->children[0]->strucname = struc->strucname;
                     }
@@ -485,7 +490,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                   for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
                       if (returnType->attributes[i] != temp->attributes[i] ) {
 
-                             printf("Not compatible return types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                             printf("Incompatible return types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                              handleBlock(block, returnType);
                              break;
                           }
@@ -497,7 +502,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                 for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) { 
                     if (returnType->attributes[i] != block->children[0]->attributes[i] ) 
                     {
-                    	printf("Not compatible return types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                    	printf("Incompatible return types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                         handleBlock(block, returnType);
                         break;
                     }
@@ -545,9 +550,15 @@ void handleBlock(astree* blockNode, astree* returnType) {
                 }
                 
                 symbol* temp = findVariable(block->children[0]->lexinfo);
+                if (temp == nullptr) {
+                    fprintf(stderr, "Variable reference at (%lu.%lu.%lu) was not found.\n", 
+                    block->children[0]->lloc.filenr, block->children[0]->lloc.linenr, 
+                    block->children[0]->lloc.offset);
+                    return;
+                }
                 for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
                    if (temp->attributes[i] != block->children[1]->attributes[i] ) {
-                      printf("Not compatible assigment to variable at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                      printf("Incompatible assigment to variable at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                       handleBlock(block, returnType);
                       break;
                    }
@@ -642,6 +653,7 @@ void traversal(astree* root) {
             break;
          }
          case TOK_FUNCTION : {
+            variables->clear();
             symbol* sym = newSym(childNode);
             sym -> attributes = childNode->children[0]->children[0]->attributes;
             sym -> funcname = childNode->children[0]->children[0]->lexinfo;
@@ -661,7 +673,7 @@ void traversal(astree* root) {
             }
             sym->attributes[unsigned(attr::VARIABLE)] = 0;
             childNode->children[0]->children[0]->attributes = sym->attributes;
-            variables->insert(std::make_pair(sym->funcname, sym));
+            globaldecs->insert(std::make_pair(sym->funcname, sym));
             printf("%s (%lu.%lu.%lu) {%lu} %s\n", sym->funcname->c_str(), sym->lloc.filenr,
             sym->lloc.linenr, sym->lloc.offset, sym->block_nr,
             attrStringSym(sym).c_str());
@@ -722,7 +734,56 @@ void traversal(astree* root) {
             printf("\n");
             break;
          }  
+         case TOK_VARDECL : {
+                checkVarDecl(childNode);
+                
+                int blockCounter = 0;
+                if ( childNode->children[0]->symbol == TOK_ARRAY ) {
+                    if ( childNode->children[0]->children[0]->symbol == TOK_TYPEID ) {
+                        symbol* struc = findTypeid(childNode->children[0]->children[0]->lexinfo);
+                        if(struc == nullptr) {
+                            fprintf(stderr, "Struct reference at (%lu.%lu.%lu) was not found.\n", 
+                            childNode->children[0]->children[0]->lloc.filenr, childNode->children[0]->children[0]->lloc.linenr, 
+                            childNode->children[0]->children[0]->lloc.offset);
+                            break;
+                        }
+                        childNode->children[0]->children[0]->children[0]->attributes[unsigned(attr::STRUCT)] = 1;
+                        childNode->children[0]->children[0]->children[0]->strucname = struc->strucname;
+                    }
+                    childNode->children[0]->children[0]->children[0]->boolLoc = 1;
+                    childNode->children[0]->children[0]->children[0]->decLloc = childNode->children[0]->children[0]->lloc;
+                    symbol* dec = newSym(childNode->children[0]->children[0]->children[0]);
+                    dec -> sequence = blockCounter;
+                    dec -> block_nr = blocknr;
+                    globaldecs->insert(std::make_pair(childNode->children[0]->children[0]->children[0]->lexinfo, dec));
+                    printf("%s (%lu.%lu.%lu) {%lu} %s %lu\n", childNode->children[0]->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
+                    dec->lloc.linenr, dec->lloc.offset, dec->block_nr,
+                    attrStringSym(dec).c_str(), dec->sequence);
 
+                }
+                else {
+                    if ( childNode->children[0]->symbol == TOK_TYPEID ) {
+                        symbol* struc = findTypeid(childNode->children[0]->lexinfo);
+                        childNode->children[0]->children[0]->attributes[unsigned(attr::STRUCT)] = 1;
+                        childNode->children[0]->children[0]->strucname = struc->strucname;
+                    }
+                    childNode->children[0]->children[0]->boolLoc = 1;
+                    childNode->children[0]->children[0]->decLloc = childNode->children[0]->lloc;
+                    symbol* dec = newSym(childNode->children[0]->children[0]);
+                    dec -> sequence = blockCounter;
+                    dec -> block_nr = blocknr;
+                    globaldecs->insert(std::make_pair(childNode->children[0]->children[0]->lexinfo, dec));
+                    printf("%s (%lu.%lu.%lu) {%lu} %s %lu\n", childNode->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
+                    dec->lloc.linenr, dec->lloc.offset, dec->block_nr,
+                    attrStringSym(dec).c_str(), dec->sequence);
+                    childNode->children[0]->children[0]->attributes[unsigned(attr::LOCAL)] = 0;
+                }
+                if ( childNode->children[1]->symbol == TOK_ARROW ) {
+                    checkArrow(childNode->children[1]);
+                }
+                printf("\n");
+                break;
+         }
          case TOK_TYPEID :
             //childNode -> attributes[unsigned(attr::TYPEID)] = 1;
             break;
@@ -741,7 +802,7 @@ void traversal(astree* root) {
          default :
             break;
       }
-      traversal(childNode);
+      //traversal(childNode);
   }
 }
 
@@ -810,6 +871,12 @@ void updateAttr(astree* root) {
          case TOK_IDENT : 
             break;
          case TOK_ARRAY : 
+            if(childNode->children[0]->symbol == TOK_VOID) {
+                fprintf(stderr, "Cannot have an array of type void. (%lu.%lu.%lu)\n", 
+                childNode->children[0]->lloc.filenr, childNode->children[0]->lloc.linenr, 
+                childNode->children[0]->lloc.offset);
+                return;
+            }
             childNode -> children[0] -> children[0] -> attributes[unsigned(attr::ARRAY)] = 1;
             break;
          case TOK_INTCON:
@@ -863,6 +930,8 @@ void updateAttr(astree* root) {
               childNode -> attributes[unsigned(attr::VREG)] = 1;
               childNode -> attributes[unsigned(attr::ARRAY)] = 1;
               break;
+        case TOK_RETURN :
+            break;
          default : 
            printf("Press F to pay respect: %s\n", parser::get_tname(childNode->symbol));
       }
