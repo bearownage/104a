@@ -1,0 +1,41 @@
+# 1 "unstring.oc"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h"
+# 1 "<command-line>"
+# 1 "unstring.oc"
+0  4.001 260 TOK_INT       int
+0  4.005 280 TOK_IDENT     main
+0  4.009 295 TOK_PARAM     (
+0  4.010  41 ')'           )
+0  4.012 123 '{'           {
+0  5.004 261 TOK_STRING    string
+0  5.011 280 TOK_IDENT     t
+0  5.013  61 '='           =
+0  5.017  42 '*'           *
+0  5.018  47 '/'           /
+0  5.019 283 TOK_STRINGCON ";
+
+0  5.025 261 TOK_STRING    string
+0  5.032 280 TOK_IDENT     s
+0  5.034  61 '='           =
+0  5.036 283 TOK_STRINGCON "abc;
+
+0  5.045 280 TOK_IDENT     char
+0  5.050 280 TOK_IDENT     c
+0  5.052  61 '='           =
+0  5.054 282 TOK_CHARCON   'a
+0  5.056  59 ';'           ;
+0  6.004 280 TOK_IDENT     s
+0  6.006  61 '='           =
+0  6.008 283 TOK_STRINGCON "abcd\";
+
+0  6.020 280 TOK_IDENT     s
+0  6.022  61 '='           =
+0  6.024 283 TOK_STRINGCON "abc|   ;
+
+0  7.004 260 TOK_INT       int
+0  7.008 281 TOK_INTCON    23
+0  7.010 280 TOK_IDENT     foobar
+0  7.016  59 ';'           ;
+0  8.001 125 '}'           }

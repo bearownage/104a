@@ -301,32 +301,38 @@ void checkVarDecl(astree* block)  {
            block->attributes[unsigned(attr::VREG)] = 1;
            return;
       }
-      /* 
+       
       if ( block->children[0]->symbol == TOK_TYPEID ) { 
-         printf("Yyooyoy");
-     	 symbol* temp = types->find(block->children[0]->lexinfo)->second;
+     	 symbol* temp = findTypeid(block->children[0]->lexinfo);
          if ( temp == NULL ) {
-              fprintf(stderr, "Semantic error : (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
-              return;
+              temp = findGlobal(block->children[0]->lexinfo);
+              if ( temp == NULL ) { 
+                 fprintf(stderr, "Var Declaration error at : (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                 return;
+            }
          }
          for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
              if ( temp->attributes[i] == 1 ) { 
-                block->attributes[i] = 1;
+                  block->attributes[i] = 1;
              } 
          }
+         block->strucname = temp->strucname;
+	 block->attributes[unsigned(attr::VREG)] = 1;
          return;
       } 
-            
-      if ( block->children[1]->children[0]->symbol == TOK_NEWARRAY ) { 
-           for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i) { 
-               if ( block->children[0]->children[0]->children[0]->attributes[i] == 1 ) {
-                    block->attributes[i] = 1;
-               } 
-            }
-            block->attributes[unsigned(attr::VREG)] = 1;
-            return;
-       }*/
-
+      
+      if ( &block->children[1]->children[0] != NULL ) {      
+         if ( block->children[1]->children[0]->symbol == TOK_NEWARRAY ) { 
+             for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i) { 
+                  if ( block->children[0]->children[0]->children[0]->attributes[i] == 1 ) {
+                      block->attributes[i] = 1;
+                  } 
+              }
+              block->attributes[unsigned(attr::VREG)] = 1;
+              return;
+          }
+      }
+       
       if (block->children[0]->symbol == TOK_VOID) {
           fprintf(stderr, "Variable of type void at : (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
           return;
@@ -503,17 +509,19 @@ void handleBlock(astree* blockNode, astree* returnType) {
               break;       
            }
            case TOK_RETURN : { 
-                //printf("%s", block->children[0]->lexinfo->c_str());
                 
                 if ( block->children.size() > 0 && block->children[0]->symbol == TOK_ARROW ) {
                      checkArrow(block->children[0]);
                      handleBlock(block, returnType);
                      break;
-                }/* 
-                if ( block->children[0]->children[0]->symbol == TOK_ARROW ) { 
-                     printf("hi");
-                     //checkArrow(block->children[0]->children[0]);
-                     //handleBlock(block, returnType);
+                }
+                
+                /*if ( &block->children[0]->children[0] != NULL ) {
+                     if ( block->children[0]->children[0]->symbol == TOK_ARROW ) { 
+                          checkArrow(block->children[0]->children[0]);
+                          handleBlock(block, returnType);
+                          break;
+                     }
                      break;
                 }*/
                 
@@ -528,7 +536,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                     break;
                 }
  
-                if ( block->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 )
+               if ( block->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 )
                {
                   symbol* temp = findVariable(block->children[0]->lexinfo);
                   for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
@@ -630,7 +638,14 @@ void handleBlock(astree* blockNode, astree* returnType) {
                    break;
              }
               case TOK_IDENT : { 
-                  symbol* temp = findVariable(block->children[0]->lexinfo);
+                  /*symbol* temp = findGlobal(block->lexinfo);
+                                    
+                  if ( temp == nullptr ) { 
+                     printf("did not found functio name");
+                  }
+                  else { 
+                     printf("foud name");
+                  }*/
                   break;
               }
               case TOK_NEW : 

@@ -1,0 +1,150 @@
+ROOT "" (0.0.0) {0} 
+| PROTOTYPE "" (4.29.1) {0} 
+| | VOID "void" (4.29.1) {0} 
+| | | DECLID "__assert_fail" (4.29.6) {0} void 
+| | PARAM "(" (4.29.20) {0} 
+| | | STRING "string" (4.29.21) {0} 
+| | | | DECLID "expr" (4.29.28) {0} string variable lval param (4.29.21) 
+| | | STRING "string" (4.29.34) {0} 
+| | | | DECLID "file" (4.29.41) {0} string variable lval param (4.29.34) 
+| | | INT "int" (4.29.47) {0} 
+| | | | DECLID "line" (4.29.51) {0} int variable lval param (4.29.47) 
+| | | STRING "string" (4.29.57) {0} 
+| | | | DECLID "func" (4.29.64) {0} string variable lval param (4.29.57) 
+| PROTOTYPE "" (4.30.1) {0} 
+| | VOID "void" (4.30.1) {0} 
+| | | DECLID "putchar" (4.30.6) {0} void 
+| | PARAM "(" (4.30.14) {0} 
+| | | INT "int" (4.30.15) {0} 
+| | | | DECLID "c" (4.30.19) {0} int variable lval param (4.30.15) 
+| PROTOTYPE "" (4.31.1) {0} 
+| | VOID "void" (4.31.1) {0} 
+| | | DECLID "putint" (4.31.6) {0} void 
+| | PARAM "(" (4.31.13) {0} 
+| | | INT "int" (4.31.14) {0} 
+| | | | DECLID "i" (4.31.18) {0} int variable lval param (4.31.14) 
+| PROTOTYPE "" (4.32.1) {0} 
+| | VOID "void" (4.32.1) {0} 
+| | | DECLID "putstr" (4.32.6) {0} void 
+| | PARAM "(" (4.32.13) {0} 
+| | | STRING "string" (4.32.14) {0} 
+| | | | DECLID "s" (4.32.21) {0} string variable lval param (4.32.14) 
+| PROTOTYPE "" (4.33.1) {0} 
+| | INT "int" (4.33.1) {0} 
+| | | DECLID "getchar" (4.33.5) {0} int 
+| | PARAM "(" (4.33.12) {0} 
+| PROTOTYPE "" (4.34.1) {0} 
+| | STRING "string" (4.34.1) {0} 
+| | | DECLID "getword" (4.34.8) {0} string 
+| | PARAM "(" (4.34.15) {0} 
+| PROTOTYPE "" (4.35.1) {0} 
+| | STRING "string" (4.35.1) {0} 
+| | | DECLID "getln" (4.35.8) {0} string 
+| | PARAM "(" (4.35.13) {0} 
+| PROTOTYPE "" (4.36.1) {0} 
+| | VOID "void" (4.36.1) {0} 
+| | | DECLID "endl" (4.36.6) {0} void 
+| | PARAM "(" (4.36.10) {0} 
+| PROTOTYPE "" (4.37.1) {0} 
+| | VOID "void" (4.37.1) {0} 
+| | | DECLID "exit" (4.37.6) {0} void 
+| | PARAM "(" (4.37.11) {0} 
+| | | INT "int" (4.37.12) {0} 
+| | | | DECLID "status" (4.37.16) {0} int variable lval param (4.37.12) 
+| FUNCTION "" (0.8.1) {0} 
+| | INT "int" (0.8.1) {0} 
+| | | DECLID "main" (0.8.5) {0} int function 
+| | PARAM "(" (0.8.9) {1} 
+| | BLOCK "{" (0.8.12) {1} 
+| | | VARDECL "=" (0.9.14) {1} 
+| | | | INT "int" (0.9.4) {1} 
+| | | | | DECLID "prime" (0.9.8) {1} int variable lval local (0.9.4) 
+| | | | INTCON "2" (0.9.16) {1} int const 
+| | | VARDECL "=" (0.10.14) {1} 
+| | | | INT "int" (0.10.4) {1} 
+| | | | | DECLID "index" (0.10.8) {1} int variable lval local (0.10.4) 
+| | | | INTCON "2" (0.10.16) {1} int const 
+| | | VARDECL "=" (0.11.19) {1} string array vreg 
+| | | | ARRAY "[]" (0.11.10) {1} 
+| | | | | STRING "string" (0.11.4) {1} variable lval 
+| | | | | | DECLID "sieve" (0.11.13) {1} string array variable local (0.11.4) 
+| | | | NEW "new" (0.11.21) {1} 
+| | | | | NEWARRAY "[" (0.11.31) {1} array vreg 
+| | | | | | STRING "string" (0.11.25) {1} 
+| | | | | | INTCON "100" (0.11.32) {1} int const 
+| | | WHILE "while" (0.13.4) {1} 
+| | | | LT "<" (0.13.17) {1} int vreg 
+| | | | | DECLID "index" (0.13.11) {1} variable 
+| | | | | INTCON "100" (0.13.19) {1} int const 
+| | | | BLOCK "{" (0.13.24) {1} 
+| | | | | '=' "=" (0.14.20) {1} vreg 
+| | | | | | INDEX "[" (0.14.12) {1} 
+| | | | | | | DECLID "sieve" (0.14.7) {1} variable 
+| | | | | | | DECLID "index" (0.14.13) {1} variable 
+| | | | | | INTCON "1" (0.14.22) {1} int const 
+| | | | | '=' "=" (0.15.13) {1} vreg 
+| | | | | | DECLID "index" (0.15.7) {1} variable 
+| | | | | | '+' "+" (0.15.21) {1} int vreg 
+| | | | | | | DECLID "index" (0.15.15) {1} variable 
+| | | | | | | INTCON "1" (0.15.23) {1} int const 
+| | | WHILE "while" (0.18.4) {1} 
+| | | | LT "<" (0.18.17) {1} int vreg 
+| | | | | DECLID "prime" (0.18.11) {1} variable 
+| | | | | INTCON "100" (0.18.19) {1} int const 
+| | | | BLOCK "{" (0.18.24) {1} 
+| | | | | IF "if" (0.19.7) {1} 
+| | | | | | INDEX "[" (0.19.16) {1} 
+| | | | | | | DECLID "sieve" (0.19.11) {1} variable 
+| | | | | | | DECLID "prime" (0.19.17) {1} variable 
+| | | | | | BLOCK "{" (0.19.25) {1} 
+| | | | | | | '=' "=" (0.20.16) {1} vreg 
+| | | | | | | | DECLID "index" (0.20.10) {1} variable 
+| | | | | | | | '*' "*" (0.20.24) {1} int vreg 
+| | | | | | | | | DECLID "prime" (0.20.18) {1} variable 
+| | | | | | | | | INTCON "2" (0.20.26) {1} int const 
+| | | | | | | WHILE "while" (0.21.10) {1} 
+| | | | | | | | LT "<" (0.21.23) {1} int vreg 
+| | | | | | | | | DECLID "index" (0.21.17) {1} variable 
+| | | | | | | | | INTCON "100" (0.21.25) {1} int const 
+| | | | | | | | BLOCK "{" (0.21.30) {1} 
+| | | | | | | | | '=' "=" (0.22.26) {1} vreg 
+| | | | | | | | | | INDEX "[" (0.22.18) {1} 
+| | | | | | | | | | | DECLID "sieve" (0.22.13) {1} variable 
+| | | | | | | | | | | DECLID "index" (0.22.19) {1} variable 
+| | | | | | | | | | INTCON "0" (0.22.28) {1} int const 
+| | | | | | | | | '=' "=" (0.23.19) {1} vreg 
+| | | | | | | | | | DECLID "index" (0.23.13) {1} variable 
+| | | | | | | | | | '+' "+" (0.23.27) {1} int vreg 
+| | | | | | | | | | | DECLID "index" (0.23.21) {1} variable 
+| | | | | | | | | | | DECLID "prime" (0.23.29) {1} variable 
+| | | | | '=' "=" (0.26.13) {1} vreg 
+| | | | | | DECLID "prime" (0.26.7) {1} variable 
+| | | | | | '+' "+" (0.26.21) {1} int vreg 
+| | | | | | | DECLID "prime" (0.26.15) {1} variable 
+| | | | | | | INTCON "1" (0.26.23) {1} int const 
+| | | '=' "=" (0.29.10) {1} int vreg 
+| | | | DECLID "index" (0.29.4) {1} variable 
+| | | | INTCON "2" (0.29.12) {1} int const 
+| | | WHILE "while" (0.30.4) {1} 
+| | | | LT "<" (0.30.17) {1} int vreg 
+| | | | | DECLID "index" (0.30.11) {1} variable 
+| | | | | INTCON "100" (0.30.19) {1} int const 
+| | | | BLOCK "{" (0.30.24) {1} 
+| | | | | IF "if" (0.31.7) {1} 
+| | | | | | INDEX "[" (0.31.16) {1} 
+| | | | | | | DECLID "sieve" (0.31.11) {1} variable 
+| | | | | | | DECLID "index" (0.31.17) {1} variable 
+| | | | | | BLOCK "{" (0.31.25) {1} 
+| | | | | | | CALL "(" (0.32.17) {1} 
+| | | | | | | | IDENT "putint" (0.32.10) {1} 
+| | | | | | | | DECLID "index" (0.32.18) {1} variable 
+| | | | | | | CALL "(" (0.33.18) {1} 
+| | | | | | | | IDENT "putchar" (0.33.10) {1} 
+| | | | | | | | CHARCON "'\n'" (0.33.19) {1} 
+| | | | | '=' "=" (0.35.13) {1} vreg 
+| | | | | | DECLID "index" (0.35.7) {1} variable 
+| | | | | | '+' "+" (0.35.21) {1} int vreg 
+| | | | | | | DECLID "index" (0.35.15) {1} variable 
+| | | | | | | INTCON "1" (0.35.23) {1} int const 
+| | | RETURN "return" (0.38.4) {1} 
+| | | | INTCON "0" (0.38.11) {1} int const 

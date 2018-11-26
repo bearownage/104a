@@ -1,0 +1,41 @@
+# 1 "test.oc"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h"
+# 1 "<command-line>"
+# 1 "test.oc"
+0  1.001 260 TOK_INT       int
+0  1.005 280 TOK_IDENT     main
+0  1.009 295 TOK_PARAM     (
+0  1.010  41 ')'           )
+0  1.012 123 '{'           {
+0  2.004 261 TOK_STRING    string
+0  2.011 280 TOK_IDENT     b
+0  2.013  61 '='           =
+0  2.015 268 TOK_NEW       new
+0  2.019 261 TOK_STRING    string
+0  2.025 295 TOK_PARAM     (
+0  2.026 281 TOK_INTCON    5
+0  2.027  41 ')'           )
+0  2.028  59 ';'           ;
+0  3.004 260 TOK_INT       int
+0  3.007 270 TOK_ARRAY     []
+0  3.010 280 TOK_IDENT     vec1
+0  3.015  61 '='           =
+0  3.017 268 TOK_NEW       new
+0  3.021 261 TOK_STRING    string
+0  3.027  91 '['           [
+0  3.028 281 TOK_INTCON    0
+0  3.029  93 ']'           ]
+0  3.030  59 ';'           ;
+0  4.004 260 TOK_INT       int
+0  4.007 270 TOK_ARRAY     []
+0  4.010 280 TOK_IDENT     d
+0  4.012  61 '='           =
+0  4.014 268 TOK_NEW       new
+0  4.018 260 TOK_INT       int
+0  4.021  91 '['           [
+0  4.022 281 TOK_INTCON    5
+0  4.023  93 ']'           ]
+0  4.024  59 ';'           ;
+0  5.001 125 '}'           }

@@ -64,60 +64,6 @@
 ; 0. 47:       putchar ('\n');
 ; 0. 48:    }
 ; 0. 49: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-stack (0.5.8) {0} struct stack
-    data (0.6.13) string array field 0
-    size (0.7.8) int field 1
-    top (0.8.8) int field 2
-
-new_stack (0.11.7) {0} struct stack function
-    size (0.11.22) {1} int variable lval param 0
-    stack (0.12.10) {1} struct stack variable lval local 0
-
-push (0.19.6) {1} void function
-    stack (0.19.18) {2} struct stack variable lval param 0
-    str (0.19.32) {2} string variable lval param 1
-
-pop (0.25.8) {2} string function
-    stack (0.25.19) {3} struct stack variable lval param 0
-    tmp (0.26.11) {3} string variable lval local 0
-
-empty (0.32.5) {3} int function
-    stack (0.32.18) {4} struct stack variable lval param 0
-
-main (0.36.5) {4} int function
-    argc (0.36.15) {5} int variable lval param 0
-    argv (0.36.30) {5} string array variable lval param 1
-    stack (0.37.10) {5} struct stack variable lval local 0
-    argi (0.38.8) {5} int variable lval local 0
-
 ;-1.  1: # 1 "assertfail.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -142,32 +88,12 @@ main (0.36.5) {4} int function
 ; 0.  5: int main (int argc, string[] argv) {
 ; 0.  6:    putstr (argv[0]);
 ; 0.  7:    putstr (" was compiled on ");
-; 0.  8:    putstr ("Nov 25 2018");
+; 0.  8:    putstr ("Nov 26 2018");
 ; 0.  9:    putstr (" @ ");
-; 0. 10:    putstr ("16:29:20");
+; 0. 10:    putstr ("14:44:36");
 ; 0. 11:    putstr ("\n");
 ; 0. 12:    return 0;
 ; 0. 13: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-main (0.5.5) {0} int function
-    argc (0.5.15) {1} int variable lval param 0
-    argv (0.5.30) {1} string array variable lval param 1
-
 ;-1.  1: # 1 "assert.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -193,20 +119,6 @@ main (0.5.5) {0} int function
 ; 0.  6:    { if (not ("null" == null)) { __assert_fail ("\"null\" == null", "assert.oc", 6, __FUNC__); } };
 ; 0.  7:    return 0;
 ; 0.  8: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-main (0.5.5) {0} int function
-
 ;-1.  1: # 1 "atoi.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -270,57 +182,6 @@ main (0.5.5) {0} int function
 ; 0. 44:    }
 ; 0. 45:    return 0;
 ; 0. 46: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-atoi (0.5.5) {0} int function
-    str (0.5.18) {1} string variable lval param 0
-    neg (0.6.8) {1} int variable lval local 0
-    num (0.7.8) {1} int variable lval local 0
-    digit (0.8.8) {1} int variable lval local 0
-    contin (0.9.8) {1} int variable lval local 0
-    c (0.10.8) {1} int variable lval local 0
-
-main (0.34.5) {1} int function
-    argc (0.34.15) {2} int variable lval param 0
-    argv (0.34.30) {2} string array variable lval param 1
-    argi (0.35.8) {2} int variable lval local 0
-    arg (0.36.11) {2} string variable lval local 0
-
 ;-1.  1: # 1 "c8.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -406,37 +267,6 @@ main (0.34.5) {1} int function
 ; 0. 27:    putchar ('\n');
 ; 0. 28:    return 0;
 ; 0. 29: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-dot_product (0.5.5) {0} int function
-    size (0.5.22) {1} int variable lval param 0
-    vec1 (0.5.34) {1} int array variable lval param 1
-    vec2 (0.5.46) {1} int array variable lval param 2
-    index (0.6.8) {1} int variable lval local 0
-    dot (0.7.8) {1} int variable lval local 0
-
-main (0.17.5) {1} int function
-    vec1 (0.18.10) {2} int array variable local 0
-    vec2 (0.19.10) {2} int array variable local 0
-    i (0.20.8) {2} int variable lval local 0
-
 ;-1.  1: # 1 "elseif.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -467,21 +297,6 @@ main (0.17.5) {1} int function
 ; 0. 11: 
 ; 0. 12: 
 ; 0. 13: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CALL
-main (0.5.5) {0} int function
-    argc (0.5.15) {1} int variable lval param 0
-    argi (0.6.8) {1} int variable lval local 0
-
 ;-1.  1: # 1 "era.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -538,33 +353,6 @@ main (0.5.5) {0} int function
 ; 0. 37: 
 ; 0. 38:    return 0;
 ; 0. 39: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-main (0.8.5) {0} int function
-    prime (0.9.8) {1} int variable lval local 0
-    index (0.10.8) {1} int variable lval local 0
-    sieve (0.11.13) {1} string array variable local 0
-
 ;-1.  1: # 1 "example.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -589,20 +377,6 @@ main (0.8.5) {0} int function
 ; 0. 16:           else b = "foo";
 ; 0. 17:       }
 ; 0. 18: }
-Press F to pay respect: TOK_IF
-Press F to pay respect: '.'
-Press F to pay respect: TOK_IF
-node (0.1.8) {0} struct node
-    foo (0.2.11) int field 0
-    link (0.3.12) struct node field 1
-
-func (0.7.6) {0} struct node function
-    head (0.7.17) {1} struct node variable lval param 0
-    length (0.7.27) {1} int variable lval param 1
-    a (0.8.11) {1} int variable lval local 0
-    b (0.9.14) {1} string variable lval local 0
-    c (0.10.12) {1} struct node variable lval local 0
-
 ;-1.  1: # 1 "fac.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -645,28 +419,6 @@ func (0.7.6) {0} struct node function
 ; 0. 23:    }
 ; 0. 24:    return 0;
 ; 0. 25: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-fac (0.8.5) {0} int function
-    n (0.8.14) {1} int variable lval param 0
-    f (0.9.8) {1} int variable lval local 0
-
-main (0.17.5) {1} int function
-    n (0.18.8) {2} int variable lval local 0
-
 ;-1.  1: # 1 "fib2.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -708,32 +460,6 @@ main (0.17.5) {1} int function
 ; 0. 22:    }
 ; 0. 23:    return 0;
 ; 0. 24: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-fibonacci (0.8.5) {0} int function
-    n (0.8.20) {1} int variable lval param 0
-
-main (0.13.5) {1} int function
-    n (0.14.8) {2} int variable lval local 0
-
 ;-1.  1: # 1 "fib.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -783,35 +509,6 @@ main (0.13.5) {1} int function
 ; 0. 30:       index = index + 1;
 ; 0. 31:    }
 ; 0. 32: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-fibonacci (0.9.7) {0} int array variable 0
-
-main (0.11.5) {0} int function
-    index (0.12.8) {1} int variable lval local 0
-
 ;-1.  1: # 1 "hello.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -838,18 +535,6 @@ main (0.11.5) {0} int function
 ; 0.  7:    putstr ("Hello, world!\n");
 ; 0.  8:    return 0;
 ; 0.  9: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_CALL
-main (0.6.5) {0} int function
-
 ;-1.  1: # 1 "hundred.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -880,22 +565,6 @@ main (0.6.5) {0} int function
 ; 0. 11:    }
 ; 0. 12:    return 0;
 ; 0. 13: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-main (0.5.5) {0} int function
-    count (0.6.8) {1} int variable lval local 0
-
 ;-1.  1: # 1 "insertion.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -979,70 +648,6 @@ main (0.5.5) {0} int function
 ; 0. 64:    print_array ("sorted", argc, argv);
 ; 0. 65:    return 0;
 ; 0. 66: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-strcmp (0.8.5) {0} int function
-    s1 (0.8.20) {1} string variable lval param 0
-    s2 (0.8.31) {1} string variable lval param 1
-    index (0.9.8) {1} int variable lval local 0
-    contin (0.10.8) {1} int variable lval local 0
-    s1c (0.11.8) {1} int variable lval local 0
-    s2c (0.12.8) {1} int variable lval local 0
-    cmp (0.13.8) {1} int variable lval local 0
-
-insertion_sort (0.25.6) {1} void function
-    size (0.25.26) {2} int variable lval param 0
-    array (0.25.41) {2} string array variable lval param 1
-    sorted (0.26.8) {2} int variable lval local 0
-    slot (0.27.8) {2} int variable lval local 0
-    element (0.28.11) {2} string variable lval local 0
-    contin (0.29.8) {2} int variable lval local 0
-
-print_array (0.49.6) {2} void function
-    label (0.49.26) {3} string variable lval param 0
-    size (0.49.37) {3} int variable lval param 1
-    array (0.49.52) {3} string array variable lval param 2
-    index (0.50.8) {3} int variable lval local 0
-
-main (0.61.5) {3} int function
-    argc (0.61.15) {4} int variable lval param 0
-    argv (0.61.30) {4} string array variable lval param 1
-
 ;-1.  1: # 1 "linkedstack.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1115,67 +720,6 @@ main (0.61.5) {3} int function
 ; 0. 53:    }
 ; 0. 54:    return 0;
 ; 0. 55: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-node (0.5.8) {0} struct node
-    data (0.6.11) string field 0
-    link (0.7.9) struct node field 1
-
-stack (0.10.8) {0} struct stack
-    top (0.11.9) struct node field 0
-
-empty (0.14.5) {0} int function
-    stack (0.14.18) {1} struct stack variable lval param 0
-
-new_stack (0.19.7) {1} struct stack function
-    stack (0.20.10) {2} struct stack variable lval local 0
-
-push (0.25.6) {2} void function
-    stack (0.25.18) {3} struct stack variable lval param 0
-    str (0.25.32) {3} string variable lval param 1
-    tmp (0.26.9) {3} struct node variable lval local 0
-
-pop (0.33.8) {3} string function
-    stack (0.33.19) {4} struct stack variable lval param 0
-    tmp (0.34.11) {4} string variable lval local 0
-
-main (0.41.5) {4} int function
-    argc (0.41.15) {5} int variable lval param 0
-    argv (0.41.30) {5} string array variable lval param 1
-    stack (0.42.10) {5} struct stack variable lval local 0
-    argi (0.43.8) {5} int variable lval local 0
-
 ;-1.  1: # 1 "numbers.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1208,25 +752,6 @@ main (0.41.5) {4} int function
 ; 0. 13:    putchar ('\n');
 ; 0. 14:    return 0;
 ; 0. 15: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-main (0.5.5) {0} int function
-    number (0.6.8) {1} int variable lval local 0
-
 ;-1.  1: # 1 "ocecho.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1258,27 +783,6 @@ main (0.5.5) {0} int function
 ; 0. 12:    putstr ("\n");
 ; 0. 13:    return 0;
 ; 0. 14: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CALL
-main (0.5.5) {0} int function
-    argc (0.5.14) {1} int variable lval param 0
-    argv (0.5.29) {1} string array variable lval param 1
-    argi (0.6.8) {1} int variable lval local 0
-
 ;-1.  1: # 1 "queens.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1342,53 +846,6 @@ main (0.5.5) {0} int function
 ; 0. 44:    queens (0);
 ; 0. 45:    return 0;
 ; 0. 46: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-board (0.6.7) {0} int array variable 0
-
-is_safe (0.8.5) {0} int function
-    newcol (0.8.18) {1} int variable lval param 0
-    col (0.9.8) {1} int variable lval local 0
-    diagonal (0.10.8) {1} int variable lval local 0
-
-printqueens (0.21.6) {1} void function
-    col (0.22.8) {2} int variable lval local 0
-
-queens (0.30.6) {2} void function
-    newcol (0.30.18) {3} int variable lval param 0
-    row (0.31.8) {3} int variable lval local 0
-
-main (0.42.5) {3} int function
-
 ;-1.  1: # 1 "semantics.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1410,16 +867,6 @@ main (0.42.5) {3} int function
 ; 0. 13:    bool y = a==b;
 ; 0. 14:    return "foobar";
 ; 0. 15: }
-Press F to pay respect: TOK_PROTOTYPE
-a (0.4.7) {0} int array variable 0
-
-b (0.5.7) {0} int array variable 0
-
-main (0.9.5) {0} int function
-    c (0.10.8) {1} int variable lval local 0
-    n (0.11.9) {1} void variable lval local 0
-Incompatible return types at: (0.14.4) 
-
 ;-1.  1: # 1 "syntax.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1464,23 +911,6 @@ Incompatible return types at: (0.14.4)
 ; 0. 11:    putchar ('\n');
 ; 0. 12:    return 0;
 ; 0. 13: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-main (0.5.5) {0} int function
-    a (0.6.8) {1} int variable lval local 0
-    b (0.7.8) {1} int variable lval local 0
-    c (0.8.8) {1} int variable lval local 0
-
 ;-1.  1: # 1 "test4.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1517,28 +947,6 @@ main (0.5.5) {0} int function
 ; 0. 17:    putchar ('\n');
 ; 0. 18:    return 0;
 ; 0. 19: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CHARCON
-foo (0.5.8) {0} struct foo
-    a (0.6.8) int field 0
-
-main (0.9.5) {0} int function
-    a (0.10.8) {1} int variable lval local 0
-    b (0.11.8) {1} struct foo variable lval local 0
-
 ;-1.  1: # 1 "test6.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1574,28 +982,6 @@ main (0.9.5) {0} int function
 ; 0. 16:    string[] sa = new string[10];
 ; 0. 17:    return 0;
 ; 0. 18: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-foo (0.5.8) {0} struct foo
-
-bar (0.6.8) {0} struct bar
-
-main (0.14.5) {0} int function
-    s (0.15.11) {1} string variable lval local 0
-    sa (0.16.13) {1} string array variable local 0
-
 ;-1.  1: # 1 "tester.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1628,28 +1014,6 @@ main (0.14.5) {0} int function
 ; 0. 13:    { if (not (stack != null)) { __assert_fail ("stack != null", "tester.oc", 13, __FUNC__); } };
 ; 0. 14: 
 ; 0. 15: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_NOT
-Press F to pay respect: TOK_CALL
-node (0.3.8) {0} struct node
-    data (0.4.11) string field 0
-    link (0.5.9) struct node field 1
-
-stack (0.8.8) {0} struct stack
-    top (0.9.9) struct node field 0
-
-empty (0.12.5) {0} int function
-    stack (0.12.18) {1} struct stack variable lval param 0
-
 ;-1.  1: # 1 "test.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1659,12 +1023,8 @@ empty (0.12.5) {0} int function
 ; 0.  1: int main() {
 ; 0.  2:    string b = new string(5);
 ; 0.  3:    int[] vec1 = new string[0];
-; 0.  4: }
-Press F to pay respect: TOK_NEWSTR
-main (0.1.5) {0} int function
-    b (0.2.11) {1} string variable lval local 0
-    vec1 (0.3.10) {1} int array variable local 0
-
+; 0.  4:    int[] d = new int[5];
+; 0.  5: }
 ;-1.  1: # 1 "towers.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1705,37 +1065,6 @@ main (0.1.5) {0} int function
 ; 0. 21:    towers (4, "Source", "Temporary", "Destination");
 ; 0. 22:    return 0;
 ; 0. 23: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-move (0.5.6) {0} void function
-    src (0.5.19) {1} string variable lval param 0
-    dst (0.5.31) {1} string variable lval param 1
-
-towers (0.13.6) {1} void function
-    ndisks (0.13.18) {2} int variable lval param 0
-    src (0.13.33) {2} string variable lval param 1
-    tmp (0.13.45) {2} string variable lval param 2
-    dst (0.13.57) {2} string variable lval param 3
-
-main (0.20.5) {2} int function
-
 ;-1.  1: # 1 "trivial.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1772,31 +1101,6 @@ main (0.20.5) {2} int function
 ; 0. 29:    if (a == b) f (x);
 ; 0. 30:    if (a != b) y = 3; else f (y, z);
 ; 0. 31: }
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_PROTOTYPE
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_INDEX
-Press F to pay respect: TOK_WHILE
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CALL
-Press F to pay respect: TOK_IF
-Press F to pay respect: TOK_CALL
-a (0.9.7) {0} int array variable 0
-
-foo (0.13.6) {0} void function
-    a (0.13.17) {1} int array variable lval param 0
-    b (0.13.26) {1} int array variable lval param 1
-    x (0.13.34) {1} int variable lval local 0
-
-foo (0.14.8) {0} struct foo
-    a (0.14.18) int field 0
-    b (0.14.25) int field 1
-
-main (0.16.5) {1} int function
-
 ;-1.  1: # 1 "uncomment.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"

@@ -1,4 +1,5 @@
 int main() {
    string b = new string(5);
    int[] vec1 = new string[0];
+   int[] d = new int[5];
 }

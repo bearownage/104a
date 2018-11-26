@@ -1,0 +1,121 @@
+# 1 "assertfail.oc"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h"
+# 1 "<command-line>"
+# 1 "assertfail.oc"
+# 1 "oclib.h"
+# 29 "oclib.h"
+4 29.001 258 TOK_VOID      void
+4 29.006 280 TOK_IDENT     __assert_fail
+4 29.020 295 TOK_PARAM     (
+4 29.021 261 TOK_STRING    string
+4 29.028 280 TOK_IDENT     expr
+4 29.032  44 ','           ,
+4 29.034 261 TOK_STRING    string
+4 29.041 280 TOK_IDENT     file
+4 29.045  44 ','           ,
+4 29.047 260 TOK_INT       int
+4 29.051 280 TOK_IDENT     line
+4 29.055  44 ','           ,
+4 29.057 261 TOK_STRING    string
+4 29.064 280 TOK_IDENT     func
+4 29.068  41 ')'           )
+4 29.069  59 ';'           ;
+4 30.001 258 TOK_VOID      void
+4 30.006 280 TOK_IDENT     putchar
+4 30.014 295 TOK_PARAM     (
+4 30.015 260 TOK_INT       int
+4 30.019 280 TOK_IDENT     c
+4 30.020  41 ')'           )
+4 30.021  59 ';'           ;
+4 31.001 258 TOK_VOID      void
+4 31.006 280 TOK_IDENT     putint
+4 31.013 295 TOK_PARAM     (
+4 31.014 260 TOK_INT       int
+4 31.018 280 TOK_IDENT     i
+4 31.019  41 ')'           )
+4 31.020  59 ';'           ;
+4 32.001 258 TOK_VOID      void
+4 32.006 280 TOK_IDENT     putstr
+4 32.013 295 TOK_PARAM     (
+4 32.014 261 TOK_STRING    string
+4 32.021 280 TOK_IDENT     s
+4 32.022  41 ')'           )
+4 32.023  59 ';'           ;
+4 33.001 260 TOK_INT       int
+4 33.005 280 TOK_IDENT     getchar
+4 33.012 295 TOK_PARAM     (
+4 33.013  41 ')'           )
+4 33.014  59 ';'           ;
+4 34.001 261 TOK_STRING    string
+4 34.008 280 TOK_IDENT     getword
+4 34.015 295 TOK_PARAM     (
+4 34.016  41 ')'           )
+4 34.017  59 ';'           ;
+4 35.001 261 TOK_STRING    string
+4 35.008 280 TOK_IDENT     getln
+4 35.013 295 TOK_PARAM     (
+4 35.014  41 ')'           )
+4 35.015  59 ';'           ;
+4 36.001 258 TOK_VOID      void
+4 36.006 280 TOK_IDENT     endl
+4 36.010 295 TOK_PARAM     (
+4 36.011  41 ')'           )
+4 36.012  59 ';'           ;
+4 37.001 258 TOK_VOID      void
+4 37.006 280 TOK_IDENT     exit
+4 37.011 295 TOK_PARAM     (
+4 37.012 260 TOK_INT       int
+4 37.016 280 TOK_IDENT     status
+4 37.022  41 ')'           )
+4 37.023  59 ';'           ;
+# 4 "assertfail.oc"
+0  5.001 260 TOK_INT       int
+0  5.005 280 TOK_IDENT     main
+0  5.010 295 TOK_PARAM     (
+0  5.011 260 TOK_INT       int
+0  5.015 280 TOK_IDENT     argc
+0  5.019  44 ','           ,
+0  5.021 261 TOK_STRING    string
+0  5.027 270 TOK_ARRAY     []
+0  5.030 280 TOK_IDENT     argv
+0  5.034  41 ')'           )
+0  5.036 123 '{'           {
+0  6.004 280 TOK_IDENT     putstr
+0  6.011 295 TOK_PARAM     (
+0  6.012 280 TOK_IDENT     argv
+0  6.016  91 '['           [
+0  6.017 281 TOK_INTCON    0
+0  6.018  93 ']'           ]
+0  6.019  41 ')'           )
+0  6.020  59 ';'           ;
+0  7.004 280 TOK_IDENT     putstr
+0  7.011 295 TOK_PARAM     (
+0  7.012 283 TOK_STRINGCON " was compiled on "
+0  7.031  41 ')'           )
+0  7.032  59 ';'           ;
+0  8.004 280 TOK_IDENT     putstr
+0  8.011 295 TOK_PARAM     (
+0  8.012 283 TOK_STRINGCON "Nov 26 2018"
+0  8.025  41 ')'           )
+0  8.026  59 ';'           ;
+0  9.004 280 TOK_IDENT     putstr
+0  9.011 295 TOK_PARAM     (
+0  9.012 283 TOK_STRINGCON " @ "
+0  9.017  41 ')'           )
+0  9.018  59 ';'           ;
+0 10.004 280 TOK_IDENT     putstr
+0 10.011 295 TOK_PARAM     (
+0 10.012 283 TOK_STRINGCON "14:45:17"
+0 10.022  41 ')'           )
+0 10.023  59 ';'           ;
+0 11.004 280 TOK_IDENT     putstr
+0 11.011 295 TOK_PARAM     (
+0 11.012 283 TOK_STRINGCON "\n"
+0 11.016  41 ')'           )
+0 11.017  59 ';'           ;
+0 12.004 265 TOK_RETURN    return
+0 12.011 281 TOK_INTCON    0
+0 12.012  59 ';'           ;
+0 13.001 125 '}'           }
