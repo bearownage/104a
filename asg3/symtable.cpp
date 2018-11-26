@@ -9,6 +9,7 @@ using namespace std;
 #include "astree.h"
 #include "symtable.h"
 
+extern FILE *symFile;
 int blocknr = 0;
 int next_block = 1;
 int seqCounter = 0;
@@ -251,7 +252,6 @@ bool typecheckMath(astree* node) {
 }
 
 bool typecheckExpr(astree* node) { 
-     //printf("%d", unsigned(attr::FUNCTION));
      if ( node->children[0]->children[0]->attributes[unsigned(attr::VARIABLE)] == 1 && node->children[0]->children[1]->attributes[unsigned(attr::VARIABLE)] == 0 )
      {
          symbol* temp = findVariable(node->children[0]->children[0]->lexinfo);
@@ -417,7 +417,7 @@ void checkIndexArrow(astree* block) {
         block->attributes[unsigned(attr::VADDR)] = 1;
         return;
         }
-        printf("Improper use of field selector at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+        fprintf(stderr, "Improper use of field selector at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
         return;
 }
 
@@ -443,7 +443,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                     dec -> block_nr = blocknr;
                     seqCounter++;
                     variables->insert(std::make_pair(block->children[0]->children[0]->children[0]->lexinfo, dec));
-                    printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", block->children[0]->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
+                    fprintf(symFile, "    %s (%lu.%lu.%lu) {%lu} %s %lu\n", block->children[0]->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
                     dec->lloc.linenr, dec->lloc.offset, dec->block_nr,
                     attrStringSym(dec).c_str(), dec->sequence);
                         
@@ -468,7 +468,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                     dec -> block_nr = blocknr;
                     seqCounter++;
                     variables->insert(std::make_pair(block->children[0]->children[0]->lexinfo, dec)); 
-                    printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", block->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
+                    fprintf(symFile, "    %s (%lu.%lu.%lu) {%lu} %s %lu\n", block->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
                     dec->lloc.linenr, dec->lloc.offset, dec->block_nr,
                     attrStringSym(dec).c_str(), dec->sequence);
                 }
@@ -484,7 +484,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                     handleBlock(block, returnType);
                     break;
                 }
-                printf("Comparing two different types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                fprintf(stderr, "Comparing two different types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                 break;
             case TOK_WHILE : {
                 break; }
@@ -499,14 +499,13 @@ void handleBlock(astree* blockNode, astree* returnType) {
                   handleBlock(block, returnType);
                   break;
               } 
-              printf("Non Integer on unop expression at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+              fprintf(stderr, "Non Integer on unop expression at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
               break;       
            }
            case TOK_RETURN : { 
                 //printf("%s", block->children[0]->lexinfo->c_str());
                 
                 if ( block->children.size() > 0 && block->children[0]->symbol == TOK_ARROW ) {
-                     printf("hi again");
                      checkArrow(block->children[0]);
                      handleBlock(block, returnType);
                      break;
@@ -524,7 +523,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                     if ( &block->children[0] == NULL ) { 
                      	 break; 
                     }
-                    printf("Return type in void function at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                    fprintf(stderr, "Return type in void function at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                     handleBlock(block, returnType);
                     break;
                 }
@@ -535,7 +534,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                   for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
                       if (returnType->attributes[i] != temp->attributes[i] ) {
 
-                             printf("Incompatible return types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                             fprintf(stderr, "Incompatible return types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                              handleBlock(block, returnType);
                              break;
                           }
@@ -547,7 +546,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                 for ( size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) { 
                     if (returnType->attributes[i] != block->children[0]->attributes[i] ) 
                     {
-                    	printf("Incompatible return types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                    	fprintf(stderr, "Incompatible return types at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                         handleBlock(block, returnType);
                         break;
                     }
@@ -607,7 +606,7 @@ void handleBlock(astree* blockNode, astree* returnType) {
                 }
                 for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
                    if (temp->attributes[i] != block->children[1]->attributes[i] ) {
-                      printf("Incompatible assigment to variable at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                      fprintf(stderr, "Incompatible assigment to variable at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                       handleBlock(block, returnType);
                       break;
                    }
@@ -663,7 +662,7 @@ void traversal(astree* root) {
             sym -> fields = new symbol_table();
             vector <astree*> v;
             types -> insert(std::make_pair(childNode -> children[0] -> lexinfo, sym));
-            printf("%s (%lu.%lu.%lu) {%lu} %s\n", sym->strucname->c_str(), sym->lloc.filenr,
+            fprintf(symFile, "%s (%lu.%lu.%lu) {%lu} %s\n", sym->strucname->c_str(), sym->lloc.filenr,
             sym->lloc.linenr, sym->lloc.offset, sym->block_nr,
             attrStringSym(sym).c_str());
             for (astree* fieldNode: childNode -> children) {
@@ -677,7 +676,7 @@ void traversal(astree* root) {
                     const string* ident = fieldNode->children[0]->lexinfo;
                     addStruct(sym, strucID, ident, fieldNode->children[0]);
                  }
-                 printf("    %s (%lu.%lu.%lu) %s %lu\n", id->c_str(), fieldSym->lloc.filenr,
+                 fprintf(symFile, "    %s (%lu.%lu.%lu) %s %lu\n", id->c_str(), fieldSym->lloc.filenr,
                  fieldSym->lloc.linenr, fieldSym->lloc.offset,
                  attrStringSym(fieldSym).c_str(), fieldSym->sequence);
                  counter++;
@@ -691,14 +690,14 @@ void traversal(astree* root) {
                     const string* id = fieldNode->children[0]->children[0]->lexinfo;
                     addStruct(sym, strucID, id, fieldNode->children[0]->children[0]);
                  }
-                 printf("    %s (%lu.%lu.%lu) %s %lu\n", fieldNode->children[0]->children[0]->lexinfo->c_str(), fieldSym->lloc.filenr,
+                 fprintf(symFile, "    %s (%lu.%lu.%lu) %s %lu\n", fieldNode->children[0]->children[0]->lexinfo->c_str(), fieldSym->lloc.filenr,
                  fieldSym->lloc.linenr, fieldSym->lloc.offset,
                  attrStringSym(fieldSym).c_str(), fieldSym->sequence);
                  counter++;
               }
               
             }
-            printf("\n");
+            fprintf(symFile, "\n");
             break;
          }
          case TOK_FUNCTION : {
@@ -723,7 +722,7 @@ void traversal(astree* root) {
             sym->attributes[unsigned(attr::VARIABLE)] = 0;
             childNode->children[0]->children[0]->attributes = sym->attributes;
             globaldecs->insert(std::make_pair(sym->funcname, sym));
-            printf("%s (%lu.%lu.%lu) {%lu} %s\n", sym->funcname->c_str(), sym->lloc.filenr,
+            fprintf(symFile, "%s (%lu.%lu.%lu) {%lu} %s\n", sym->funcname->c_str(), sym->lloc.filenr,
             sym->lloc.linenr, sym->lloc.offset, sym->block_nr,
             attrStringSym(sym).c_str());
            
@@ -771,7 +770,7 @@ void traversal(astree* root) {
                   parameter->children[0]->children[0]->boolLoc = 1;
                   parameter->children[0]->children[0]->decLloc = parameter->children[0]->lloc; 
                }
-               printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", currParam->param_name->c_str(), currParam->lloc.filenr,
+               fprintf(symFile, "    %s (%lu.%lu.%lu) {%lu} %s %lu\n", currParam->param_name->c_str(), currParam->lloc.filenr,
                currParam->lloc.linenr, currParam->lloc.offset, currParam->block_nr,
                attrStringSym(currParam).c_str(), currParam->sequence);
                variables->insert(std::make_pair(currParam->param_name, currParam));
@@ -781,7 +780,7 @@ void traversal(astree* root) {
             astree* block = childNode -> children[2];
             astree* returnType = childNode->children[0]->children[0];
             handleBlock(block, returnType);
-            printf("\n");
+            fprintf(symFile, "\n");
             break;
          }  
          case TOK_VARDECL : {
@@ -806,7 +805,7 @@ void traversal(astree* root) {
                     dec -> sequence = blockCounter;
                     dec -> block_nr = blocknr;
                     globaldecs->insert(std::make_pair(childNode->children[0]->children[0]->children[0]->lexinfo, dec));
-                    printf("%s (%lu.%lu.%lu) {%lu} %s %lu\n", childNode->children[0]->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
+                    fprintf(symFile, "%s (%lu.%lu.%lu) {%lu} %s %lu\n", childNode->children[0]->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
                     dec->lloc.linenr, dec->lloc.offset, dec->block_nr,
                     attrStringSym(dec).c_str(), dec->sequence);
 
@@ -823,7 +822,7 @@ void traversal(astree* root) {
                     dec -> sequence = blockCounter;
                     dec -> block_nr = blocknr;
                     globaldecs->insert(std::make_pair(childNode->children[0]->children[0]->lexinfo, dec));
-                    printf("%s (%lu.%lu.%lu) {%lu} %s %lu\n", childNode->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
+                    fprintf(symFile, "%s (%lu.%lu.%lu) {%lu} %s %lu\n", childNode->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
                     dec->lloc.linenr, dec->lloc.offset, dec->block_nr,
                     attrStringSym(dec).c_str(), dec->sequence);
                     childNode->children[0]->children[0]->attributes[unsigned(attr::LOCAL)] = 0;
@@ -831,7 +830,7 @@ void traversal(astree* root) {
                 if ( childNode->children[1]->symbol == TOK_ARROW ) {
                     checkArrow(childNode->children[1]);
                 }
-                printf("\n");
+                fprintf(symFile, "\n");
                 break;
          }
          case TOK_PROTOTYPE : {
@@ -854,7 +853,7 @@ void traversal(astree* root) {
             sym->attributes[unsigned(attr::VARIABLE)] = 0;
             childNode->children[0]->children[0]->attributes = sym->attributes;
             globaldecs->insert(std::make_pair(sym->funcname, sym));
-            printf("%s (%lu.%lu.%lu) {%lu} %s\n", sym->funcname->c_str(), sym->lloc.filenr,
+            fprintf(symFile, "%s (%lu.%lu.%lu) {%lu} %s\n", sym->funcname->c_str(), sym->lloc.filenr,
             sym->lloc.linenr, sym->lloc.offset, sym->block_nr,
             attrStringSym(sym).c_str());
            
@@ -902,13 +901,13 @@ void traversal(astree* root) {
                   parameter->children[0]->children[0]->boolLoc = 1;
                   parameter->children[0]->children[0]->decLloc = parameter->children[0]->lloc; 
                }
-               printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", currParam->param_name->c_str(), currParam->lloc.filenr,
+               fprintf(symFile, "    %s (%lu.%lu.%lu) {%lu} %s %lu\n", currParam->param_name->c_str(), currParam->lloc.filenr,
                currParam->lloc.linenr, currParam->lloc.offset, currParam->block_nr,
                attrStringSym(currParam).c_str(), currParam->sequence);
                variables->insert(std::make_pair(currParam->param_name, currParam));
                
             }
-            printf("\n");
+            fprintf(symFile, "\n");
              break;
          }
          case TOK_TYPEID :
@@ -923,7 +922,7 @@ void traversal(astree* root) {
              {
 		break;
              }
-             printf("Non Int operands used at: (%lu.%lu.%lu) \n", childNode->lloc.filenr, childNode->lloc.linenr, childNode->lloc.offset);
+             fprintf(stderr, "Non Int operands used at: (%lu.%lu.%lu) \n", childNode->lloc.filenr, childNode->lloc.linenr, childNode->lloc.offset);
              break;
          }
          default :

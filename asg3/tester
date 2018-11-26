@@ -142,7 +142,7 @@ main (0.36.5) {4} int function
 ; 0.  7:    putstr (" was compiled on ");
 ; 0.  8:    putstr ("Nov 25 2018");
 ; 0.  9:    putstr (" @ ");
-; 0. 10:    putstr ("23:00:22");
+; 0. 10:    putstr ("23:13:01");
 ; 0. 11:    putstr ("\n");
 ; 0. 12:    return 0;
 ; 0. 13: }

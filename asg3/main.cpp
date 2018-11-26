@@ -23,7 +23,7 @@ const string cpp_name = "/usr/bin/cpp";
 string cpp_command;
 FILE *tokFile;
 FILE *astFile;
-extern symbol_table* types;
+FILE *symFile;
 // Open a pipe from the C preprocessor.
 // Exit failure if can't.
 // Assigns opened pipe to FILE* yyin.
@@ -90,12 +90,15 @@ int main (int argc, char** argv) {
    std::string filenameStr (filein.begin(), filein.end()-3);
    std::string filenameTok (filein.begin(), filein.end()-3);
    std::string filenameAst (filein.begin(), filein.end()-3);
+   std::string filenameSym (filein.begin(), filein.end()-3);
    filenameStr += ".str";
    filenameTok += ".tok";
    filenameAst += ".ast";
+   filenameSym += ".sym";
    const char* outFileTok = filenameTok.c_str();
    const char* outFileStr = filenameStr.c_str();
    const char* outFileAst = filenameAst.c_str();
+   const char* outFileSym = filenameSym.c_str();
    tokFile = fopen(outFileTok, "w+");
    scan_opts (argc, argv);
   
@@ -118,10 +121,12 @@ int main (int argc, char** argv) {
    if (parse_rc) {
       errprintf ("parse failed (%d)\n", parse_rc);
    }else {
-      FILE* astFile;
-      astFile = fopen(outFileAst, "w");
+      symFile = fopen(outFileSym, "w");
       updateAttr(parser::root);
       traversal(parser::root);
+      fclose(symFile);
+      FILE* astFile;
+      astFile = fopen(outFileAst, "w");
       parser::root -> dump_tree(astFile, 0);
       fclose(astFile);
       destroy(parser::root);
