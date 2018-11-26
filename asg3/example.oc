@@ -1,17 +1,19 @@
-#include "oclib.h"
-int fac (int n) {
-   int f = 1;
-   while (n > 1) {
-      f = f*n;
-      n = n-1;
-   }
-   return f;
+struct node {
+      int foo;
+      node link;
 }
-int main() {
-   int n=1;
-   while (n <= 5) {
-      putint (fac (n));
-      n = n+1;
-   }
-   return EXIT_SUCCESS;
+
+
+node func (node head, int length) {
+      int a = 0;
+      string b = "";
+      node c = new node;
+      if (a < 3) {
+          a=length;
+          c=c.link;
+      }else {
+          if (0 == 0) a = 8;
+          else b = "foo";
+      }
 }
+

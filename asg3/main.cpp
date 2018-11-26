@@ -123,7 +123,7 @@ int main (int argc, char** argv) {
       parser::root -> dump_tree(astFile, 0);
       updateAttr(parser::root);
       traversal(parser::root);
-      parser::root -> dump_tree(stdout, 0);
+      //parser::root -> dump_tree(stdout, 0);
       fclose(astFile);
       destroy(parser::root);
       parser::root = nullptr; 

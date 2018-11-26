@@ -1,0 +1,36 @@
+# 1 "syntax.oc"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h"
+# 1 "<command-line>"
+# 1 "syntax.oc"
+0  3.001 260 TOK_INT       int
+0  3.005 280 TOK_IDENT     f
+0  3.006 295 TOK_PARAM     (
+0  3.007  41 ')'           )
+0  3.009 123 '{'           {
+0  4.001 260 TOK_INT       int
+0  4.005 280 TOK_IDENT     a
+0  4.007  61 '='           =
+0  4.009  59 ';'           ;
+0  5.001 265 TOK_RETURN    return
+0  5.008 280 TOK_IDENT     foo
+0  5.011  59 ';'           ;
+0  6.001 280 TOK_IDENT     public
+0  6.008 280 TOK_IDENT     static
+0  6.015 260 TOK_INT       int
+0  6.019 280 TOK_IDENT     main
+0  6.024 295 TOK_PARAM     (
+0  6.025 280 TOK_IDENT     String
+0  6.031 270 TOK_ARRAY     []
+0  6.034 280 TOK_IDENT     args
+0  6.038  41 ')'           )
+0  6.040 123 '{'           {
+0  7.004 280 TOK_IDENT     System
+0  7.010  46 '.'           .
+0  7.011 280 TOK_IDENT     exit
+0  7.016 295 TOK_PARAM     (
+0  7.017 281 TOK_INTCON    255
+0  7.020  41 ')'           )
+0  7.021  59 ';'           ;
+0  8.001 125 '}'           }

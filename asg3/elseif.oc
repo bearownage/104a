@@ -3,10 +3,11 @@
 #include "oclib.h"
 
 int main (int argc) {
-   if (argc == 1) puts ("one");
-   else if (argc == 2) putstr ("two");
-   else if (argc == 3) putstr ("three");
-   else putstr ("many");
-   putchar ('\n');
-   return EXIT_SUCCESS;
+   int argi = 0;
+   if (argc == argi ) puts ("one");
+   //else if (argc == 2) putstr ("two");
+   //else if (argc == 3) putstr ("three");
+   //else putstr ("many");
+   //putchar ('\n');
+   //return EXIT_SUCCESS;
 }

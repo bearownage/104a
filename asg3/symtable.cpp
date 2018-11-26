@@ -190,6 +190,16 @@ symbol* findVariable(const string* varID) {
     return temp;
 }
 
+symbol* findGlobal(const string* varID) {
+    symbol* temp;
+    if(globaldecs->find(varID) == globaldecs->end()) {
+        temp = nullptr;
+        return temp;
+    }
+    temp = globaldecs->find(varID)->second;
+    return temp;
+}
+
 //symbol* findStruc(const string varID) { 
 //      symbol* temp = 
 bool typecheckUnop(astree* node) {
@@ -284,7 +294,39 @@ bool typecheckExpr(astree* node) {
 }
 
 void checkVarDecl(astree* block)  {
-        if (block->children[0]->symbol == TOK_VOID) {
+      if ( block->children[0]->symbol == TOK_STRING ) 
+      {
+           block->attributes[unsigned(attr::STRING)] = 1;
+           block->attributes[unsigned(attr::VREG)] = 1;
+           return;
+      }
+      /* 
+      if ( block->children[0]->symbol == TOK_TYPEID ) { 
+         printf("Yyooyoy");
+     	 symbol* temp = types->find(block->children[0]->lexinfo)->second;
+         if ( temp == NULL ) {
+              fprintf(stderr, "Semantic error : (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+              return;
+         }
+         for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
+             if ( temp->attributes[i] == 1 ) { 
+                block->attributes[i] = 1;
+             } 
+         }
+         return;
+      } 
+            
+      if ( block->children[1]->children[0]->symbol == TOK_NEWARRAY ) { 
+           for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i) { 
+               if ( block->children[0]->children[0]->children[0]->attributes[i] == 1 ) {
+                    block->attributes[i] = 1;
+               } 
+            }
+            block->attributes[unsigned(attr::VREG)] = 1;
+            return;
+       }*/
+
+      if (block->children[0]->symbol == TOK_VOID) {
           fprintf(stderr, "Variable of type void at : (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
           return;
       }
@@ -479,6 +521,9 @@ void handleBlock(astree* blockNode, astree* returnType) {
 
                 if ( returnType->attributes[unsigned(attr::VOID)] == 1 )
                 {
+                    if ( &block->children[0] == NULL ) { 
+                     	 break; 
+                    }
                     printf("Return type in void function at: (%lu.%lu.%lu) \n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                     handleBlock(block, returnType);
                     break;
@@ -551,10 +596,14 @@ void handleBlock(astree* blockNode, astree* returnType) {
                 
                 symbol* temp = findVariable(block->children[0]->lexinfo);
                 if (temp == nullptr) {
-                    fprintf(stderr, "Variable reference at (%lu.%lu.%lu) was not found.\n", 
-                    block->children[0]->lloc.filenr, block->children[0]->lloc.linenr, 
-                    block->children[0]->lloc.offset);
-                    return;
+                    temp = findGlobal(block->children[0]->lexinfo);
+                    if ( temp == nullptr ) {
+                        fprintf(stderr, "Variable reference at (%lu.%lu.%lu) was not found.\n", 
+                        block->children[0]->lloc.filenr, block->children[0]->lloc.linenr, 
+                        block->children[0]->lloc.offset);
+                        return;
+                   }
+                   return;
                 }
                 for (size_t i = 0; i < unsigned(attr::FUNCTION); ++i ) {
                    if (temp->attributes[i] != block->children[1]->attributes[i] ) {

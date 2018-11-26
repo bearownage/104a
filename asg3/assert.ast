@@ -1,0 +1,73 @@
+ROOT "" (0.0.0) {0} 
+| PROTOTYPE "" (4.29.1) {0} 
+| | VOID "void" (4.29.1) {0} 
+| | | DECLID "__assert_fail" (4.29.6) {0} 
+| | PARAM "(" (4.29.20) {0} 
+| | | STRING "string" (4.29.21) {0} 
+| | | | DECLID "expr" (4.29.28) {0} 
+| | | STRING "string" (4.29.34) {0} 
+| | | | DECLID "file" (4.29.41) {0} 
+| | | INT "int" (4.29.47) {0} 
+| | | | DECLID "line" (4.29.51) {0} 
+| | | STRING "string" (4.29.57) {0} 
+| | | | DECLID "func" (4.29.64) {0} 
+| PROTOTYPE "" (4.30.1) {0} 
+| | VOID "void" (4.30.1) {0} 
+| | | DECLID "putchar" (4.30.6) {0} 
+| | PARAM "(" (4.30.14) {0} 
+| | | INT "int" (4.30.15) {0} 
+| | | | DECLID "c" (4.30.19) {0} 
+| PROTOTYPE "" (4.31.1) {0} 
+| | VOID "void" (4.31.1) {0} 
+| | | DECLID "putint" (4.31.6) {0} 
+| | PARAM "(" (4.31.13) {0} 
+| | | INT "int" (4.31.14) {0} 
+| | | | DECLID "i" (4.31.18) {0} 
+| PROTOTYPE "" (4.32.1) {0} 
+| | VOID "void" (4.32.1) {0} 
+| | | DECLID "putstr" (4.32.6) {0} 
+| | PARAM "(" (4.32.13) {0} 
+| | | STRING "string" (4.32.14) {0} 
+| | | | DECLID "s" (4.32.21) {0} 
+| PROTOTYPE "" (4.33.1) {0} 
+| | INT "int" (4.33.1) {0} 
+| | | DECLID "getchar" (4.33.5) {0} 
+| | PARAM "(" (4.33.12) {0} 
+| PROTOTYPE "" (4.34.1) {0} 
+| | STRING "string" (4.34.1) {0} 
+| | | DECLID "getword" (4.34.8) {0} 
+| | PARAM "(" (4.34.15) {0} 
+| PROTOTYPE "" (4.35.1) {0} 
+| | STRING "string" (4.35.1) {0} 
+| | | DECLID "getln" (4.35.8) {0} 
+| | PARAM "(" (4.35.13) {0} 
+| PROTOTYPE "" (4.36.1) {0} 
+| | VOID "void" (4.36.1) {0} 
+| | | DECLID "endl" (4.36.6) {0} 
+| | PARAM "(" (4.36.10) {0} 
+| PROTOTYPE "" (4.37.1) {0} 
+| | VOID "void" (4.37.1) {0} 
+| | | DECLID "exit" (4.37.6) {0} 
+| | PARAM "(" (4.37.11) {0} 
+| | | INT "int" (4.37.12) {0} 
+| | | | DECLID "status" (4.37.16) {0} 
+| FUNCTION "" (0.5.1) {0} 
+| | INT "int" (0.5.1) {0} 
+| | | DECLID "main" (0.5.5) {0} 
+| | PARAM "(" (0.5.9) {0} 
+| | BLOCK "{" (0.5.12) {0} 
+| | | BLOCK "{" (0.6.4) {0} 
+| | | | IF "if" (0.6.6) {0} 
+| | | | | NOT "not" (0.6.10) {0} 
+| | | | | | EQ "==" (0.6.22) {0} 
+| | | | | | | STRINGCON ""null"" (0.6.15) {0} 
+| | | | | | | NULL "null" (0.6.25) {0} 
+| | | | | BLOCK "{" (0.6.32) {0} 
+| | | | | | CALL "(" (0.6.48) {0} 
+| | | | | | | IDENT "__assert_fail" (0.6.34) {0} 
+| | | | | | | STRINGCON ""\"null\" == null"" (0.6.49) {0} 
+| | | | | | | STRINGCON ""assert.oc"" (0.6.69) {0} 
+| | | | | | | INTCON "6" (0.6.82) {0} 
+| | | | | | | DECLID "__FUNC__" (0.6.85) {0} 
+| | | RETURN "return" (0.7.4) {0} 
+| | | | INTCON "0" (0.7.11) {0} 

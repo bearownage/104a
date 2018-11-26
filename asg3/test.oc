@@ -1,0 +1,4 @@
+int main() {
+   string b = new string(5);
+   int[] vec1 = new string[0];
+}

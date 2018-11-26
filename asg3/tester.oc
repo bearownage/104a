@@ -1,0 +1,16 @@
+#include "oclib.h"
+
+struct node {
+   string data;
+   node link;
+}
+
+struct stack {
+   node top;
+}
+
+bool empty (stack stack) {
+   assert (stack != null);
+   //return stack->top == null;
+}
+
