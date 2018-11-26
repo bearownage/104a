@@ -11,6 +11,7 @@ using namespace std;
 
 int blocknr = 0;
 int next_block = 1;
+int seqCounter = 0;
 
 symbol_table* types = new symbol_table;
 symbol_table* variables = new symbol_table;
@@ -428,7 +429,6 @@ void handleBlock(astree* blockNode, astree* returnType) {
         switch (block -> symbol) {
             case TOK_VARDECL : {
                 checkVarDecl(block); 
-                int blockCounter = 0;
                 if ( block->children[0]->symbol == TOK_ARRAY ) {
                     if ( block->children[0]->children[0]->symbol == TOK_TYPEID ) {
                         symbol* struc = findTypeid(block->children[0]->children[0]->lexinfo);
@@ -439,9 +439,9 @@ void handleBlock(astree* blockNode, astree* returnType) {
                     block->children[0]->children[0]->children[0]->decLloc = block->children[0]->children[0]->lloc;
                     block->children[0]->children[0]->children[0]->attributes[unsigned(attr::LOCAL)] = 1;
                     symbol* dec = newSym(block->children[0]->children[0]->children[0]);
-                    dec -> sequence = blockCounter;
+                    dec -> sequence = seqCounter;
                     dec -> block_nr = blocknr;
-                    blockCounter++;
+                    seqCounter++;
                     variables->insert(std::make_pair(block->children[0]->children[0]->children[0]->lexinfo, dec));
                     printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", block->children[0]->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
                     dec->lloc.linenr, dec->lloc.offset, dec->block_nr,
@@ -464,9 +464,9 @@ void handleBlock(astree* blockNode, astree* returnType) {
                     block->children[0]->children[0]->decLloc = block->children[0]->lloc;
                     block->children[0]->children[0]->attributes[unsigned(attr::LOCAL)] = 1;
                     symbol* dec = newSym(block->children[0]->children[0]);
-                    dec -> sequence = blockCounter;
+                    dec -> sequence = seqCounter;
                     dec -> block_nr = blocknr;
-                    blockCounter++;
+                    seqCounter++;
                     variables->insert(std::make_pair(block->children[0]->children[0]->lexinfo, dec)); 
                     printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", block->children[0]->children[0]->lexinfo->c_str(), dec->lloc.filenr,
                     dec->lloc.linenr, dec->lloc.offset, dec->block_nr,
@@ -777,6 +777,7 @@ void traversal(astree* root) {
                variables->insert(std::make_pair(currParam->param_name, currParam));
             }
             
+            seqCounter = 0;
             astree* block = childNode -> children[2];
             astree* returnType = childNode->children[0]->children[0];
             handleBlock(block, returnType);
@@ -832,6 +833,83 @@ void traversal(astree* root) {
                 }
                 printf("\n");
                 break;
+         }
+         case TOK_PROTOTYPE : {
+            symbol* sym = newSym(childNode);
+            sym -> attributes = childNode->children[0]->children[0]->attributes;
+            sym -> funcname = childNode->children[0]->children[0]->lexinfo;
+            sym -> lloc = childNode->children[0]->children[0]->lloc;
+            sym -> block_nr = 0;
+            
+            setFuncBlockNums(childNode);
+            childNode->block_nr = 0;
+            childNode->children[0]->block_nr = 0;
+            childNode->children[0]->children[0]->block_nr = 0;
+            if(childNode->children[0]->symbol == TOK_TYPEID) {
+              symbol* temp = findTypeid(childNode->children[0]->lexinfo);
+              sym->attributes[unsigned(attr::STRUCT)] = 1;
+              sym->strucname = temp->strucname;
+              childNode->children[0]->children[0]->strucname = temp->strucname;
+            }
+            sym->attributes[unsigned(attr::VARIABLE)] = 0;
+            childNode->children[0]->children[0]->attributes = sym->attributes;
+            globaldecs->insert(std::make_pair(sym->funcname, sym));
+            printf("%s (%lu.%lu.%lu) {%lu} %s\n", sym->funcname->c_str(), sym->lloc.filenr,
+            sym->lloc.linenr, sym->lloc.offset, sym->block_nr,
+            attrStringSym(sym).c_str());
+           
+            astree* params = childNode->children[1];
+            int paraCounter = 0;
+            
+            for(astree* parameter : params->children) {
+               astree* ident = parameter->children[0];
+               if(parameter->symbol == TOK_ARRAY) {
+                 ident = ident->children[0];
+               }
+               symbol* currParam;
+               if(parameter->symbol != TOK_ARRAY) {
+                  currParam = newSym(parameter->children[0]);
+               }
+               else {
+                  currParam = newSym(parameter->children[0]->children[0]);
+               }
+               currParam->sequence = paraCounter;
+               currParam->block_nr = blocknr;
+               paraCounter++;
+               if(parameter->symbol != TOK_ARRAY) {
+                  if(parameter->symbol == TOK_TYPEID) {
+                     symbol* struc = findTypeid(parameter->lexinfo);
+                     parameter->children[0]->attributes[unsigned(attr::STRUCT)] = 1;
+                     parameter->children[0]->strucname = struc->strucname; 
+                     currParam->attributes = parameter->children[0]->attributes;
+                     currParam->strucname = struc->strucname; 
+                  }
+                  currParam->param_name = parameter->children[0]->lexinfo;
+                  sym->parameters.push_back(currParam);
+                  parameter->children[0]->boolLoc = 1;
+                  parameter->children[0]->decLloc = parameter->lloc;
+               }
+               else {
+                  if(parameter->children[0]->symbol == TOK_TYPEID) {
+                     symbol* struc = findTypeid(parameter->children[0]->lexinfo);
+                     parameter->children[0]->children[0]->attributes[unsigned(attr::STRUCT)] = 1;
+                     parameter->children[0]->children[0]->strucname = struc->strucname;
+                     currParam->attributes = parameter->children[0]->children[0]->attributes;
+                     currParam->strucname = struc->strucname;
+                  }
+                  currParam->param_name = parameter->children[0]->children[0]->lexinfo;
+                  sym->parameters.push_back(currParam);
+                  parameter->children[0]->children[0]->boolLoc = 1;
+                  parameter->children[0]->children[0]->decLloc = parameter->children[0]->lloc; 
+               }
+               printf("    %s (%lu.%lu.%lu) {%lu} %s %lu\n", currParam->param_name->c_str(), currParam->lloc.filenr,
+               currParam->lloc.linenr, currParam->lloc.offset, currParam->block_nr,
+               attrStringSym(currParam).c_str(), currParam->sequence);
+               variables->insert(std::make_pair(currParam->param_name, currParam));
+               
+            }
+            printf("\n");
+             break;
          }
          case TOK_TYPEID :
             //childNode -> attributes[unsigned(attr::TYPEID)] = 1;
@@ -982,7 +1060,8 @@ void updateAttr(astree* root) {
         case TOK_RETURN :
             break;
          default : 
-           printf("Press F to pay respect: %s\n", parser::get_tname(childNode->symbol));
+           //printf("Press F to pay respect: %s\n", parser::get_tname(childNode->symbol));
+           break;
       }
       updateAttr(childNode);
    }   

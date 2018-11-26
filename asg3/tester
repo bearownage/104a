@@ -1,0 +1,1971 @@
+;-1.  1: # 1 "arraystack.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "arraystack.oc"
+; 0.  1: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 2 "arraystack.oc" 2
+; 0.  2: 
+; 0.  3: 
+; 0.  4: 
+; 0.  5: struct stack {
+; 0.  6:    string[] data;
+; 0.  7:    int size;
+; 0.  8:    int top;
+; 0.  9: }
+; 0. 10: 
+; 0. 11: stack new_stack (int size) {
+; 0. 12:    stack stack = new stack;
+; 0. 13:    stack->data = new string[size];
+; 0. 14:    stack->size = size;
+; 0. 15:    stack->top = NULL;
+; 0. 16:    return stack;
+; 0. 17: }
+; 0. 18: 
+; 0. 19: void push (stack stack, string str) {
+; 0. 20:    { if (not (stack->top < stack->size - 1)) { __assert_fail ("stack->top < stack->size - 1", "arraystack.oc", 20, __FUNC__); } };
+; 0. 21:    stack->top = stack->top + 1;
+; 0. 22:    stack->data[stack->top] = str;
+; 0. 23: }
+; 0. 24: 
+; 0. 25: string pop (stack stack) {
+; 0. 26:    string tmp = stack->data[stack->top];
+; 0. 27:    { if (not (stack->top != (-1))) { __assert_fail ("stack->top != EMPTY", "arraystack.oc", 27, __FUNC__); } };
+; 0. 28:    stack->top = stack->top - 1;
+; 0. 29:    return tmp;
+; 0. 30: }
+; 0. 31: 
+; 0. 32: int empty (stack stack) {
+; 0. 33:    return stack->top == (-1);
+; 0. 34: }
+; 0. 35: 
+; 0. 36: int main (int argc, string[] argv) {
+; 0. 37:    stack stack = new_stack (100);
+; 0. 38:    int argi = 0;
+; 0. 39: 
+; 0. 40:    while (argi < argc) {
+; 0. 41:       push (stack, argv[argi]);
+; 0. 42:       argi = argi + 1;
+; 0. 43:    }
+; 0. 44: 
+; 0. 45:    while (not empty (stack)) {
+; 0. 46:       putstr (pop (stack));
+; 0. 47:       putchar ('\n');
+; 0. 48:    }
+; 0. 49: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+stack (0.5.8) {0} struct stack
+    data (0.6.13) string array field 0
+    size (0.7.8) int field 1
+    top (0.8.8) int field 2
+
+new_stack (0.11.7) {0} struct stack function
+    size (0.11.22) {1} int variable lval param 0
+    stack (0.12.10) {1} struct stack variable lval local 0
+
+push (0.19.6) {1} void function
+    stack (0.19.18) {2} struct stack variable lval param 0
+    str (0.19.32) {2} string variable lval param 1
+
+pop (0.25.8) {2} string function
+    stack (0.25.19) {3} struct stack variable lval param 0
+    tmp (0.26.11) {3} string variable lval local 0
+
+empty (0.32.5) {3} int function
+    stack (0.32.18) {4} struct stack variable lval param 0
+
+main (0.36.5) {4} int function
+    argc (0.36.15) {5} int variable lval param 0
+    argv (0.36.30) {5} string array variable lval param 1
+    stack (0.37.10) {5} struct stack variable lval local 0
+    argi (0.38.8) {5} int variable lval local 1
+
+;-1.  1: # 1 "assertfail.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "assertfail.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "assertfail.oc" 2
+; 0.  4: 
+; 0.  5: int main (int argc, string[] argv) {
+; 0.  6:    putstr (argv[0]);
+; 0.  7:    putstr (" was compiled on ");
+; 0.  8:    putstr ("Nov 25 2018");
+; 0.  9:    putstr (" @ ");
+; 0. 10:    putstr ("23:00:22");
+; 0. 11:    putstr ("\n");
+; 0. 12:    return 0;
+; 0. 13: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+main (0.5.5) {0} int function
+    argc (0.5.15) {1} int variable lval param 0
+    argv (0.5.30) {1} string array variable lval param 1
+
+;-1.  1: # 1 "assert.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "assert.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "assert.oc" 2
+; 0.  4: 
+; 0.  5: int main() {
+; 0.  6:    { if (not ("null" == null)) { __assert_fail ("\"null\" == null", "assert.oc", 6, __FUNC__); } };
+; 0.  7:    return 0;
+; 0.  8: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+main (0.5.5) {0} int function
+
+;-1.  1: # 1 "atoi.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "atoi.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "atoi.oc" 2
+; 0.  4: 
+; 0.  5: int atoi (string str) {
+; 0.  6:    int neg = 0;
+; 0.  7:    int num = 0;
+; 0.  8:    int digit = 0;
+; 0.  9:    int contin = 0;
+; 0. 10:    int c = 0;
+; 0. 11:    { if (not (str != null)) { __assert_fail ("str != null", "atoi.oc", 11, __FUNC__); } };
+; 0. 12:    if (str[0] != '\0') {
+; 0. 13:       if (str[0] == '-') {
+; 0. 14:          digit = digit + 1;
+; 0. 15:          neg = 1;
+; 0. 16:       }
+; 0. 17:       contin = 1;
+; 0. 18:       while (contin) {
+; 0. 19:          if (str[digit] == '\0') {
+; 0. 20:             contin = 0;
+; 0. 21:          }else {
+; 0. 22:             c = str[digit];
+; 0. 23:             digit = digit + 1;
+; 0. 24:             if (c < '0') contin = 0;
+; 0. 25:             else if (c > '9') contin = 0;
+; 0. 26:             else num = num * 10 + c - '0';
+; 0. 27:          }
+; 0. 28:       }
+; 0. 29:       if (neg) num = - num;
+; 0. 30:    }
+; 0. 31:    return num;
+; 0. 32: }
+; 0. 33: 
+; 0. 34: int main (int argc, string[] argv) {
+; 0. 35:    int argi = 1;
+; 0. 36:    string arg = null;
+; 0. 37:    while (argi < argc) {
+; 0. 38:       arg = argv[argi];
+; 0. 39:       putstr (arg);
+; 0. 40:       putstr (" = ");
+; 0. 41:       putint (atoi (arg));
+; 0. 42:       putchar ('\n');
+; 0. 43:       argi = argi + 1;
+; 0. 44:    }
+; 0. 45:    return 0;
+; 0. 46: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+atoi (0.5.5) {0} int function
+    str (0.5.18) {1} string variable lval param 0
+    neg (0.6.8) {1} int variable lval local 0
+    num (0.7.8) {1} int variable lval local 1
+    digit (0.8.8) {1} int variable lval local 2
+    contin (0.9.8) {1} int variable lval local 3
+    c (0.10.8) {1} int variable lval local 4
+
+main (0.34.5) {1} int function
+    argc (0.34.15) {2} int variable lval param 0
+    argv (0.34.30) {2} string array variable lval param 1
+    argi (0.35.8) {2} int variable lval local 0
+    arg (0.36.11) {2} string variable lval local 1
+
+;-1.  1: # 1 "c8.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "c8.oc"
+; 0.  1: char O[9];Q(l,b,d){int o=8,p=1,q=1<<
+; 0.  2: l|1<<22-l;for(;l>7?!write(1,O,9):o--
+; 0.  3: ;)O[l]=56-o,b&p|d&q||Q(l+1,b|p,d|q),
+; 0.  4: p*=2,q*=2;}main(){O[8]=10;Q(0,0,0);}
+;-1.  1: # 1 "cobol.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "cobol.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: 000100 IDENTIFICATION DIVISION.
+; 0.  4: 000200 PROGRAM-ID. HELLOWORLD.
+; 0.  5: 000300
+; 0.  6: 000400*
+; 0.  7: 000500 ENVIRONMENT DIVISION.
+; 0.  8: 000600 CONFIGURATION SECTION.
+; 0.  9: 000700 SOURCE-COMPUTER. RM-COBOL.
+; 0. 10: 000800 OBJECT-COMPUTER. RM-COBOL.
+; 0. 11: 000900
+; 0. 12: 001000 DATA DIVISION.
+; 0. 13: 001100 FILE SECTION.
+; 0. 14: 001200
+; 0. 15: 100000 PROCEDURE DIVISION.
+; 0. 16: 100100
+; 0. 17: 100200 MAIN-LOGIC SECTION.
+; 0. 18: 100300 BEGIN.
+; 0. 19: 100400 DISPLAY " " LINE 1 POSITION 1 ERASE EOS.
+; 0. 20: 100500 DISPLAY "Hello world!" LINE 15 POSITION 10.
+; 0. 21: 100600 STOP RUN.
+; 0. 22: 100700 MAIN-LOGIC-EXIT.
+; 0. 23: 100800 EXIT.
+;-1.  1: # 1 "dotproduct.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "dotproduct.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "dotproduct.oc" 2
+; 0.  4: 
+; 0.  5: int dot_product (int size, int[] vec1, int[] vec2) {
+; 0.  6:    int index = 0;
+; 0.  7:    int dot = 0;
+; 0.  8:    while (index < size) {
+; 0.  9:       dot = dot + vec1[index] * vec2[index];
+; 0. 10:       index = index + 1;
+; 0. 11:    }
+; 0. 12:    return dot;
+; 0. 13: }
+; 0. 14: 
+; 0. 15: 
+; 0. 16: 
+; 0. 17: int main() {
+; 0. 18:    int[] vec1 = new int[10];
+; 0. 19:    int[] vec2 = new int[10];
+; 0. 20:    int i = 0;
+; 0. 21:    while (i < 10) {
+; 0. 22:       vec1[i] = i + 10;
+; 0. 23:       vec2[i] = i * 10;
+; 0. 24:       i = i + 1;
+; 0. 25:    }
+; 0. 26:    putint (dot_product (10, vec1, vec2));
+; 0. 27:    putchar ('\n');
+; 0. 28:    return 0;
+; 0. 29: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+dot_product (0.5.5) {0} int function
+    size (0.5.22) {1} int variable lval param 0
+    vec1 (0.5.34) {1} int array variable lval param 1
+    vec2 (0.5.46) {1} int array variable lval param 2
+    index (0.6.8) {1} int variable lval local 0
+    dot (0.7.8) {1} int variable lval local 1
+
+main (0.17.5) {1} int function
+    vec1 (0.18.10) {2} int array variable local 0
+    vec2 (0.19.10) {2} int array variable local 1
+    i (0.20.8) {2} int variable lval local 2
+
+;-1.  1: # 1 "elseif.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "elseif.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "elseif.oc" 2
+; 0.  4: 
+; 0.  5: int main (int argc) {
+; 0.  6:    int argi = 0;
+; 0.  7:    if (argc == argi ) puts ("one");
+; 0.  8: 
+; 0.  9: 
+; 0. 10: 
+; 0. 11: 
+; 0. 12: 
+; 0. 13: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+main (0.5.5) {0} int function
+    argc (0.5.15) {1} int variable lval param 0
+    argi (0.6.8) {1} int variable lval local 0
+
+;-1.  1: # 1 "era.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "era.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "era.oc" 2
+; 0.  4: 
+; 0.  5: 
+; 0.  6: 
+; 0.  7: 
+; 0.  8: int main() {
+; 0.  9:    int prime = 2;
+; 0. 10:    int index = 2;
+; 0. 11:    string[] sieve = new string[100];
+; 0. 12: 
+; 0. 13:    while (index < 100) {
+; 0. 14:       sieve[index] = 1;
+; 0. 15:       index = index + 1;
+; 0. 16:    }
+; 0. 17: 
+; 0. 18:    while (prime < 100) {
+; 0. 19:       if (sieve[prime]) {
+; 0. 20:          index = prime * 2;
+; 0. 21:          while (index < 100) {
+; 0. 22:             sieve[index] = 0;
+; 0. 23:             index = index + prime;
+; 0. 24:          }
+; 0. 25:       }
+; 0. 26:       prime = prime + 1;
+; 0. 27:    }
+; 0. 28: 
+; 0. 29:    index = 2;
+; 0. 30:    while (index < 100) {
+; 0. 31:       if (sieve[index]) {
+; 0. 32:          putint (index);
+; 0. 33:          putchar ('\n');
+; 0. 34:       }
+; 0. 35:       index = index + 1;
+; 0. 36:    }
+; 0. 37: 
+; 0. 38:    return 0;
+; 0. 39: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+main (0.8.5) {0} int function
+    prime (0.9.8) {1} int variable lval local 0
+    index (0.10.8) {1} int variable lval local 1
+    sieve (0.11.13) {1} string array variable local 2
+
+;-1.  1: # 1 "example.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "example.oc"
+; 0.  1: struct node {
+; 0.  2:       int foo;
+; 0.  3:       node link;
+; 0.  4: }
+; 0.  5: 
+; 0.  6: 
+; 0.  7: node func (node head, int length) {
+; 0.  8:       int a = 0;
+; 0.  9:       string b = "";
+; 0. 10:       node c = new node;
+; 0. 11:       if (a < 3) {
+; 0. 12:           a=length;
+; 0. 13:           c=c.link;
+; 0. 14:       }else {
+; 0. 15:           if (0 == 0) a = 8;
+; 0. 16:           else b = "foo";
+; 0. 17:       }
+; 0. 18: }
+node (0.1.8) {0} struct node
+    foo (0.2.11) int field 0
+    link (0.3.12) struct node field 1
+
+func (0.7.6) {0} struct node function
+    head (0.7.17) {1} struct node variable lval param 0
+    length (0.7.27) {1} int variable lval param 1
+    a (0.8.11) {1} int variable lval local 0
+    b (0.9.14) {1} string variable lval local 1
+    c (0.10.12) {1} struct node variable lval local 2
+
+;-1.  1: # 1 "fac.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "fac.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: 
+; 0.  4: 
+; 0.  5: 
+; 0.  6: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 7 "fac.oc" 2
+; 0.  7: 
+; 0.  8: int fac (int n) {
+; 0.  9:    int f = 1;
+; 0. 10:    while (n > 1) {
+; 0. 11:       f = f * n;
+; 0. 12:       n = n - 1;
+; 0. 13:    }
+; 0. 14:    return f;
+; 0. 15: }
+; 0. 16: 
+; 0. 17: int main() {
+; 0. 18:    int n = 1;
+; 0. 19:    while (n <= 5) {
+; 0. 20:       putint (fac (n));
+; 0. 21:       putchar ('\n');
+; 0. 22:       n = n + 1;
+; 0. 23:    }
+; 0. 24:    return 0;
+; 0. 25: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+fac (0.8.5) {0} int function
+    n (0.8.14) {1} int variable lval param 0
+    f (0.9.8) {1} int variable lval local 0
+
+main (0.17.5) {1} int function
+    n (0.18.8) {2} int variable lval local 0
+
+;-1.  1: # 1 "fib2.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "fib2.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: 
+; 0.  4: 
+; 0.  5: 
+; 0.  6: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 7 "fib2.oc" 2
+; 0.  7: 
+; 0.  8: int fibonacci (int n) {
+; 0.  9:    if (n < 2) return n;
+; 0. 10:    return fibonacci (n - 1) + fibonacci (n - 2);
+; 0. 11: }
+; 0. 12: 
+; 0. 13: int main() {
+; 0. 14:    int n = 0;
+; 0. 15:    while (n < 10) {
+; 0. 16:       putstr ("fibonacci(");
+; 0. 17:       putint (n);
+; 0. 18:       putstr (") = ");
+; 0. 19:       putint (fibonacci (n));
+; 0. 20:       putchar ('\n');
+; 0. 21:       n = n + 1;
+; 0. 22:    }
+; 0. 23:    return 0;
+; 0. 24: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+fibonacci (0.8.5) {0} int function
+    n (0.8.20) {1} int variable lval param 0
+
+main (0.13.5) {1} int function
+    n (0.14.8) {2} int variable lval local 0
+
+;-1.  1: # 1 "fib.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "fib.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: 
+; 0.  4: 
+; 0.  5: 
+; 0.  6: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 7 "fib.oc" 2
+; 0.  7: 
+; 0.  8: 
+; 0.  9: int[] fibonacci = null;
+; 0. 10: 
+; 0. 11: int main() {
+; 0. 12:    int index = 2;
+; 0. 13:    fibonacci = new int[30];
+; 0. 14:    fibonacci[0] = 0;
+; 0. 15:    fibonacci[1] = 1;
+; 0. 16: 
+; 0. 17:    while (index < 30) {
+; 0. 18:       fibonacci[index] = fibonacci[index - 1] + fibonacci[index - 2];
+; 0. 19:       index = index + 1;
+; 0. 20:    }
+; 0. 21: 
+; 0. 22:    index = 0;
+; 0. 23:    puts ("Numeri di figlio Bonacci\n");
+; 0. 24:    while (index < 30) {
+; 0. 25:       putstr ("fibonacci[");
+; 0. 26:       putint (index);
+; 0. 27:       putstr ("] = ");
+; 0. 28:       putint (fibonacci[index]);
+; 0. 29:       putchar ('\n');
+; 0. 30:       index = index + 1;
+; 0. 31:    }
+; 0. 32: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+fibonacci (0.9.7) {0} int array variable 0
+
+main (0.11.5) {0} int function
+    index (0.12.8) {1} int variable lval local 0
+
+;-1.  1: # 1 "hello.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "hello.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: 
+; 0.  4: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 5 "hello.oc" 2
+; 0.  5: 
+; 0.  6: int main() {
+; 0.  7:    putstr ("Hello, world!\n");
+; 0.  8:    return 0;
+; 0.  9: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+main (0.6.5) {0} int function
+
+;-1.  1: # 1 "hundred.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "hundred.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "hundred.oc" 2
+; 0.  4: 
+; 0.  5: int main() {
+; 0.  6:    int count = 0;
+; 0.  7:    while (count <= 100) {
+; 0.  8:       count = count + 1;
+; 0.  9:       putint (count);
+; 0. 10:       putchar ('\n');
+; 0. 11:    }
+; 0. 12:    return 0;
+; 0. 13: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+main (0.5.5) {0} int function
+    count (0.6.8) {1} int variable lval local 0
+
+;-1.  1: # 1 "insertion.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "insertion.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: 
+; 0.  4: 
+; 0.  5: 
+; 0.  6: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 7 "insertion.oc" 2
+; 0.  7: 
+; 0.  8: int strcmp (string s1, string s2) {
+; 0.  9:    int index = 0;
+; 0. 10:    int contin = 1;
+; 0. 11:    int s1c = 0;
+; 0. 12:    int s2c = 0;
+; 0. 13:    int cmp = 0;
+; 0. 14:    while (contin) {
+; 0. 15:       s1c = s1[index];
+; 0. 16:       s2c = s2[index];
+; 0. 17:       cmp = s1c - s2c;
+; 0. 18:       if (cmp != 0) return cmp;
+; 0. 19:       if (s1c == '\0') contin = 0;
+; 0. 20:       index = index + 1;
+; 0. 21:    }
+; 0. 22:    return 0;
+; 0. 23: }
+; 0. 24: 
+; 0. 25: void insertion_sort (int size, string[] array) {
+; 0. 26:    int sorted = 1;
+; 0. 27:    int slot = 0;
+; 0. 28:    string element = null;
+; 0. 29:    int contin = 0;
+; 0. 30:    while (sorted < size) {
+; 0. 31:       slot = sorted;
+; 0. 32:       element = array[slot];
+; 0. 33:       contin = 1;
+; 0. 34:       while (contin) {
+; 0. 35:          if (slot == 0) {
+; 0. 36:             contin = 0;
+; 0. 37:          }else if (strcmp (array[slot - 1], element) <= 0) {
+; 0. 38:             contin = 0;
+; 0. 39:          }else {
+; 0. 40:             array[slot] = array[slot - 1];
+; 0. 41:             slot = slot - 1;
+; 0. 42:          }
+; 0. 43:       }
+; 0. 44:       array[slot] = element;
+; 0. 45:       sorted = sorted + 1;
+; 0. 46:    }
+; 0. 47: }
+; 0. 48: 
+; 0. 49: void print_array (string label, int size, string[] array) {
+; 0. 50:    int index = 0;
+; 0. 51:    putchar ('\n');
+; 0. 52:    putstr (label);
+; 0. 53:    putstr (":\n");
+; 0. 54:    while (index < size) {
+; 0. 55:       putstr (array[index]);
+; 0. 56:       putchar ('\n');
+; 0. 57:       index = index + 1;
+; 0. 58:    }
+; 0. 59: }
+; 0. 60: 
+; 0. 61: int main (int argc, string[] argv) {
+; 0. 62:    print_array ("unsorted", argc, argv);
+; 0. 63:    insertion_sort (argc, argv);
+; 0. 64:    print_array ("sorted", argc, argv);
+; 0. 65:    return 0;
+; 0. 66: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+strcmp (0.8.5) {0} int function
+    s1 (0.8.20) {1} string variable lval param 0
+    s2 (0.8.31) {1} string variable lval param 1
+    index (0.9.8) {1} int variable lval local 0
+    contin (0.10.8) {1} int variable lval local 1
+    s1c (0.11.8) {1} int variable lval local 2
+    s2c (0.12.8) {1} int variable lval local 3
+    cmp (0.13.8) {1} int variable lval local 4
+
+insertion_sort (0.25.6) {1} void function
+    size (0.25.26) {2} int variable lval param 0
+    array (0.25.41) {2} string array variable lval param 1
+    sorted (0.26.8) {2} int variable lval local 0
+    slot (0.27.8) {2} int variable lval local 1
+    element (0.28.11) {2} string variable lval local 2
+    contin (0.29.8) {2} int variable lval local 3
+
+print_array (0.49.6) {2} void function
+    label (0.49.26) {3} string variable lval param 0
+    size (0.49.37) {3} int variable lval param 1
+    array (0.49.52) {3} string array variable lval param 2
+    index (0.50.8) {3} int variable lval local 0
+
+main (0.61.5) {3} int function
+    argc (0.61.15) {4} int variable lval param 0
+    argv (0.61.30) {4} string array variable lval param 1
+
+;-1.  1: # 1 "linkedstack.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "linkedstack.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "linkedstack.oc" 2
+; 0.  4: 
+; 0.  5: struct node {
+; 0.  6:    string data;
+; 0.  7:    node link;
+; 0.  8: }
+; 0.  9: 
+; 0. 10: struct stack {
+; 0. 11:    node top;
+; 0. 12: }
+; 0. 13: 
+; 0. 14: int empty (stack stack) {
+; 0. 15:    { if (not (stack != null)) { __assert_fail ("stack != null", "linkedstack.oc", 15, __FUNC__); } };
+; 0. 16:    return stack->top == null;
+; 0. 17: }
+; 0. 18: 
+; 0. 19: stack new_stack() {
+; 0. 20:    stack stack = new stack;
+; 0. 21:    stack->top = null;
+; 0. 22:    return stack;
+; 0. 23: }
+; 0. 24: 
+; 0. 25: void push (stack stack, string str) {
+; 0. 26:    node tmp = new node;
+; 0. 27:    { if (not (stack != null)) { __assert_fail ("stack != null", "linkedstack.oc", 27, __FUNC__); } };
+; 0. 28:    tmp->data = str;
+; 0. 29:    tmp->link = stack->top;
+; 0. 30:    stack->top = tmp;
+; 0. 31: }
+; 0. 32: 
+; 0. 33: string pop (stack stack) {
+; 0. 34:    string tmp = stack->top->data;
+; 0. 35:    { if (not (stack != null)) { __assert_fail ("stack != null", "linkedstack.oc", 35, __FUNC__); } };
+; 0. 36:    { if (not (not empty (stack))) { __assert_fail ("not empty (stack)", "linkedstack.oc", 36, __FUNC__); } };
+; 0. 37:    stack->top = stack->top->link;
+; 0. 38:    return tmp;
+; 0. 39: }
+; 0. 40: 
+; 0. 41: int main (int argc, string[] argv) {
+; 0. 42:    stack stack = new_stack;
+; 0. 43:    int argi = 0;
+; 0. 44: 
+; 0. 45:    while (argi < argc) {
+; 0. 46:       push (stack, argv[argi]);
+; 0. 47:       argi = argi + 1;
+; 0. 48:    }
+; 0. 49: 
+; 0. 50:    while (not empty (stack)) {
+; 0. 51:       putstr (pop (stack));
+; 0. 52:       putchar ('\n');
+; 0. 53:    }
+; 0. 54:    return 0;
+; 0. 55: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+node (0.5.8) {0} struct node
+    data (0.6.11) string field 0
+    link (0.7.9) struct node field 1
+
+stack (0.10.8) {0} struct stack
+    top (0.11.9) struct node field 0
+
+empty (0.14.5) {0} int function
+    stack (0.14.18) {1} struct stack variable lval param 0
+
+new_stack (0.19.7) {1} struct stack function
+    stack (0.20.10) {2} struct stack variable lval local 0
+
+push (0.25.6) {2} void function
+    stack (0.25.18) {3} struct stack variable lval param 0
+    str (0.25.32) {3} string variable lval param 1
+    tmp (0.26.9) {3} struct node variable lval local 0
+
+pop (0.33.8) {3} string function
+    stack (0.33.19) {4} struct stack variable lval param 0
+    tmp (0.34.11) {4} string variable lval local 0
+
+main (0.41.5) {4} int function
+    argc (0.41.15) {5} int variable lval param 0
+    argv (0.41.30) {5} string array variable lval param 1
+    stack (0.42.10) {5} struct stack variable lval local 0
+    argi (0.43.8) {5} int variable lval local 1
+
+;-1.  1: # 1 "numbers.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "numbers.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "numbers.oc" 2
+; 0.  4: 
+; 0.  5: int main() {
+; 0.  6:    int number = 1;
+; 0.  7:    while (number > 0) {
+; 0.  8:       putint (number);
+; 0.  9:       putchar ('\n');
+; 0. 10:       number = number + number;
+; 0. 11:    }
+; 0. 12:    putint (number);
+; 0. 13:    putchar ('\n');
+; 0. 14:    return 0;
+; 0. 15: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+main (0.5.5) {0} int function
+    number (0.6.8) {1} int variable lval local 0
+
+;-1.  1: # 1 "ocecho.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "ocecho.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "ocecho.oc" 2
+; 0.  4: 
+; 0.  5: int main(int argc, string[] argv) {
+; 0.  6:    int argi = 1;
+; 0.  7:    while (argi < argc) {
+; 0.  8:       if (argi > 1) putchar (' ');
+; 0.  9:       putstr (argv[argi]);
+; 0. 10:       argi = argi + 1;
+; 0. 11:    }
+; 0. 12:    putstr ("\n");
+; 0. 13:    return 0;
+; 0. 14: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+main (0.5.5) {0} int function
+    argc (0.5.14) {1} int variable lval param 0
+    argv (0.5.29) {1} string array variable lval param 1
+    argi (0.6.8) {1} int variable lval local 0
+
+;-1.  1: # 1 "queens.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "queens.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "queens.oc" 2
+; 0.  4: 
+; 0.  5: 
+; 0.  6: int[] board = null;
+; 0.  7: 
+; 0.  8: int is_safe (int newcol) {
+; 0.  9:    int col = 0;
+; 0. 10:    int diagonal = 0;
+; 0. 11:    while (col < newcol) {
+; 0. 12:       if (board[col] == board[newcol]) return 0;
+; 0. 13:       diagonal = board[col] - board[newcol];
+; 0. 14:       if (diagonal == col - newcol) return 0;
+; 0. 15:       if (diagonal == newcol - col) return 0;
+; 0. 16:       col = col + 1;
+; 0. 17:    }
+; 0. 18:    return 1;
+; 0. 19: }
+; 0. 20: 
+; 0. 21: void printqueens() {
+; 0. 22:    int col = 0;
+; 0. 23:    while (col < 8) {
+; 0. 24:       putchar (board[col] + '1');
+; 0. 25:       col = col + 1;
+; 0. 26:    }
+; 0. 27:    putchar ('\n');
+; 0. 28: }
+; 0. 29: 
+; 0. 30: void queens (int newcol) {
+; 0. 31:    int row = 0;
+; 0. 32:    if (newcol == 8) printqueens();
+; 0. 33:    else {
+; 0. 34:       while (row < 8) {
+; 0. 35:          board[newcol] = row;
+; 0. 36:          if (is_safe (newcol)) queens (newcol + 1);
+; 0. 37:          row = row + 1;
+; 0. 38:       }
+; 0. 39:    }
+; 0. 40: }
+; 0. 41: 
+; 0. 42: int main() {
+; 0. 43:    board = new int[8];
+; 0. 44:    queens (0);
+; 0. 45:    return 0;
+; 0. 46: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+board (0.6.7) {0} int array variable 0
+
+is_safe (0.8.5) {0} int function
+    newcol (0.8.18) {1} int variable lval param 0
+    col (0.9.8) {1} int variable lval local 0
+    diagonal (0.10.8) {1} int variable lval local 1
+
+printqueens (0.21.6) {1} void function
+    col (0.22.8) {2} int variable lval local 0
+
+queens (0.30.6) {2} void function
+    newcol (0.30.18) {3} int variable lval param 0
+    row (0.31.8) {3} int variable lval local 0
+
+main (0.42.5) {3} int function
+
+;-1.  1: # 1 "semantics.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "semantics.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: 
+; 0.  4: int[] a = null;
+; 0.  5: int[] b = null;
+; 0.  6: 
+; 0.  7: void[] f() {};
+; 0.  8: 
+; 0.  9: int main() {
+; 0. 10:    int c = a + b;
+; 0. 11:    void n = null;
+; 0. 12:    bool x = a < b;
+; 0. 13:    bool y = a==b;
+; 0. 14:    return "foobar";
+; 0. 15: }
+a (0.4.7) {0} int array variable 0
+
+b (0.5.7) {0} int array variable 0
+
+void (0.7.1) {0} 
+
+main (0.9.5) {0} int function
+    c (0.10.8) {1} int variable lval local 0
+    n (0.11.9) {1} void variable lval local 1
+Incompatible return types at: (0.14.4) 
+
+;-1.  1: # 1 "syntax.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "syntax.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: int f() {
+; 0.  4: int a = ;
+; 0.  5: return foo;
+; 0.  6: public static int main (String[] args) {
+; 0.  7:    System.exit (255);
+; 0.  8: }
+;-1.  1: # 1 "test3.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "test3.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "test3.oc" 2
+; 0.  4: 
+; 0.  5: int main() {
+; 0.  6:    int a = 3;
+; 0.  7:    int b = 8;
+; 0.  8:    int c = a + b;
+; 0.  9:    a = b + c;
+; 0. 10:    putint (a);
+; 0. 11:    putchar ('\n');
+; 0. 12:    return 0;
+; 0. 13: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+main (0.5.5) {0} int function
+    a (0.6.8) {1} int variable lval local 0
+    b (0.7.8) {1} int variable lval local 1
+    c (0.8.8) {1} int variable lval local 2
+
+;-1.  1: # 1 "test4.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "test4.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "test4.oc" 2
+; 0.  4: 
+; 0.  5: struct foo {
+; 0.  6:    int a;
+; 0.  7: }
+; 0.  8: 
+; 0.  9: int main() {
+; 0. 10:    int a = 6;
+; 0. 11:    foo b = new foo;
+; 0. 12:    b->a = 8;
+; 0. 13:    a = a * b->a + 6;;
+; 0. 14:    putint (a);
+; 0. 15:    putchar (' ');
+; 0. 16:    putint (b->a);
+; 0. 17:    putchar ('\n');
+; 0. 18:    return 0;
+; 0. 19: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+foo (0.5.8) {0} struct foo
+    a (0.6.8) int field 0
+
+main (0.9.5) {0} int function
+    a (0.10.8) {1} int variable lval local 0
+    b (0.11.8) {1} struct foo variable lval local 1
+
+;-1.  1: # 1 "test6.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "test6.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "test6.oc" 2
+; 0.  4: 
+; 0.  5: struct foo {}
+; 0.  6: struct bar {}
+; 0.  7: 
+; 0.  8: int f0();
+; 0.  9: int f1 (int a);
+; 0. 10: int f2 (int a, int b);
+; 0. 11: int f3 (string a, string b, string c);
+; 0. 12: int f4 (foo a, bar b);
+; 0. 13: 
+; 0. 14: int main() {
+; 0. 15:    string s = "a";
+; 0. 16:    string[] sa = new string[10];
+; 0. 17:    return 0;
+; 0. 18: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+foo (0.5.8) {0} struct foo
+
+bar (0.6.8) {0} struct bar
+
+f0 (0.8.5) {0} int
+
+f1 (0.9.5) {0} int
+    a (0.9.13) {0} int variable lval param 0
+
+f2 (0.10.5) {0} int
+    a (0.10.13) {0} int variable lval param 0
+    b (0.10.20) {0} int variable lval param 1
+
+f3 (0.11.5) {0} int
+    a (0.11.16) {0} string variable lval param 0
+    b (0.11.26) {0} string variable lval param 1
+    c (0.11.36) {0} string variable lval param 2
+
+f4 (0.12.5) {0} int
+    a (0.12.13) {0} struct foo variable lval param 0
+    b (0.12.20) {0} struct bar variable lval param 1
+
+main (0.14.5) {0} int function
+    s (0.15.11) {1} string variable lval local 0
+    sa (0.16.13) {1} string array variable local 1
+
+;-1.  1: # 1 "tester.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "tester.oc"
+; 0.  1: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 2 "tester.oc" 2
+; 0.  2: 
+; 0.  3: struct node {
+; 0.  4:    string data;
+; 0.  5:    node link;
+; 0.  6: }
+; 0.  7: 
+; 0.  8: struct stack {
+; 0.  9:    node top;
+; 0. 10: }
+; 0. 11: 
+; 0. 12: int empty (stack stack) {
+; 0. 13:    { if (not (stack != null)) { __assert_fail ("stack != null", "tester.oc", 13, __FUNC__); } };
+; 0. 14: 
+; 0. 15: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+node (0.3.8) {0} struct node
+    data (0.4.11) string field 0
+    link (0.5.9) struct node field 1
+
+stack (0.8.8) {0} struct stack
+    top (0.9.9) struct node field 0
+
+empty (0.12.5) {0} int function
+    stack (0.12.18) {1} struct stack variable lval param 0
+
+;-1.  1: # 1 "test.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "test.oc"
+; 0.  1: int main() {
+; 0.  2:    string b = new string(5);
+; 0.  3:    int[] vec1 = new string[0];
+; 0.  4: }
+main (0.1.5) {0} int function
+    b (0.2.11) {1} string variable lval local 0
+    vec1 (0.3.10) {1} int array variable local 1
+
+;-1.  1: # 1 "towers.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "towers.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: # 1 "oclib.h" 1
+; 4.  1: # 29 "oclib.h"
+; 4. 29: void __assert_fail (string expr, string file, int line, string func);
+; 4. 30: void putchar (int c);
+; 4. 31: void putint (int i);
+; 4. 32: void putstr (string s);
+; 4. 33: int getchar();
+; 4. 34: string getword();
+; 4. 35: string getln();
+; 4. 36: void endl();
+; 4. 37: void exit (int status);
+; 4. 38: # 4 "towers.oc" 2
+; 0.  4: 
+; 0.  5: void move (string src, string dst) {
+; 0.  6:    putstr ("Move a disk from ");
+; 0.  7:    putstr (src);
+; 0.  8:    putstr (" to ");
+; 0.  9:    putstr (dst);
+; 0. 10:    putstr (".\n");
+; 0. 11: }
+; 0. 12: 
+; 0. 13: void towers (int ndisks, string src, string tmp, string dst) {
+; 0. 14:    if (ndisks < 1) return;
+; 0. 15:    towers (ndisks - 1, src, dst, tmp);
+; 0. 16:    move (src, dst);
+; 0. 17:    towers (ndisks - 1, tmp, src, dst);
+; 0. 18: }
+; 0. 19: 
+; 0. 20: int main() {
+; 0. 21:    towers (4, "Source", "Temporary", "Destination");
+; 0. 22:    return 0;
+; 0. 23: }
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+move (0.5.6) {0} void function
+    src (0.5.19) {1} string variable lval param 0
+    dst (0.5.31) {1} string variable lval param 1
+
+towers (0.13.6) {1} void function
+    ndisks (0.13.18) {2} int variable lval param 0
+    src (0.13.33) {2} string variable lval param 1
+    tmp (0.13.45) {2} string variable lval param 2
+    dst (0.13.57) {2} string variable lval param 3
+
+main (0.20.5) {2} int function
+
+;-1.  1: # 1 "trivial.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "trivial.oc"
+;-1.  1: # 1 "typecheck.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "typecheck.oc"
+; 0.  1: # 9 "typecheck.oc"
+; 0.  9: int[] a = null;
+; 0. 10: reference[] a = new string[10];
+; 0. 11: void foo();
+; 0. 12: void foo (int a);
+; 0. 13: void foo (int[] a, int[] b) {int x = a + b;}
+; 0. 14: struct foo { int a; int b; }
+; 0. 15: 
+; 0. 16: int main() {
+; 0. 17:    a + b;
+; 0. 18:    f();
+; 0. 19:    f (x, y+3, z);
+; 0. 20:    foo + bar;
+; 0. 21:    a = b = c = d;
+; 0. 22:    test = abc + def + ghi;
+; 0. 23:    this + 23 * a + "hello";
+; 0. 24:    while (a < b) f = f + 1;
+; 0. 25:    return 3 + 4;
+; 0. 26:    a[i] = b[j];
+; 0. 27:    return;
+; 0. 28:    while (true) {a = 3; b = 4; }
+; 0. 29:    if (a == b) f (x);
+; 0. 30:    if (a != b) y = 3; else f (y, z);
+; 0. 31: }
+a (0.9.7) {0} int array variable 0
+
+foo (0.11.6) {0} void
+
+foo (0.12.6) {0} void
+    a (0.12.15) {0} int variable lval param 0
+
+foo (0.13.6) {0} void function
+    a (0.13.17) {1} int array variable lval param 0
+    b (0.13.26) {1} int array variable lval param 1
+    x (0.13.34) {1} int variable lval local 0
+
+foo (0.14.8) {0} struct foo
+    a (0.14.18) int field 0
+    b (0.14.25) int field 1
+
+main (0.16.5) {1} int function
+
+;-1.  1: # 1 "uncomment.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "uncomment.oc"
+;-1.  1: # 1 "unstring.oc"; 0.  0: 
+; 0.  1: # 1 "<built-in>"
+; 1.  1: # 1 "<command-line>"
+; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
+; 3.  1: # 1 "<command-line>" 2
+; 2.  1: # 1 "unstring.oc"
+; 0.  1: 
+; 0.  2: 
+; 0.  3: 
+; 0.  4: int main() {
+; 0.  5:    string t = "\*/";
+   string s = "abc;
+   char c = 'a;
+; 0.  6:    s = "abcd\";
+   s = "abc|   ;
+
+; 0.  7:    int 23foobar;
+; 0.  8: }
