@@ -72,9 +72,11 @@ struc      : struc fielddecl ';'
            ;
 
 fielddecl  : basetype TOK_IDENT                           
-             { $$ = $1 ->  adopt ($2); $2 -> adopt_sym(NULL, TOK_FIELD); } 
+             { $$ = $1 ->  adopt ($2); 
+             $2 -> adopt_sym(NULL, TOK_FIELD); } 
            | basetype TOK_ARRAY TOK_IDENT                 
-             { $$ = $2 -> adopt ($1); $1 -> adopt ($3); $3 -> adopt_sym(NULL, TOK_FIELD);}
+             { $$ = $2 -> adopt ($1); 
+             $1 -> adopt ($3); $3 -> adopt_sym(NULL, TOK_FIELD);}
            ;
 
 globaldecl : identdec '=' constant ';'               
@@ -229,9 +231,10 @@ funCall    : funCall ',' expr
            | TOK_IDENT TOK_PARAM                          
              { $$ = $2 -> adopt_sym ($1, TOK_CALL); }
 
-variable   : TOK_IDENT                                    { $$ = $1 -> adopt_sym (NULL, TOK_DECLID); }
+variable   : TOK_IDENT   { $$ = $1 -> adopt_sym (NULL, TOK_DECLID); }
            | expr '[' expr ']'                            
-             { destroy ($4); $$ = $2 -> adopt_sym ($1, TOK_INDEX); $2 -> adopt ($3);  }
+             { destroy ($4); 
+             $$ = $2 -> adopt_sym ($1, TOK_INDEX); $2 -> adopt ($3);  }
            | expr TOK_ARROW TOK_IDENT                     
              { $$ = $2 -> adopt ($1, $3); 
                $3 -> adopt_sym (NULL, TOK_FIELD); }
