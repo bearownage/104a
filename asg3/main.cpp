@@ -18,6 +18,7 @@ using namespace std;
 #include "lyutils.h"
 #include "string_set.h"
 #include "symtable.h"
+#include "emitter.h"
 
 const string cpp_name = "/usr/bin/cpp";
 string cpp_command;
@@ -129,6 +130,7 @@ int main (int argc, char** argv) {
       astFile = fopen(outFileAst, "w");
       parser::root -> dump_tree(astFile, 0);
       fclose(astFile);
+      emitCode(parser::root);
       destroy(parser::root);
       parser::root = nullptr; 
    }

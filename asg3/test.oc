@@ -1,5 +1,13 @@
-int main() {
-   string b = new string(5);
-   int[] vec1 = new string[0];
-   int[] d = new int[5];
+struct node {
+   int[] data;  
+   int link;
+   string value;
+   string[] valuesArr;
+   node a;
+   node[] b;
+}
+
+struct tree {
+   string[] val;
+   node treeNode;
 }
