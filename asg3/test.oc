@@ -11,3 +11,15 @@ struct tree {
    string[] val;
    node treeNode;
 }
+
+int temp = 5;
+int counter = 0;
+tree t0 = new tree;
+string[] rand = 5;
+node[] nodes = 10;
+
+int[] main(tree t1, int one, int two, string three) {
+   string helloworld = "hello, world!";
+   string ucsc = "University of California, Santa Cruz";
+   return 0;
+}

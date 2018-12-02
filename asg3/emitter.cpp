@@ -8,6 +8,8 @@ using namespace std;
 #include "astree.h"
 #include "emitter.h"
 
+int stringCounter = 1;
+
 enum class attr : unsigned {
    VOID, INT, NULLX, STRING, STRUCT, ARRAY, FUNCTION, VARIABLE, FIELD,
    TYPEID, PARAM, LOCAL, LVAL, CONST, VREG, VADDR, 
@@ -54,6 +56,61 @@ void emitStructs(astree* root) {
    }
 }
 
+void emitStrings(astree* root) {
+   for(astree* stringcon : root->children ) {
+       if(stringcon->symbol == TOK_STRINGCON) {
+           printf("char* s%d = %s;\n", stringCounter,
+                  stringcon->lexinfo->c_str());
+           stringCounter++;
+       }
+       emitStrings(stringcon);
+   }
+}
+
+void emitGlobalDecs(astree* root) {
+    for(astree* global : root->children) {
+        if(global->symbol == TOK_VARDECL) {
+            astree* dec = global->children[0]->children[0];
+            if(global->children[0]->symbol == TOK_ARRAY) {
+                dec = global->children[0]->children[0]->children[0];
+            }
+            printf("%s %s;\n", typeString(dec).c_str(), 
+                dec->lexinfo->c_str());
+        }
+    }
+}
+
+void emitParams(astree* paramNode) {
+    for(astree* param : paramNode->children) {
+        if(param->attributes[unsigned(attr::PARAM)]) {
+            printf("        %s _%lu_%s,\n", typeString(param).c_str(), 
+            param->block_nr, param->lexinfo->c_str());
+        }
+        emitParams(param);
+    }
+}
+
+void emitFunctions(astree* root) {
+    for(astree* function : root->children) {
+        if(function->symbol == TOK_FUNCTION) {
+           astree* ident = function->children[0]->children[0];
+           if(function->children[0]->symbol == TOK_ARRAY) {
+               ident = function->children[0]->children[0]
+               ->children[0];
+           }
+           printf("%s %s (\n", typeString(ident).c_str(), 
+              ident->lexinfo->c_str());
+           astree* params = function->children[1];
+           emitParams(params);
+        }
+    }
+
+}
+
+
 void emitCode(astree* root) {
    emitStructs(root);
-} 
+   emitStrings(root);
+   emitGlobalDecs(root);
+   emitFunctions(root);
+}  
