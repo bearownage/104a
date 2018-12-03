@@ -99,6 +99,17 @@ void emitGlobalDecs(astree* root) {
 }
 
 void emitParams(astree* paramNode) {
+    for (size_t i = 0; i < paramNode->children.size()-1; ++i ) {
+        printf("%s%s %s_%lu_%s,\n", indent.c_str(), typeString(paramNode->children[i]).c_str(), addPtrs(paramNode->children[i]).c_str(),
+        paramNode->children[i]->block_nr, paramNode->children[i]->lexinfo->c_str());
+    }
+    printf("%s%s %s_%lu_%s)\n", indent.c_str(), typeString(paramNode->children[paramNode->children.size()-1]).c_str(), addPtrs(paramNode->children[paramNode->children.size()-1]).c_str(),
+    paramNode->children[paramNode->children.size()-1]->block_nr, paramNode->children[paramNode->children.size()-1]->lexinfo->c_str());
+    return;
+}
+
+/*
+Params(astree* paramNode) {
     for(astree* param : paramNode->children) {
         if(param->attributes[unsigned(attr::PARAM)]) {
            if(paramCounter == 0) {
@@ -119,7 +130,7 @@ void emitParams(astree* paramNode) {
         }
         emitParams(param);
     }
-}
+}*/
 
 void emitBlock(astree* root) {
      for (astree* block : root->children) {
@@ -139,8 +150,33 @@ void emitBlock(astree* root) {
                    block->lloc.filenr, 
                    block->lloc.linenr, 
                    block->lloc.offset);
+                   emitBlock(block->children[1]);
+                   printf("%sgoto while_%zd_%zd_%zd;\n", indent.c_str(),
+                   block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                   printf("block_%zd_%zd_%zd:;\n",
+                   block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                    break;
               }
+              case TOK_RETURN : { 
+   		   if ( &block->children[0] == nullptr ) {
+                 	printf("%sreturn;", indent.c_str());
+                        break;
+                   }
+                   else { 
+			if ( block->children[0]->attributes[unsigned(attr::VARIABLE)] != 1 )  { 
+                             printf("%sreturn %s;\n",indent.c_str(), block->children[0]->lexinfo->c_str());
+                             break;
+                        }
+			else { 
+			     printf("%sreturn _%lu_%s;\n", indent.c_str(), block->children[0]->block_nr, block->children[0]->lexinfo->c_str());
+                             break;
+                        }
+                   }
+              }
+              case TOK_CALL : {
+                   printf("%scall\n", indent.c_str()); 
+  		   break;
+	      }
           }
     }
 }
