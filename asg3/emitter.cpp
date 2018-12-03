@@ -100,37 +100,23 @@ void emitGlobalDecs(astree* root) {
 
 void emitParams(astree* paramNode) {
     for (size_t i = 0; i < paramNode->children.size()-1; ++i ) {
-        printf("%s%s %s_%lu_%s,\n", indent.c_str(), typeString(paramNode->children[i]).c_str(), addPtrs(paramNode->children[i]).c_str(),
-        paramNode->children[i]->block_nr, paramNode->children[i]->lexinfo->c_str());
+        printf("%s%s %s_%lu_%s,\n", indent.c_str(), typeString(paramNode->children[i]->children[0]).c_str(), addPtrs(paramNode->children[i]).c_str(),
+        paramNode->children[i]->block_nr, paramNode->children[i]->children[0]->lexinfo->c_str());
     }
-    printf("%s%s %s_%lu_%s)\n", indent.c_str(), typeString(paramNode->children[paramNode->children.size()-1]).c_str(), addPtrs(paramNode->children[paramNode->children.size()-1]).c_str(),
-    paramNode->children[paramNode->children.size()-1]->block_nr, paramNode->children[paramNode->children.size()-1]->lexinfo->c_str());
+    printf("%s%s %s_%lu_%s)\n", indent.c_str(), typeString(paramNode->children[paramNode->children.size()-1]->children[0]).c_str(), addPtrs(paramNode->children[paramNode->children.size()-1]).c_str(),
+    paramNode->children[paramNode->children.size()-1]->block_nr, paramNode->children[paramNode->children.size()-1]->children[0]->lexinfo->c_str());
     return;
 }
 
-/*
-Params(astree* paramNode) {
-    for(astree* param : paramNode->children) {
-        if(param->attributes[unsigned(attr::PARAM)]) {
-           if(paramCounter == 0) {
-               printf("\n%s%s %s_%lu_%s", indent.c_str(), 
-               typeString(param).c_str(), 
-               addPtrs(param).c_str(), 
-               param->block_nr, 
-               param->lexinfo->c_str());
-               paramCounter++;
-           }
-           else {
-               printf("%s%s %s_%lu_%s,\n", indent.c_str(), 
-               typeString(param).c_str(), 
-               addPtrs(param).c_str(), 
-               param->block_nr, 
-               param->lexinfo->c_str());
-           }
+void emitCondition(astree* cond) {
+        if ( cond->attributes[unsigned(attr::VARIABLE)] == 1 ) 
+        {
+           return;
         }
-        emitParams(param);
-    }
-}*/
+	printf("%schar b%lu = __%s %s %s\n", indent.c_str(), cond->block_nr, cond->children[0]->lexinfo->c_str(), cond->lexinfo->c_str(), cond->children[1]->lexinfo->c_str()); 
+        return;
+}
+
 
 void emitBlock(astree* root) {
      for (astree* block : root->children) {
@@ -150,10 +136,17 @@ void emitBlock(astree* root) {
                    block->lloc.filenr, 
                    block->lloc.linenr, 
                    block->lloc.offset);
+                   emitCondition(block->children[0]);
+                   printf("%sif (!b%lu) goto break_%zd_%zd_%zd;\n",
+                   indent.c_str(),
+                   block->block_nr, 
+                   block->lloc.filenr, 
+                   block->lloc.linenr,
+                   block->lloc.offset);
                    emitBlock(block->children[1]);
                    printf("%sgoto while_%zd_%zd_%zd;\n", indent.c_str(),
                    block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
-                   printf("block_%zd_%zd_%zd:;\n",
+                   printf("break_%zd_%zd_%zd:;\n",
                    block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                    break;
               }
@@ -176,6 +169,9 @@ void emitBlock(astree* root) {
               case TOK_CALL : {
                    printf("%scall\n", indent.c_str()); 
   		   break;
+	      }
+              case '=' : { 
+		   break;	 
 	      }
           }
     }
