@@ -94,19 +94,8 @@ void emitBlock(astree* root) {
      for (astree* block : root->children) {
           switch(block->symbol) {
              case TOK_VARDECL : {
-                  string type = "";
-                  if (block->children[0]->symbol == TOK_INT ) {
-                     type += "int";
-                  }
-                  else if (block->children[0]->symbol == TOK_STRING ) { 
-                     type += "string";
-                  }
-                  else {
-                      printf("add case here"); 
-                  }
-
                  
-                  printf("        %s _%lu_%s %s %s;\n", type.c_str(), block->block_nr,
+                  printf("        %s _%lu_%s %s %s;\n", typeString(block->children[0]->children[0]).c_str(), block->block_nr,
                   block->children[0]->children[0]->lexinfo->c_str(), block->lexinfo->c_str(),
                   block->children[1]->lexinfo->c_str()); 
                   break;
@@ -131,17 +120,17 @@ void emitFunctions(astree* root) {
            else if ( &function->children[1]->children[0] == nullptr ) { 
                printf("%s %s (void)\n", typeString(ident).c_str(),
                ident->lexinfo->c_str());
-               astree* block = function->children[2];
-               emitBlock(block);
            }
            else {
-           printf("%s %s (\n", typeString(ident).c_str(), 
-              ident->lexinfo->c_str());
-           astree* params = function->children[1];
-           emitParams(params);
+               printf("%s %s (\n", typeString(ident).c_str(), 
+               ident->lexinfo->c_str());
+               astree* params = function->children[1];
+               emitParams(params);
+           }
+           printf("{\n");
            astree* block = function->children[2];
            emitBlock(block);
-           }
+           printf("}\n");
         }
     }
 
