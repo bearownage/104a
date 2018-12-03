@@ -9,6 +9,8 @@ using namespace std;
 #include "emitter.h"
 
 int stringCounter = 1;
+string indent = "        ";
+int paramCounter = 0;
 
 enum class attr : unsigned {
    VOID, INT, NULLX, STRING, STRUCT, ARRAY, FUNCTION, VARIABLE, FIELD,
@@ -21,24 +23,37 @@ const string typeString(astree* node) {
       type += "int";
    }
    else if(node->attributes[unsigned(attr::STRING)]) {
-      type += "char*";
+      type += "char";
    }
    else if(node->attributes[unsigned(attr::STRUCT)]) {
       type += "struct ";
       type += node->strucname->c_str();
-      type += "*";
    }
 
-   if(node->attributes[unsigned(attr::ARRAY)]) {
-      type += "*";
-   }
    return type;
+}
+
+const string addPtrs(astree* node) {
+    string mangled = "";
+    if(node->attributes[unsigned(attr::STRING)]) {
+      mangled += "*";
+    }
+    else if(node->attributes[unsigned(attr::STRUCT)]) {
+      mangled += "*";
+    }
+
+    if(node->attributes[unsigned(attr::ARRAY)]) {
+      mangled += "*";
+    }
+    return mangled;
 }
 
 void printFields(astree* structNode, const string* name) {
    for(astree* field : structNode->children) {
       if(field->symbol == TOK_FIELD) {
-         printf("        %s %s;\n", typeString(field).c_str(), field->lexinfo->c_str());
+         printf("%s%s %s%s;\n", indent.c_str(), 
+         typeString(field).c_str(), addPtrs(field).c_str(),
+         field->lexinfo->c_str());
       }
       printFields(field, name);
    }
@@ -59,8 +74,9 @@ void emitStructs(astree* root) {
 void emitStrings(astree* root) {
    for(astree* stringcon : root->children ) {
        if(stringcon->symbol == TOK_STRINGCON) {
-           printf("char* s%d = %s;\n", stringCounter,
-                  stringcon->lexinfo->c_str());
+           printf("char *s%d = %s;\n", 
+           stringCounter,
+           stringcon->lexinfo->c_str());
            stringCounter++;
        }
        emitStrings(stringcon);
@@ -74,8 +90,10 @@ void emitGlobalDecs(astree* root) {
             if(global->children[0]->symbol == TOK_ARRAY) {
                 dec = global->children[0]->children[0]->children[0];
             }
-            printf("%s %s;\n", typeString(dec).c_str(), 
-                dec->lexinfo->c_str());
+            printf("%s %s%s;\n", 
+            typeString(dec).c_str(), 
+            addPtrs(dec).c_str(),
+            dec->lexinfo->c_str());
         }
     }
 }
@@ -83,8 +101,21 @@ void emitGlobalDecs(astree* root) {
 void emitParams(astree* paramNode) {
     for(astree* param : paramNode->children) {
         if(param->attributes[unsigned(attr::PARAM)]) {
-           printf("        %s _%lu_%s,\n", typeString(param).c_str(), 
-           param->block_nr, param->lexinfo->c_str());
+           if(paramCounter == 0) {
+               printf("\n%s%s %s_%lu_%s", indent.c_str(), 
+               typeString(param).c_str(), 
+               addPtrs(param).c_str(), 
+               param->block_nr, 
+               param->lexinfo->c_str());
+               paramCounter++;
+           }
+           else {
+               printf("%s%s %s_%lu_%s,\n", indent.c_str(), 
+               typeString(param).c_str(), 
+               addPtrs(param).c_str(), 
+               param->block_nr, 
+               param->lexinfo->c_str());
+           }
         }
         emitParams(param);
     }
@@ -94,15 +125,20 @@ void emitBlock(astree* root) {
      for (astree* block : root->children) {
           switch(block->symbol) {
              case TOK_VARDECL : {
-                 
-                  printf("        %s _%lu_%s %s %s;\n", typeString(block->children[0]->children[0]).c_str(), block->block_nr,
-                  block->children[0]->children[0]->lexinfo->c_str(), block->lexinfo->c_str(),
+                  astree* ident = block->children[0]->children[0];
+                  printf("%s%s %s_%lu_%s %s %s;\n", 
+                  indent.c_str(), 
+                  typeString(ident).c_str(), addPtrs(ident).c_str(),
+                  block->block_nr,
+                  ident->lexinfo->c_str(), block->lexinfo->c_str(),
                   block->children[1]->lexinfo->c_str()); 
                   break;
               }
               case TOK_WHILE: {
                    printf("while_%zd_%zd_%zd:;\n",
-                   block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                   block->lloc.filenr, 
+                   block->lloc.linenr, 
+                   block->lloc.offset);
                    break;
               }
           }
@@ -117,12 +153,16 @@ void emitFunctions(astree* root) {
                ident = function->children[0]->children[0]
                ->children[0];
            }
-           else if ( &function->children[1]->children[0] == nullptr ) { 
-               printf("%s %s (void)\n", typeString(ident).c_str(),
+           if ( &function->children[1]->children[0] == nullptr ) { 
+               printf("%s %s%s (void)\n", 
+               typeString(ident).c_str(), 
+               addPtrs(ident).c_str(), 
                ident->lexinfo->c_str());
            }
            else {
-               printf("%s %s (\n", typeString(ident).c_str(), 
+               printf("%s %s%s (\n", 
+               typeString(ident).c_str(), 
+               addPtrs(ident).c_str(),
                ident->lexinfo->c_str());
                astree* params = function->children[1];
                emitParams(params);
