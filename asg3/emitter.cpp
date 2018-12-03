@@ -83,10 +83,40 @@ void emitGlobalDecs(astree* root) {
 void emitParams(astree* paramNode) {
     for(astree* param : paramNode->children) {
         if(param->attributes[unsigned(attr::PARAM)]) {
-            printf("        %s _%lu_%s,\n", typeString(param).c_str(), 
-            param->block_nr, param->lexinfo->c_str());
+           printf("        %s _%lu_%s,\n", typeString(param).c_str(), 
+           param->block_nr, param->lexinfo->c_str());
         }
         emitParams(param);
+    }
+}
+
+void emitBlock(astree* root) {
+     for (astree* block : root->children) {
+          switch(block->symbol) {
+             case TOK_VARDECL : {
+                  string type = "";
+                  if (block->children[0]->symbol == TOK_INT ) {
+                     type += "int";
+                  }
+                  else if (block->children[0]->symbol == TOK_STRING ) { 
+                     type += "string";
+                  }
+                  else {
+                      printf("add case here"); 
+                  }
+
+                 
+                  printf("        %s _%lu_%s %s %s;\n", type.c_str(), block->block_nr,
+                  block->children[0]->children[0]->lexinfo->c_str(), block->lexinfo->c_str(),
+                  block->children[1]->lexinfo->c_str()); 
+                  break;
+              }
+              case TOK_WHILE: {
+                   printf("while_%zd_%zd_%zd:;\n",
+                   block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                   break;
+              }
+          }
     }
 }
 
@@ -98,15 +128,24 @@ void emitFunctions(astree* root) {
                ident = function->children[0]->children[0]
                ->children[0];
            }
+           else if ( &function->children[1]->children[0] == nullptr ) { 
+               printf("%s %s (void)\n", typeString(ident).c_str(),
+               ident->lexinfo->c_str());
+               astree* block = function->children[2];
+               emitBlock(block);
+           }
+           else {
            printf("%s %s (\n", typeString(ident).c_str(), 
               ident->lexinfo->c_str());
            astree* params = function->children[1];
            emitParams(params);
+           astree* block = function->children[2];
+           emitBlock(block);
+           }
         }
     }
 
 }
-
 
 void emitCode(astree* root) {
    emitStructs(root);
