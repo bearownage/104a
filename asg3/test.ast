@@ -1,0 +1,72 @@
+ROOT "" (0.0.0) {0} 
+| STRUCT "struct" (0.1.1) {0} 
+| | TYPEID "node" (0.1.8) {0} struct node 
+| | ARRAY "[]" (0.2.7) {0} 
+| | | INT "int" (0.2.4) {0} 
+| | | | FIELD "data" (0.2.10) {0} int array field 
+| | INT "int" (0.3.4) {0} 
+| | | FIELD "link" (0.3.8) {0} int field 
+| | STRING "string" (0.4.4) {0} 
+| | | FIELD "value" (0.4.11) {0} string field 
+| | ARRAY "[]" (0.5.10) {0} 
+| | | STRING "string" (0.5.4) {0} 
+| | | | FIELD "valuesArr" (0.5.13) {0} string array field 
+| | TYPEID "node" (0.6.4) {0} typeid 
+| | | FIELD "a" (0.6.9) {0} struct node field 
+| | ARRAY "[]" (0.7.8) {0} 
+| | | TYPEID "node" (0.7.4) {0} typeid 
+| | | | FIELD "b" (0.7.11) {0} struct node array field 
+| STRUCT "struct" (0.10.1) {0} 
+| | TYPEID "tree" (0.10.8) {0} struct tree 
+| | ARRAY "[]" (0.11.10) {0} 
+| | | STRING "string" (0.11.4) {0} 
+| | | | FIELD "val" (0.11.13) {0} string array field 
+| | TYPEID "node" (0.12.4) {0} typeid 
+| | | FIELD "treeNode" (0.12.9) {0} struct node field 
+| VARDECL "=" (0.15.10) {0} 
+| | INT "int" (0.15.1) {0} 
+| | | DECLID "temp" (0.15.5) {0} int variable lval (0.15.1) 
+| | INTCON "5" (0.15.12) {0} int const 
+| VARDECL "=" (0.16.13) {0} 
+| | INT "int" (0.16.1) {0} 
+| | | DECLID "counter" (0.16.5) {0} int variable lval (0.16.1) 
+| | INTCON "0" (0.16.15) {0} int const 
+| VARDECL "=" (0.17.9) {0} struct tree vreg 
+| | TYPEID "tree" (0.17.1) {0} typeid 
+| | | DECLID "t0" (0.17.6) {0} struct tree variable lval (0.17.1) 
+| | NEW "new" (0.17.11) {0} 
+| | | TYPEID "tree" (0.17.15) {0} typeid 
+| VARDECL "=" (0.18.15) {0} 
+| | ARRAY "[]" (0.18.7) {0} 
+| | | STRING "string" (0.18.1) {0} variable lval 
+| | | | DECLID "rand" (0.18.10) {0} string array variable (0.18.1) 
+| | INTCON "5" (0.18.17) {0} int const 
+| VARDECL "=" (0.19.14) {0} 
+| | ARRAY "[]" (0.19.5) {0} 
+| | | TYPEID "node" (0.19.1) {0} variable typeid lval 
+| | | | DECLID "nodes" (0.19.8) {0} struct node array variable (0.19.1) 
+| | INTCON "10" (0.19.16) {0} int const 
+| FUNCTION "" (0.21.4) {0} 
+| | ARRAY "[]" (0.21.4) {0} 
+| | | INT "int" (0.21.1) {0} function 
+| | | | DECLID "main" (0.21.7) {1} int array variable 
+| | PARAM "(" (0.21.11) {1} 
+| | | TYPEID "tree" (0.21.12) {1} typeid 
+| | | | DECLID "t1" (0.21.17) {1} struct tree variable lval param (0.21.12) 
+| | | INT "int" (0.21.21) {1} 
+| | | | DECLID "one" (0.21.25) {1} int variable lval param (0.21.21) 
+| | | INT "int" (0.21.30) {1} 
+| | | | DECLID "two" (0.21.34) {1} int variable lval param (0.21.30) 
+| | | STRING "string" (0.21.39) {1} 
+| | | | DECLID "three" (0.21.46) {1} string variable lval param (0.21.39) 
+| | BLOCK "{" (0.21.53) {1} 
+| | | VARDECL "=" (0.22.22) {1} string vreg 
+| | | | STRING "string" (0.22.4) {1} 
+| | | | | DECLID "helloworld" (0.22.11) {1} string variable lval local (0.22.4) 
+| | | | STRINGCON ""hello, world!"" (0.22.24) {1} string const 
+| | | VARDECL "=" (0.23.16) {1} string vreg 
+| | | | STRING "string" (0.23.4) {1} 
+| | | | | DECLID "ucsc" (0.23.11) {1} string variable lval local (0.23.4) 
+| | | | STRINGCON ""University of California, Santa Cruz"" (0.23.18) {1} string const 
+| | | RETURN "return" (0.24.4) {1} 
+| | | | INTCON "0" (0.24.11) {1} int const 

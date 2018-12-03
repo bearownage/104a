@@ -10,7 +10,7 @@ using namespace std;
 
 int stringCounter = 1;
 string indent = "        ";
-int paramCounter = 0;
+int regCounter = 1;
 
 enum class attr : unsigned {
    VOID, INT, NULLX, STRING, STRUCT, ARRAY, FUNCTION, VARIABLE, FIELD,
@@ -31,6 +31,18 @@ const string typeString(astree* node) {
    }
 
    return type;
+}
+
+const string addReg(astree* node) { 
+	string reg = "";
+        if (node->attributes[unsigned(attr::INT)]) {
+	   reg += "i" + std::to_string(regCounter);
+        }
+        if (node->attributes[unsigned(attr::STRING)]) {
+	   reg += "s" + std::to_string(regCounter);
+	}
+        regCounter++;
+        return reg;
 }
 
 const string addPtrs(astree* node) {
@@ -170,7 +182,8 @@ void emitBlock(astree* root) {
                    printf("%scall\n", indent.c_str()); 
   		   break;
 	      }
-              case '=' : { 
+              case '=' : {
+                   printf("%s%s\n",indent.c_str(), addReg(block->children[1]).c_str());
 		   break;	 
 	      }
           }
