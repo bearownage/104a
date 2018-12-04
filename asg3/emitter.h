@@ -11,7 +11,7 @@ using namespace std;
 #include "symtable.h"
 
 void emitCode(astree* root);
-void emitFunctions(astree* node);
+void emitFunctions(astree* node, symbol_table* local_vars);
 void emitBlock(astree* node, symbol_table* local_vars);
 
 #endif

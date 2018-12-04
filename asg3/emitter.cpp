@@ -36,7 +36,38 @@ const string typeString(astree* node) {
    return type;
 }
 
-const string addReg(astree* node) { 
+const string typeStringSym(symbol* temp) {
+    string type = "";
+    if(temp->attributes[unsigned(attr::INT)]) {
+       type += "int";
+    }
+    else if (temp->attributes[unsigned(attr::STRING)]) {
+         type += "char";
+    }
+    else if (temp->attributes[unsigned(attr::STRUCT)]) {
+         type += "struct ";
+         type += temp->strucname->c_str();
+    }
+
+    return type;
+}
+
+const string addPtrsSym(symbol* node) {
+    string mangled = "";
+    if(node->attributes[unsigned(attr::STRING)]) {
+      mangled += "*";
+    }
+    else if(node->attributes[unsigned(attr::STRUCT)]) {
+      mangled += "*";
+    }
+
+    if(node->attributes[unsigned(attr::ARRAY)]) {
+      mangled += "*";
+    }
+    return mangled;
+}
+
+const string addReg(symbol* node) { 
 	string reg = "";
         if (node->attributes[unsigned(attr::INT)]) {
 	   reg += "i" + std::to_string(regCounter);
@@ -44,6 +75,13 @@ const string addReg(astree* node) {
         if (node->attributes[unsigned(attr::STRING)]) {
 	   reg += "s" + std::to_string(regCounter);
 	}
+        if ( node->attributes[unsigned(attr::VREG)]) { 
+           reg += "a" + std::to_string(regCounter);
+        }
+        if ( node->attributes[unsigned(attr::STRUCT)]) { 
+           reg += "p" + std::to_string(regCounter);
+        }
+
         regCounter++;
         return reg;
 }
@@ -141,7 +179,8 @@ void printTable(symbol_table *table) {
 }
 
 void emitBlock(astree* root, symbol_table* local_vars) {
-     printTable(local_vars);
+     //printTable(local_vars);
+     string reg = "";
      for (astree* block : root->children) {
           switch(block->symbol) {
              case TOK_VARDECL : {
@@ -155,53 +194,55 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                   break;
               }
               case TOK_WHILE: {
-                   printf("while_%zd_%zd_%zd:;\n",
+                   fprintf(oilFile, "while_%zd_%zd_%zd:;\n",
                    block->lloc.filenr, 
                    block->lloc.linenr, 
                    block->lloc.offset);
                    emitCondition(block->children[0]);
-                   printf("%sif (!b%lu) goto break_%zd_%zd_%zd;\n",
+                   fprintf(oilFile, "%sif (!b%lu) goto break_%zd_%zd_%zd;\n",
                    indent.c_str(),
                    block->block_nr, 
                    block->lloc.filenr, 
                    block->lloc.linenr,
                    block->lloc.offset);
                    emitBlock(block->children[1], local_vars);
-                   printf("%sgoto while_%zd_%zd_%zd;\n", indent.c_str(),
+                   fprintf(oilFile, "%sgoto while_%zd_%zd_%zd;\n", indent.c_str(),
                    block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
-                   printf("break_%zd_%zd_%zd:;\n",
+                   fprintf(oilFile, "break_%zd_%zd_%zd:;\n",
                    block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
                    break;
               }
               case TOK_RETURN : { 
    		   if ( &block->children[0] == nullptr ) {
-                 	printf("%sreturn;", indent.c_str());
+                 	fprintf(oilFile, "%sreturn;", indent.c_str());
                         break;
                    }
                    else { 
 			if ( block->children[0]->attributes[unsigned(attr::VARIABLE)] != 1 )  { 
-                             printf("%sreturn %s;\n",indent.c_str(), block->children[0]->lexinfo->c_str());
+                             fprintf(oilFile, "%sreturn %s;\n",indent.c_str(), block->children[0]->lexinfo->c_str());
                              break;
                         }
 			else { 
-			     printf("%sreturn _%lu_%s;\n", indent.c_str(), block->children[0]->block_nr, block->children[0]->lexinfo->c_str());
+			     fprintf(oilFile, "%sreturn _%lu_%s;\n", indent.c_str(), block->children[0]->block_nr, block->children[0]->lexinfo->c_str());
                              break;
                         }
                    }
               }
               case TOK_CALL : {
-                   printf("%scall\n", indent.c_str()); 
+                   fprintf(oilFile, "%scall\n", indent.c_str()); 
   		   break;
 	      }
               case '=' : {
-                   printf("%s%s\n",indent.c_str(), addReg(block->children[1]).c_str());
+                   symbol* temp = local_vars->find(block->children[0]->lexinfo)->second;
+                  
+                   fprintf(oilFile, "%s%s%s %s\n",indent.c_str(), typeStringSym(temp).c_str(), addPtrsSym(temp).c_str(), addReg(temp).c_str());
 		   break;	 
 	      }
           }
     }
 }
 
-void emitFunctions(astree* function) {
+void emitFunctions(astree* function, symbol_table* local_vars) { 
      astree* ident = function->children[0]->children[0];
      if(function->children[0]->symbol == TOK_ARRAY) {
         ident = function->children[0]->children[0]
@@ -223,6 +264,7 @@ void emitFunctions(astree* function) {
      }
      fprintf(oilFile, "{\n");
      astree* block = function->children[2];
+     emitBlock(block, local_vars);
      fprintf(oilFile, "}\n");
 }
 

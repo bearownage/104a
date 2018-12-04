@@ -875,8 +875,8 @@ void traversal(astree *root) {
       handleBlock(block, returnType);
       fprintf(symFile, "\n");
       //fprintf(oilFile, "hithere");
-      emitFunctions(childNode);
-      emitBlock(block, variables);
+      emitFunctions(childNode, variables);
+      //emitBlock(block, variables);
       break;
     }
     case TOK_VARDECL: {
