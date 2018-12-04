@@ -35,4 +35,6 @@ const string attrString(astree* node);
 void traversal(astree* node);
 void updateAttr(astree* root);
 void printTable(symbol_table* table);
+
+symbol* findGlobal(const string* var);
 #endif

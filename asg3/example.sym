@@ -1,0 +1,33 @@
+__assert_fail (4.29.6) {0} void
+    expr (4.29.28) {0} string variable lval param 0
+    file (4.29.41) {0} string variable lval param 1
+    line (4.29.51) {0} int variable lval param 2
+    func (4.29.64) {0} string variable lval param 3
+
+putchar (4.30.6) {0} void
+    c (4.30.19) {0} int variable lval param 0
+
+putint (4.31.6) {0} void
+    i (4.31.18) {0} int variable lval param 0
+
+putstr (4.32.6) {0} void
+    s (4.32.21) {0} string variable lval param 0
+
+getchar (4.33.5) {0} int
+
+getword (4.34.8) {0} string
+
+getln (4.35.8) {0} string
+
+endl (4.36.6) {0} void
+
+exit (4.37.6) {0} void
+    status (4.37.16) {0} int variable lval param 0
+
+fac (0.2.5) {0} int function
+    n (0.2.14) {1} int variable lval param 0
+    f (0.3.8) {1} int variable lval local 0
+
+main (0.10.5) {1} int function
+    n (0.11.8) {2} int variable lval local 0
+
