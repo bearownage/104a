@@ -259,6 +259,25 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                    fprintf(oilFile, "%s_%zu_%s = %s\n", indent.c_str(), temp->block_nr, block->children[0]->lexinfo->c_str(), reg.c_str());
 		   break;	 
 	      }
+              case TOK_IF : {
+                   if ( block->children.size() > 2 ) { 
+			emitCondition(block->children[0]);
+                        fprintf(oilFile, "%sif (!b%zu) goto else_%zd_%zd_%zd;\n", indent.c_str(), block->block_nr, block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                        emitBlock(block->children[1], local_vars);
+			fprintf(oilFile, "%sgoto fi_%zd_%zd_%zd;\n", indent.c_str(), block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                        fprintf(oilFile, "else_%zd_%zd_%zd;\n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                        emitBlock(block->children[2], local_vars);
+                        fprintf(oilFile, "fi_%zd_%zd_%zd;\n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+
+                   } 
+                   else { 
+                   emitCondition(block->children[0]);
+                   fprintf(oilFile, "%sif (!b%zu) goto fi_%zd_%zd_%zd;\n", indent.c_str(), block->block_nr, block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                   emitBlock(block->children[1], local_vars);
+                   fprintf(oilFile, "fi_%zd_%zd_%zd;\n", block->lloc.filenr, block->lloc.linenr, block->lloc.offset);
+                   }
+		   break;
+              }
           }
     }
 }
