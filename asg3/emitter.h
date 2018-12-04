@@ -8,7 +8,10 @@ using namespace std;
 
 #include "lyutils.h"
 #include "astree.h"
+#include "symtable.h"
 
 void emitCode(astree* root);
+void emitFunctions(astree* node);
+void emitBlock(astree* node, symbol_table* local_vars);
 
 #endif

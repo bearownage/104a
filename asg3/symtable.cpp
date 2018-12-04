@@ -8,11 +8,14 @@ using namespace std;
 
 #include "astree.h"
 #include "symtable.h"
+#include "emitter.h"
 
 extern FILE *symFile;
+
 int blocknr = 0;
 int next_block = 1;
 int seqCounter = 0;
+int oilCounter = 0;
 
 symbol_table *types = new symbol_table;
 symbol_table *variables = new symbol_table;
@@ -164,6 +167,7 @@ symbol *newSym(astree *node) {
   return sym;
 }
 
+/*
 // Print the symbols for .sym
 void printTable(symbol_table *table) {
   for (auto it = table->cbegin(); it != table->cend(); it++) {
@@ -183,6 +187,7 @@ void printTable(symbol_table *table) {
     }
   }
 }
+*/
 
 void addStruct(symbol *currStruc, 
 const string *strucID, const string *id,
@@ -775,6 +780,10 @@ void traversal(astree *root) {
       break;
     }
     case TOK_FUNCTION: {
+      if(oilCounter == 0) {
+        emitCode(root);
+        oilCounter++;
+      }
       variables->clear();
       symbol *sym = newSym(childNode);
       sym->attributes = childNode->children[0]->children[0]->attributes;
@@ -865,6 +874,9 @@ void traversal(astree *root) {
       astree *returnType = childNode->children[0]->children[0];
       handleBlock(block, returnType);
       fprintf(symFile, "\n");
+      //fprintf(oilFile, "hithere");
+      emitFunctions(childNode);
+      emitBlock(block, variables);
       break;
     }
     case TOK_VARDECL: {

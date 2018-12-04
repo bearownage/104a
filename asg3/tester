@@ -64,58 +64,46 @@
 ; 0. 47:       putchar ('\n');
 ; 0. 48:    }
 ; 0. 49: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-stack (0.5.8) {0} struct stack
-    data (0.6.13) string array field 0
-    size (0.7.8) int field 1
-    top (0.8.8) int field 2
-
-new_stack (0.11.7) {0} struct stack function
-    size (0.11.22) {1} int variable lval param 0
-    stack (0.12.10) {1} struct stack variable lval local 0
-
-push (0.19.6) {1} void function
-    stack (0.19.18) {2} struct stack variable lval param 0
-    str (0.19.32) {2} string variable lval param 1
-
-pop (0.25.8) {2} string function
-    stack (0.25.19) {3} struct stack variable lval param 0
-    tmp (0.26.11) {3} string variable lval local 0
-
-empty (0.32.5) {3} int function
-    stack (0.32.18) {4} struct stack variable lval param 0
-
-main (0.36.5) {4} int function
-    argc (0.36.15) {5} int variable lval param 0
-    argv (0.36.30) {5} string array variable lval param 1
-    stack (0.37.10) {5} struct stack variable lval local 0
-    argi (0.38.8) {5} int variable lval local 1
-
+stack (0.12.10) {1} 
+size (0.11.22) {1} 
+        
+        
+        
+        return _1_stack;
+str (0.19.32) {2} 
+stack (0.19.18) {2} 
+        i4
+        
+tmp (0.26.11) {3} 
+stack (0.25.19) {3} 
+        i6
+        return _3_tmp;
+stack (0.32.18) {4} 
+        return ==;
+argi (0.38.8) {5} 
+stack (0.37.10) {5} 
+argv (0.36.30) {5} 
+argc (0.36.15) {5} 
+while_0_40_4:;
+        if (!b5) goto break_0_40_4;
+argi (0.38.8) {5} 
+stack (0.37.10) {5} 
+argv (0.36.30) {5} 
+argc (0.36.15) {5} 
+        call
+        i7
+        goto while_0_40_4;
+break_0_40_4:;
+while_0_45_4:;
+        if (!b5) goto break_0_45_4;
+argi (0.38.8) {5} 
+stack (0.37.10) {5} 
+argv (0.36.30) {5} 
+argc (0.36.15) {5} 
+        call
+        call
+        goto while_0_45_4;
+break_0_45_4:;
 ;-1.  1: # 1 "assertfail.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -140,42 +128,21 @@ main (0.36.5) {4} int function
 ; 0.  5: int main (int argc, string[] argv) {
 ; 0.  6:    putstr (argv[0]);
 ; 0.  7:    putstr (" was compiled on ");
-; 0.  8:    putstr ("Nov 25 2018");
+; 0.  8:    putstr ("Dec  3 2018");
 ; 0.  9:    putstr (" @ ");
-; 0. 10:    putstr ("23:13:01");
+; 0. 10:    putstr ("16:46:04");
 ; 0. 11:    putstr ("\n");
 ; 0. 12:    return 0;
 ; 0. 13: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-main (0.5.5) {0} int function
-    argc (0.5.15) {1} int variable lval param 0
-    argv (0.5.30) {1} string array variable lval param 1
-
+argv (0.5.30) {1} 
+argc (0.5.15) {1} 
+        call
+        call
+        call
+        call
+        call
+        call
+        return 0;
 ;-1.  1: # 1 "assert.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -201,34 +168,7 @@ main (0.5.5) {0} int function
 ; 0.  6:    { if (not ("null" == null)) { __assert_fail ("\"null\" == null", "assert.oc", 6, __FUNC__); } };
 ; 0.  7:    return 0;
 ; 0.  8: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-main (0.5.5) {0} int function
-
+        return 0;
 ;-1.  1: # 1 "atoi.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -292,46 +232,32 @@ main (0.5.5) {0} int function
 ; 0. 44:    }
 ; 0. 45:    return 0;
 ; 0. 46: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-atoi (0.5.5) {0} int function
-    str (0.5.18) {1} string variable lval param 0
-    neg (0.6.8) {1} int variable lval local 0
-    num (0.7.8) {1} int variable lval local 1
-    digit (0.8.8) {1} int variable lval local 2
-    contin (0.9.8) {1} int variable lval local 3
-    c (0.10.8) {1} int variable lval local 4
-
-main (0.34.5) {1} int function
-    argc (0.34.15) {2} int variable lval param 0
-    argv (0.34.30) {2} string array variable lval param 1
-    argi (0.35.8) {2} int variable lval local 0
-    arg (0.36.11) {2} string variable lval local 1
-
+c (0.10.8) {1} 
+contin (0.9.8) {1} 
+digit (0.8.8) {1} 
+neg (0.6.8) {1} 
+num (0.7.8) {1} 
+str (0.5.18) {1} 
+        return _1_num;
+arg (0.36.11) {2} 
+argi (0.35.8) {2} 
+argv (0.34.30) {2} 
+argc (0.34.15) {2} 
+while_0_37_4:;
+        if (!b2) goto break_0_37_4;
+arg (0.36.11) {2} 
+argi (0.35.8) {2} 
+argv (0.34.30) {2} 
+argc (0.34.15) {2} 
+        
+        call
+        call
+        call
+        call
+        i2
+        goto while_0_37_4;
+break_0_37_4:;
+        return 0;
 ;-1.  1: # 1 "c8.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -417,44 +343,39 @@ main (0.34.5) {1} int function
 ; 0. 27:    putchar ('\n');
 ; 0. 28:    return 0;
 ; 0. 29: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-dot_product (0.5.5) {0} int function
-    size (0.5.22) {1} int variable lval param 0
-    vec1 (0.5.34) {1} int array variable lval param 1
-    vec2 (0.5.46) {1} int array variable lval param 2
-    index (0.6.8) {1} int variable lval local 0
-    dot (0.7.8) {1} int variable lval local 1
-
-main (0.17.5) {1} int function
-    vec1 (0.18.10) {2} int array variable local 0
-    vec2 (0.19.10) {2} int array variable local 1
-    i (0.20.8) {2} int variable lval local 2
-
+dot (0.7.8) {1} 
+index (0.6.8) {1} 
+vec2 (0.5.46) {1} 
+vec1 (0.5.34) {1} 
+size (0.5.22) {1} 
+while_0_8_4:;
+        if (!b1) goto break_0_8_4;
+dot (0.7.8) {1} 
+index (0.6.8) {1} 
+vec2 (0.5.46) {1} 
+vec1 (0.5.34) {1} 
+size (0.5.22) {1} 
+        i1
+        i2
+        goto while_0_8_4;
+break_0_8_4:;
+        return _1_dot;
+i (0.20.8) {2} 
+vec2 (0.19.10) {2} 
+vec1 (0.18.10) {2} 
+while_0_21_4:;
+        if (!b2) goto break_0_21_4;
+i (0.20.8) {2} 
+vec2 (0.19.10) {2} 
+vec1 (0.18.10) {2} 
+        i3
+        i4
+        i5
+        goto while_0_21_4;
+break_0_21_4:;
+        call
+        call
+        return 0;
 ;-1.  1: # 1 "elseif.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -485,36 +406,8 @@ main (0.17.5) {1} int function
 ; 0. 11: 
 ; 0. 12: 
 ; 0. 13: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-main (0.5.5) {0} int function
-    argc (0.5.15) {1} int variable lval param 0
-    argi (0.6.8) {1} int variable lval local 0
-
+argi (0.6.8) {1} 
+argc (0.5.15) {1} 
 ;-1.  1: # 1 "era.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -571,37 +464,36 @@ main (0.5.5) {0} int function
 ; 0. 37: 
 ; 0. 38:    return 0;
 ; 0. 39: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-main (0.8.5) {0} int function
-    prime (0.9.8) {1} int variable lval local 0
-    index (0.10.8) {1} int variable lval local 1
-    sieve (0.11.13) {1} string array variable local 2
-
+sieve (0.11.13) {1} 
+index (0.10.8) {1} 
+prime (0.9.8) {1} 
+while_0_13_4:;
+        if (!b1) goto break_0_13_4;
+sieve (0.11.13) {1} 
+index (0.10.8) {1} 
+prime (0.9.8) {1} 
+        i1
+        i2
+        goto while_0_13_4;
+break_0_13_4:;
+while_0_18_4:;
+        if (!b1) goto break_0_18_4;
+sieve (0.11.13) {1} 
+index (0.10.8) {1} 
+prime (0.9.8) {1} 
+        i3
+        goto while_0_18_4;
+break_0_18_4:;
+        i4
+while_0_30_4:;
+        if (!b1) goto break_0_30_4;
+sieve (0.11.13) {1} 
+index (0.10.8) {1} 
+prime (0.9.8) {1} 
+        i5
+        goto while_0_30_4;
+break_0_30_4:;
+        return 0;
 ;-1.  1: # 1 "example.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -626,17 +518,11 @@ main (0.8.5) {0} int function
 ; 0. 16:           else b = "foo";
 ; 0. 17:       }
 ; 0. 18: }
-node (0.1.8) {0} struct node
-    foo (0.2.11) int field 0
-    link (0.3.12) struct node field 1
-
-func (0.7.6) {0} struct node function
-    head (0.7.17) {1} struct node variable lval param 0
-    length (0.7.27) {1} int variable lval param 1
-    a (0.8.11) {1} int variable lval local 0
-    b (0.9.14) {1} string variable lval local 1
-    c (0.10.12) {1} struct node variable lval local 2
-
+c (0.10.12) {1} 
+head (0.7.17) {1} 
+length (0.7.27) {1} 
+a (0.8.11) {1} 
+b (0.9.14) {1} 
 ;-1.  1: # 1 "fac.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -679,39 +565,27 @@ func (0.7.6) {0} struct node function
 ; 0. 23:    }
 ; 0. 24:    return 0;
 ; 0. 25: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-fac (0.8.5) {0} int function
-    n (0.8.14) {1} int variable lval param 0
-    f (0.9.8) {1} int variable lval local 0
-
-main (0.17.5) {1} int function
-    n (0.18.8) {2} int variable lval local 0
-
+f (0.9.8) {1} 
+n (0.8.14) {1} 
+while_0_10_4:;
+        if (!b1) goto break_0_10_4;
+f (0.9.8) {1} 
+n (0.8.14) {1} 
+        i1
+        i2
+        goto while_0_10_4;
+break_0_10_4:;
+        return _1_f;
+n (0.18.8) {2} 
+while_0_19_4:;
+        if (!b2) goto break_0_19_4;
+n (0.18.8) {2} 
+        call
+        call
+        i3
+        goto while_0_19_4;
+break_0_19_4:;
+        return 0;
 ;-1.  1: # 1 "fib2.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -753,38 +627,21 @@ main (0.17.5) {1} int function
 ; 0. 22:    }
 ; 0. 23:    return 0;
 ; 0. 24: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-fibonacci (0.8.5) {0} int function
-    n (0.8.20) {1} int variable lval param 0
-
-main (0.13.5) {1} int function
-    n (0.14.8) {2} int variable lval local 0
-
+n (0.8.20) {1} 
+        return +;
+n (0.14.8) {2} 
+while_0_15_4:;
+        if (!b2) goto break_0_15_4;
+n (0.14.8) {2} 
+        call
+        call
+        call
+        call
+        call
+        i1
+        goto while_0_15_4;
+break_0_15_4:;
+        return 0;
 ;-1.  1: # 1 "fib.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -834,37 +691,30 @@ main (0.13.5) {1} int function
 ; 0. 30:       index = index + 1;
 ; 0. 31:    }
 ; 0. 32: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-fibonacci (0.9.7) {0} int array variable 0
-
-main (0.11.5) {0} int function
-    index (0.12.8) {1} int variable lval local 0
-
+index (0.12.8) {1} 
+        
+        i2
+        i3
+while_0_17_4:;
+        if (!b1) goto break_0_17_4;
+index (0.12.8) {1} 
+        i4
+        i5
+        goto while_0_17_4;
+break_0_17_4:;
+        i6
+        call
+while_0_24_4:;
+        if (!b1) goto break_0_24_4;
+index (0.12.8) {1} 
+        call
+        call
+        call
+        call
+        call
+        i7
+        goto while_0_24_4;
+break_0_24_4:;
 ;-1.  1: # 1 "hello.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -891,34 +741,8 @@ main (0.11.5) {0} int function
 ; 0.  7:    putstr ("Hello, world!\n");
 ; 0.  8:    return 0;
 ; 0.  9: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-main (0.6.5) {0} int function
-
+        call
+        return 0;
 ;-1.  1: # 1 "hundred.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -949,35 +773,16 @@ main (0.6.5) {0} int function
 ; 0. 11:    }
 ; 0. 12:    return 0;
 ; 0. 13: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-main (0.5.5) {0} int function
-    count (0.6.8) {1} int variable lval local 0
-
+count (0.6.8) {1} 
+while_0_7_4:;
+        if (!b1) goto break_0_7_4;
+count (0.6.8) {1} 
+        i1
+        call
+        call
+        goto while_0_7_4;
+break_0_7_4:;
+        return 0;
 ;-1.  1: # 1 "insertion.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1061,59 +866,84 @@ main (0.5.5) {0} int function
 ; 0. 64:    print_array ("sorted", argc, argv);
 ; 0. 65:    return 0;
 ; 0. 66: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-strcmp (0.8.5) {0} int function
-    s1 (0.8.20) {1} string variable lval param 0
-    s2 (0.8.31) {1} string variable lval param 1
-    index (0.9.8) {1} int variable lval local 0
-    contin (0.10.8) {1} int variable lval local 1
-    s1c (0.11.8) {1} int variable lval local 2
-    s2c (0.12.8) {1} int variable lval local 3
-    cmp (0.13.8) {1} int variable lval local 4
-
-insertion_sort (0.25.6) {1} void function
-    size (0.25.26) {2} int variable lval param 0
-    array (0.25.41) {2} string array variable lval param 1
-    sorted (0.26.8) {2} int variable lval local 0
-    slot (0.27.8) {2} int variable lval local 1
-    element (0.28.11) {2} string variable lval local 2
-    contin (0.29.8) {2} int variable lval local 3
-
-print_array (0.49.6) {2} void function
-    label (0.49.26) {3} string variable lval param 0
-    size (0.49.37) {3} int variable lval param 1
-    array (0.49.52) {3} string array variable lval param 2
-    index (0.50.8) {3} int variable lval local 0
-
-main (0.61.5) {3} int function
-    argc (0.61.15) {4} int variable lval param 0
-    argv (0.61.30) {4} string array variable lval param 1
-
+s2c (0.12.8) {1} 
+s1c (0.11.8) {1} 
+contin (0.10.8) {1} 
+cmp (0.13.8) {1} 
+index (0.9.8) {1} 
+s2 (0.8.31) {1} 
+s1 (0.8.20) {1} 
+while_0_14_4:;
+        if (!b1) goto break_0_14_4;
+s2c (0.12.8) {1} 
+s1c (0.11.8) {1} 
+contin (0.10.8) {1} 
+cmp (0.13.8) {1} 
+index (0.9.8) {1} 
+s2 (0.8.31) {1} 
+s1 (0.8.20) {1} 
+        
+        
+        i3
+        i4
+        goto while_0_14_4;
+break_0_14_4:;
+        return 0;
+element (0.28.11) {2} 
+slot (0.27.8) {2} 
+sorted (0.26.8) {2} 
+array (0.25.41) {2} 
+contin (0.29.8) {2} 
+size (0.25.26) {2} 
+while_0_30_4:;
+        if (!b2) goto break_0_30_4;
+element (0.28.11) {2} 
+slot (0.27.8) {2} 
+sorted (0.26.8) {2} 
+array (0.25.41) {2} 
+contin (0.29.8) {2} 
+size (0.25.26) {2} 
+        
+        
+        i7
+while_0_34_7:;
+        if (!b2) goto break_0_34_7;
+element (0.28.11) {2} 
+slot (0.27.8) {2} 
+sorted (0.26.8) {2} 
+array (0.25.41) {2} 
+contin (0.29.8) {2} 
+size (0.25.26) {2} 
+        goto while_0_34_7;
+break_0_34_7:;
+        
+        i9
+        goto while_0_30_4;
+break_0_30_4:;
+index (0.50.8) {3} 
+array (0.49.52) {3} 
+size (0.49.37) {3} 
+label (0.49.26) {3} 
+        call
+        call
+        call
+while_0_54_4:;
+        if (!b3) goto break_0_54_4;
+index (0.50.8) {3} 
+array (0.49.52) {3} 
+size (0.49.37) {3} 
+label (0.49.26) {3} 
+        call
+        call
+        i10
+        goto while_0_54_4;
+break_0_54_4:;
+argv (0.61.30) {4} 
+argc (0.61.15) {4} 
+        call
+        call
+        call
+        return 0;
 ;-1.  1: # 1 "linkedstack.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1186,60 +1016,46 @@ main (0.61.5) {3} int function
 ; 0. 53:    }
 ; 0. 54:    return 0;
 ; 0. 55: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-node (0.5.8) {0} struct node
-    data (0.6.11) string field 0
-    link (0.7.9) struct node field 1
-
-stack (0.10.8) {0} struct stack
-    top (0.11.9) struct node field 0
-
-empty (0.14.5) {0} int function
-    stack (0.14.18) {1} struct stack variable lval param 0
-
-new_stack (0.19.7) {1} struct stack function
-    stack (0.20.10) {2} struct stack variable lval local 0
-
-push (0.25.6) {2} void function
-    stack (0.25.18) {3} struct stack variable lval param 0
-    str (0.25.32) {3} string variable lval param 1
-    tmp (0.26.9) {3} struct node variable lval local 0
-
-pop (0.33.8) {3} string function
-    stack (0.33.19) {4} struct stack variable lval param 0
-    tmp (0.34.11) {4} string variable lval local 0
-
-main (0.41.5) {4} int function
-    argc (0.41.15) {5} int variable lval param 0
-    argv (0.41.30) {5} string array variable lval param 1
-    stack (0.42.10) {5} struct stack variable lval local 0
-    argi (0.43.8) {5} int variable lval local 1
-
+stack (0.14.18) {1} 
+        return ==;
+stack (0.20.10) {2} 
+        
+        return _2_stack;
+tmp (0.26.9) {3} 
+str (0.25.32) {3} 
+stack (0.25.18) {3} 
+        
+        
+        
+tmp (0.34.11) {4} 
+stack (0.33.19) {4} 
+        
+        return _4_tmp;
+argi (0.43.8) {5} 
+stack (0.42.10) {5} 
+argv (0.41.30) {5} 
+argc (0.41.15) {5} 
+while_0_45_4:;
+        if (!b5) goto break_0_45_4;
+argi (0.43.8) {5} 
+stack (0.42.10) {5} 
+argv (0.41.30) {5} 
+argc (0.41.15) {5} 
+        call
+        i6
+        goto while_0_45_4;
+break_0_45_4:;
+while_0_50_4:;
+        if (!b5) goto break_0_50_4;
+argi (0.43.8) {5} 
+stack (0.42.10) {5} 
+argv (0.41.30) {5} 
+argc (0.41.15) {5} 
+        call
+        call
+        goto while_0_50_4;
+break_0_50_4:;
+        return 0;
 ;-1.  1: # 1 "numbers.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1272,35 +1088,18 @@ main (0.41.5) {4} int function
 ; 0. 13:    putchar ('\n');
 ; 0. 14:    return 0;
 ; 0. 15: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-main (0.5.5) {0} int function
-    number (0.6.8) {1} int variable lval local 0
-
+number (0.6.8) {1} 
+while_0_7_4:;
+        if (!b1) goto break_0_7_4;
+number (0.6.8) {1} 
+        call
+        call
+        i1
+        goto while_0_7_4;
+break_0_7_4:;
+        call
+        call
+        return 0;
 ;-1.  1: # 1 "ocecho.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1332,37 +1131,20 @@ main (0.5.5) {0} int function
 ; 0. 12:    putstr ("\n");
 ; 0. 13:    return 0;
 ; 0. 14: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-main (0.5.5) {0} int function
-    argc (0.5.14) {1} int variable lval param 0
-    argv (0.5.29) {1} string array variable lval param 1
-    argi (0.6.8) {1} int variable lval local 0
-
+argi (0.6.8) {1} 
+argv (0.5.29) {1} 
+argc (0.5.14) {1} 
+while_0_7_4:;
+        if (!b1) goto break_0_7_4;
+argi (0.6.8) {1} 
+argv (0.5.29) {1} 
+argc (0.5.14) {1} 
+        call
+        i1
+        goto while_0_7_4;
+break_0_7_4:;
+        call
+        return 0;
 ;-1.  1: # 1 "queens.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1426,48 +1208,33 @@ main (0.5.5) {0} int function
 ; 0. 44:    queens (0);
 ; 0. 45:    return 0;
 ; 0. 46: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-board (0.6.7) {0} int array variable 0
-
-is_safe (0.8.5) {0} int function
-    newcol (0.8.18) {1} int variable lval param 0
-    col (0.9.8) {1} int variable lval local 0
-    diagonal (0.10.8) {1} int variable lval local 1
-
-printqueens (0.21.6) {1} void function
-    col (0.22.8) {2} int variable lval local 0
-
-queens (0.30.6) {2} void function
-    newcol (0.30.18) {3} int variable lval param 0
-    row (0.31.8) {3} int variable lval local 0
-
-main (0.42.5) {3} int function
-
+diagonal (0.10.8) {1} 
+col (0.9.8) {1} 
+newcol (0.8.18) {1} 
+while_0_11_4:;
+        if (!b1) goto break_0_11_4;
+diagonal (0.10.8) {1} 
+col (0.9.8) {1} 
+newcol (0.8.18) {1} 
+        i1
+        i2
+        goto while_0_11_4;
+break_0_11_4:;
+        return 1;
+col (0.22.8) {2} 
+while_0_23_4:;
+        if (!b2) goto break_0_23_4;
+col (0.22.8) {2} 
+        call
+        i3
+        goto while_0_23_4;
+break_0_23_4:;
+        call
+row (0.31.8) {3} 
+newcol (0.30.18) {3} 
+        
+        call
+        return 0;
 ;-1.  1: # 1 "semantics.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1489,17 +1256,9 @@ main (0.42.5) {3} int function
 ; 0. 13:    bool y = a==b;
 ; 0. 14:    return "foobar";
 ; 0. 15: }
-a (0.4.7) {0} int array variable 0
-
-b (0.5.7) {0} int array variable 0
-
-void (0.7.1) {0} 
-
-main (0.9.5) {0} int function
-    c (0.10.8) {1} int variable lval local 0
-    n (0.11.9) {1} void variable lval local 1
-Incompatible return types at: (0.14.4) 
-
+n (0.11.9) {1} 
+c (0.10.8) {1} 
+        return "foobar";
 ;-1.  1: # 1 "syntax.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1544,37 +1303,13 @@ Incompatible return types at: (0.14.4)
 ; 0. 11:    putchar ('\n');
 ; 0. 12:    return 0;
 ; 0. 13: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-main (0.5.5) {0} int function
-    a (0.6.8) {1} int variable lval local 0
-    b (0.7.8) {1} int variable lval local 1
-    c (0.8.8) {1} int variable lval local 2
-
+c (0.8.8) {1} 
+b (0.7.8) {1} 
+a (0.6.8) {1} 
+        i1
+        call
+        call
+        return 0;
 ;-1.  1: # 1 "test4.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1611,39 +1346,15 @@ main (0.5.5) {0} int function
 ; 0. 17:    putchar ('\n');
 ; 0. 18:    return 0;
 ; 0. 19: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-foo (0.5.8) {0} struct foo
-    a (0.6.8) int field 0
-
-main (0.9.5) {0} int function
-    a (0.10.8) {1} int variable lval local 0
-    b (0.11.8) {1} struct foo variable lval local 1
-
+b (0.11.8) {1} 
+a (0.10.8) {1} 
+        i1
+        i2
+        call
+        call
+        call
+        call
+        return 0;
 ;-1.  1: # 1 "test6.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1679,58 +1390,9 @@ main (0.9.5) {0} int function
 ; 0. 16:    string[] sa = new string[10];
 ; 0. 17:    return 0;
 ; 0. 18: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-foo (0.5.8) {0} struct foo
-
-bar (0.6.8) {0} struct bar
-
-f0 (0.8.5) {0} int
-
-f1 (0.9.5) {0} int
-    a (0.9.13) {0} int variable lval param 0
-
-f2 (0.10.5) {0} int
-    a (0.10.13) {0} int variable lval param 0
-    b (0.10.20) {0} int variable lval param 1
-
-f3 (0.11.5) {0} int
-    a (0.11.16) {0} string variable lval param 0
-    b (0.11.26) {0} string variable lval param 1
-    c (0.11.36) {0} string variable lval param 2
-
-f4 (0.12.5) {0} int
-    a (0.12.13) {0} struct foo variable lval param 0
-    b (0.12.20) {0} struct bar variable lval param 1
-
-main (0.14.5) {0} int function
-    s (0.15.11) {1} string variable lval local 0
-    sa (0.16.13) {1} string array variable local 1
-
+sa (0.16.13) {1} 
+s (0.15.11) {1} 
+        return 0;
 ;-1.  1: # 1 "tester.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1763,56 +1425,62 @@ main (0.14.5) {0} int function
 ; 0. 13:    { if (not (stack != null)) { __assert_fail ("stack != null", "tester.oc", 13, __FUNC__); } };
 ; 0. 14: 
 ; 0. 15: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-node (0.3.8) {0} struct node
-    data (0.4.11) string field 0
-    link (0.5.9) struct node field 1
-
-stack (0.8.8) {0} struct stack
-    top (0.9.9) struct node field 0
-
-empty (0.12.5) {0} int function
-    stack (0.12.18) {1} struct stack variable lval param 0
-
+stack (0.12.18) {1} 
 ;-1.  1: # 1 "test.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
 ; 2.  1: # 1 "/usr/include/stdc-predef.h" 1 3 4
 ; 3.  1: # 1 "<command-line>" 2
 ; 2.  1: # 1 "test.oc"
-; 0.  1: int main() {
-; 0.  2:    string b = new string(5);
-; 0.  3:    int[] vec1 = new string[0];
-; 0.  4: }
-main (0.1.5) {0} int function
-    b (0.2.11) {1} string variable lval local 0
-    vec1 (0.3.10) {1} int array variable local 1
-
+; 0.  1: struct node {
+; 0.  2:    int[] data;
+; 0.  3:    int link;
+; 0.  4:    string value;
+; 0.  5:    string[] valuesArr;
+; 0.  6:    node a;
+; 0.  7:    node[] b;
+; 0.  8: }
+; 0.  9: 
+; 0. 10: struct tree {
+; 0. 11:    string[] val;
+; 0. 12:    node treeNode;
+; 0. 13: }
+; 0. 14: 
+; 0. 15: int temp = 5;
+; 0. 16: int counter = 0;
+; 0. 17: tree t0 = new tree;
+; 0. 18: string[] rand = 5;
+; 0. 19: node[] nodes = 10;
+; 0. 20: 
+; 0. 21: int[] main(tree t1, int one, int two, string three) {
+; 0. 22:    string helloworld = "hello, world!";
+; 0. 23:    string ucsc = "University of California, Santa Cruz";
+; 0. 24:    int num = 17;
+; 0. 25:    while(num < 5) {
+; 0. 26:      num = num + 1;
+; 0. 27:    }
+; 0. 28:    return 0;
+; 0. 29: }
+ucsc (0.23.11) {1} 
+helloworld (0.22.11) {1} 
+t1 (0.21.17) {1} 
+one (0.21.25) {1} 
+num (0.24.8) {1} 
+three (0.21.46) {1} 
+two (0.21.34) {1} 
+while_0_25_4:;
+        if (!b1) goto break_0_25_4;
+ucsc (0.23.11) {1} 
+helloworld (0.22.11) {1} 
+t1 (0.21.17) {1} 
+one (0.21.25) {1} 
+num (0.24.8) {1} 
+three (0.21.46) {1} 
+two (0.21.34) {1} 
+        i1
+        goto while_0_25_4;
+break_0_25_4:;
+        return 0;
 ;-1.  1: # 1 "towers.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1853,44 +1521,22 @@ main (0.1.5) {0} int function
 ; 0. 21:    towers (4, "Source", "Temporary", "Destination");
 ; 0. 22:    return 0;
 ; 0. 23: }
-__assert_fail (4.29.6) {0} void
-    expr (4.29.28) {0} string variable lval param 0
-    file (4.29.41) {0} string variable lval param 1
-    line (4.29.51) {0} int variable lval param 2
-    func (4.29.64) {0} string variable lval param 3
-
-putchar (4.30.6) {0} void
-    c (4.30.19) {0} int variable lval param 0
-
-putint (4.31.6) {0} void
-    i (4.31.18) {0} int variable lval param 0
-
-putstr (4.32.6) {0} void
-    s (4.32.21) {0} string variable lval param 0
-
-getchar (4.33.5) {0} int
-
-getword (4.34.8) {0} string
-
-getln (4.35.8) {0} string
-
-endl (4.36.6) {0} void
-
-exit (4.37.6) {0} void
-    status (4.37.16) {0} int variable lval param 0
-
-move (0.5.6) {0} void function
-    src (0.5.19) {1} string variable lval param 0
-    dst (0.5.31) {1} string variable lval param 1
-
-towers (0.13.6) {1} void function
-    ndisks (0.13.18) {2} int variable lval param 0
-    src (0.13.33) {2} string variable lval param 1
-    tmp (0.13.45) {2} string variable lval param 2
-    dst (0.13.57) {2} string variable lval param 3
-
-main (0.20.5) {2} int function
-
+dst (0.5.31) {1} 
+src (0.5.19) {1} 
+        call
+        call
+        call
+        call
+        call
+dst (0.13.57) {2} 
+tmp (0.13.45) {2} 
+src (0.13.33) {2} 
+ndisks (0.13.18) {2} 
+        call
+        call
+        call
+        call
+        return 0;
 ;-1.  1: # 1 "trivial.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
@@ -1927,24 +1573,25 @@ main (0.20.5) {2} int function
 ; 0. 29:    if (a == b) f (x);
 ; 0. 30:    if (a != b) y = 3; else f (y, z);
 ; 0. 31: }
-a (0.9.7) {0} int array variable 0
-
-foo (0.11.6) {0} void
-
-foo (0.12.6) {0} void
-    a (0.12.15) {0} int variable lval param 0
-
-foo (0.13.6) {0} void function
-    a (0.13.17) {1} int array variable lval param 0
-    b (0.13.26) {1} int array variable lval param 1
-    x (0.13.34) {1} int variable lval local 0
-
-foo (0.14.8) {0} struct foo
-    a (0.14.18) int field 0
-    b (0.14.25) int field 1
-
-main (0.16.5) {1} int function
-
+x (0.13.34) {1} 
+b (0.13.26) {1} 
+a (0.13.17) {1} 
+        call
+        call
+        
+        i2
+while_0_24_4:;
+        if (!b2) goto break_0_24_4;
+        goto while_0_24_4;
+break_0_24_4:;
+        return +;
+        
+        return;while_0_28_4:;
+        if (!b2) goto break_0_28_4;
+        i4
+        i5
+        goto while_0_28_4;
+break_0_28_4:;
 ;-1.  1: # 1 "uncomment.oc"; 0.  0: 
 ; 0.  1: # 1 "<built-in>"
 ; 1.  1: # 1 "<command-line>"
