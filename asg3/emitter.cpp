@@ -231,18 +231,15 @@ void emitBlock(astree* root, symbol_table* local_vars) {
               case TOK_CALL : {
                    //fprintf(oilFile, "%scall\n", indent.c_str());
                    symbol* temp = findGlobal(block->children[0]->lexinfo);
-                   fprintf(oilFile, "%s%s\n", indent.c_str(), temp->funcname->c_str());
-                   if ( &block->children[1] == nullptr ) { 
-                      if (block->children[1]->symbol == TOK_IDENT) {
-                          printf("hi");
-                          //break;
-                        /* 
-			symbol* temp2 = local_vars->find(block->children[1]->children[1]->lexinfo)->second;
-                        fprintf(oilFile,"%s %s = __%s (__%s)", typeStringSym(temp2).c_str(), 
-                        addReg(temp2).c_str(), block->children[1]->children[0]->lexinfo->c_str(),
-                        block->children[1]->children[1]->lexinfo->c_str());*/
-                        break;
-                      }
+                   if ( !temp->attributes[unsigned(attr::VOID)]) {
+			
+                   }
+                   //fprintf(oilFile, "%s%s\n", indent.c_str(), temp->funcname->c_str());
+                   if ( &block->children[1] != nullptr ) {
+                      if ( block->children[1]->symbol == TOK_CALL ) {
+                          emitBlock(block, local_vars); 
+                          break;
+                     }
                    }
                    else {
                         printf("how is it null"); 
@@ -252,6 +249,15 @@ void emitBlock(astree* root, symbol_table* local_vars) {
 	      }
               case '=' : {
                    symbol* temp = local_vars->find(block->children[0]->lexinfo)->second;
+                   if ( temp == nullptr ) {
+                  	temp = findGlobal(block->children[0]->lexinfo);
+                        reg = addReg(temp).c_str();
+                        fprintf(oilFile, "%s%s%s %s = _%zu_%s %s _%zu_%s; \n",indent.c_str(), typeStringSym(temp).c_str(),
+                        addPtrsSym(temp).c_str(), reg.c_str(), temp->block_nr, block->children[1]->children[0]->lexinfo->c_str(),
+                        block->children[1]->lexinfo->c_str(), temp->block_nr, block->children[1]->children[1]->lexinfo->c_str());
+                        fprintf(oilFile, "%s_%zu_%s = %s\n", indent.c_str(), temp->block_nr, block->children[0]->lexinfo->c_str(), reg.c_str());
+                        break;
+                   }
                    reg = addReg(temp).c_str();                  
                    fprintf(oilFile, "%s%s%s %s = _%zu_%s %s _%zu_%s; \n",indent.c_str(), typeStringSym(temp).c_str(), 
                    addPtrsSym(temp).c_str(), reg.c_str(), temp->block_nr, block->children[1]->children[0]->lexinfo->c_str(),
