@@ -10,6 +10,7 @@ int[] fibonacci = null;
 
 int main() {
    int index = 2;
+   index = 0;
    fibonacci = new int[FIB_SIZE];
    fibonacci[0] = 0;
    //fibonacci[1] = 1;

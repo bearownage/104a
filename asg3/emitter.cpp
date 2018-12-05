@@ -351,7 +351,10 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                       break;
                    } 
                    if(block->children[1]->children.size() < 1) {
-                      printf("DEBUG:::%s\n", block->children[0]->lexinfo->c_str());
+                      //symbol* temp = findVar(block->children[0]->lexinfo, local_vars);
+                      //reg = addReg(temp).c_str();
+                      fprintf(oilFile, "%s%s %s = %s\n", indent.c_str(), typeStringSym(temp).c_str(), reg.c_str(), block->children[1]->lexinfo->c_str());
+                      fprintf(oilFile, "%s_%zd_%s = %s\n", indent.c_str(), block->children[0]->block_nr, block->children[0]->lexinfo->c_str(), reg.c_str());
                       break;
                    }  
                    fprintf(oilFile,  
