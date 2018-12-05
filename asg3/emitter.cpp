@@ -356,7 +356,20 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                       fprintf(oilFile, "%s%s %s = %s\n", indent.c_str(), typeStringSym(temp).c_str(), reg.c_str(), block->children[1]->lexinfo->c_str());
                       fprintf(oilFile, "%s_%zd_%s = %s\n", indent.c_str(), block->children[0]->block_nr, block->children[0]->lexinfo->c_str(), reg.c_str());
                       break;
-                   }  
+                   } 
+                   
+                   if ( block->children[1]->children[1]->symbol == TOK_INTCON ) {
+			fprintf(oilFile,
+                   "%s%s%s %s = _%lu_%s %s %s; \n",
+                   indent.c_str(),
+                   typeStringSym(temp).c_str(),
+                   addPtrsSym(temp).c_str(),
+                   reg.c_str(),
+                   temp->block_nr,
+                   block->children[1]->children[0]->lexinfo->c_str(),
+                   block->children[1]->lexinfo->c_str(),
+                   block->children[1]->children[1]->lexinfo->c_str());
+                   } else { 
                    fprintf(oilFile,  
                    "%s%s%s %s = _%lu_%s %s _%lu_%s; \n", 
                    indent.c_str(), 
@@ -367,6 +380,7 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                    block->children[1]->children[0]->lexinfo->c_str(),
                    block->children[1]->lexinfo->c_str(), 
                    temp->block_nr, block->children[1]->children[1]->lexinfo->c_str());
+                   }
                    fprintf(oilFile, "%s_%zu_%s = %s\n", indent.c_str(), temp->block_nr, block->children[0]->lexinfo->c_str(), reg.c_str());
                    break;	 
 	      }
