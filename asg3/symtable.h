@@ -37,4 +37,5 @@ void updateAttr(astree* root);
 void printTable(symbol_table* table);
 
 symbol* findGlobal(const string* var);
+symbol* findTypeid(const string* strucID);
 #endif
