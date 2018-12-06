@@ -341,6 +341,10 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                            fprintf(oilFile, " = __%s;\n",
                            block->children[1]->lexinfo->c_str());
                         }
+                        else if(block->children[1]->symbol == '-') {
+                           fprintf(oilFile, " = %s_%s - 1;\n", block->children[0]->children[0]->lexinfo->c_str(),
+                                   block->children[0]->children[1]->lexinfo->c_str()); 
+                        }
                         break; 
                    }
  
