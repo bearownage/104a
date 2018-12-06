@@ -14,6 +14,7 @@ string indent = "        ";
 int regCounter = 1;
 string reg = "";
 extern FILE* oilFile;
+int vectorCounter = 1;
 
 enum class attr : unsigned {
    VOID, INT, NULLX, STRING, STRUCT, ARRAY, FUNCTION, VARIABLE, FIELD,
@@ -286,11 +287,19 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                    if(temp == nullptr) {
                       break;
                    }
-                   if ( &block->children[1] != nullptr ) {
-                      emitBlock(block, local_vars); 
+                   if( block->children.size() == 1 ) {
+                     fprintf(oilFile, "%s__%s();\n", indent.c_str(), temp->funcname->c_str());
+                     break;
                    }
-                   else {
-                      printf("how is it null"); 
+                   if ( &block->children[1] != nullptr && block->children[1]->symbol == TOK_CALL) {
+                      if(block->children[1]->symbol == TOK_CALL) {
+                         emitBlock(block, local_vars); 
+                      }
+                   }
+                   else if (&block->children[1] != nullptr && block->children[1]->symbol == TOK_STRINGCON) {
+                      fprintf(oilFile, "%s__%s(s%d);\n", indent.c_str(), temp->funcname->c_str(), vectorCounter);
+                      vectorCounter++;
+                      break;
                    }
 
  
