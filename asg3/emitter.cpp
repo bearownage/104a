@@ -277,7 +277,27 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                    }
                    else { 
 			if ( block->children[0]->attributes[unsigned(attr::VARIABLE)] != 1 )  { 
+                             if ( block->children[0]->attributes[unsigned(attr::VREG)]) {
+                                  if (block->children[0]->children[0]->symbol == TOK_ARROW ) {
+                                     if ( block->children[0]->children[1]->children.size() < 1 ) {
+					fprintf(oilFile, "%sreturn %s_%s %s\n", indent.c_str(),
+                                        block->children[0]->children[0]->children[0]->lexinfo->c_str(), block->children[0]->children[0]->children[1]->lexinfo->c_str(), 
+                                        block->children[0]->children[1]->lexinfo->c_str());
+
+                                  }
+                                  else {
+				  fprintf(oilFile, "%sreturn %s_%s %s %s\n", indent.c_str(),
+                                  block->children[0]->children[0]->children[0]->lexinfo->c_str(), block->children[0]->children[0]->children[1]->lexinfo->c_str(), 
+                                  block->children[0]->children[1]->lexinfo->c_str(), block->children[0]->children[1]->children[0]->lexinfo->c_str());
+                                    }
+                                }
+                                else {
+                                    printf("hi"); 
+                                }
+                             }
+                             else {
                              fprintf(oilFile, "%sreturn %s;\n",indent.c_str(), block->children[0]->lexinfo->c_str());
+                             }
                              break;
                         }
 			else { 
@@ -328,6 +348,12 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                         emitBlock(block, local_vars);
                    }
                    if(block->children[0]->symbol == TOK_ARROW) {
+                        if ( block->children[1]->symbol == TOK_ARROW ) {
+			    fprintf(oilFile, "%s%s_%s = %s_%s;\n", indent.c_str(), block->children[0]->children[0]->lexinfo->c_str(),
+                            block->children[0]->children[1]->lexinfo->c_str(), block->children[1]->children[0]->lexinfo->c_str(),
+                            block->children[1]->children[1]->lexinfo->c_str());
+			    break;
+                        }
                         fprintf(oilFile, "%s%s_%s",
                            indent.c_str(),
                            block->children[0]->children[0]->lexinfo->c_str(),
@@ -343,7 +369,10 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                         }
                         else if(block->children[1]->symbol == '-') {
                            fprintf(oilFile, " = %s_%s - 1;\n", block->children[0]->children[0]->lexinfo->c_str(),
-                                   block->children[0]->children[1]->lexinfo->c_str()); 
+                           block->children[0]->children[1]->lexinfo->c_str()); 
+                        }
+                        else if (block->children[1]->symbol == TOK_NULL) {
+			   fprintf(oilFile, " = %s;\n", block->children[1]->lexinfo->c_str());
                         }
                         break; 
                    }
