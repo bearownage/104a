@@ -77,7 +77,12 @@ const string addPtrsSym(symbol* node) {
 const string addReg(symbol* node) { 
 	string reg = "";
         if (node->attributes[unsigned(attr::INT)]) {
+           if ( node->attributes[unsigned(attr::ARRAY)]) {
+		reg += "a" + std::to_string(regCounter);
+           }
+           else {
 	   reg += "i" + std::to_string(regCounter);
+           }
         }
         if (node->attributes[unsigned(attr::STRING)]) {
 	   reg += "s" + std::to_string(regCounter);
@@ -267,7 +272,7 @@ void emitBlock(astree* root, symbol_table* local_vars) {
               }
               case TOK_RETURN : { 
    		   if ( &block->children[0] == nullptr ) {
-                 	fprintf(oilFile, "%sreturn;", indent.c_str());
+                 	fprintf(oilFile, "%sreturn;\n", indent.c_str());
                         break;
                    }
                    else { 
@@ -316,6 +321,9 @@ void emitBlock(astree* root, symbol_table* local_vars) {
                    break;  
 	      }
               case '=' : {
+                   if (block->children[0]->symbol == TOK_INDEX ) {
+			emitBlock(block, local_vars);
+                   }
                    if(block->children[1]->symbol == TOK_NEW) {
                         emitBlock(block, local_vars);
                    }
@@ -415,20 +423,20 @@ void emitBlock(astree* root, symbol_table* local_vars) {
               case TOK_NEW : {
                    if(block->children[0]->symbol == TOK_NEWARRAY) {
                       if(block->children[0]->children[0]->symbol == TOK_STRING) {
-                         fprintf(oilFile, "%schar** p%d = xcalloc ( __%s, sizeof (char*));\n",
+                         fprintf(oilFile, "%schar** p%d = xcalloc (__%s, sizeof (char*));\n",
                          indent.c_str(),
                          regCounter,
                          block->children[0]->children[1]->lexinfo->c_str());
                       }
                       if(block->children[0]->children[0]->symbol == TOK_INT) {
                          if(block->children[0]->children[1]->symbol == TOK_INTCON) {
-                            fprintf(oilFile, "%sint* p%d = xcalloc ( %s, sizeof (int));\n",
+                            fprintf(oilFile, "%sint* p%d = xcalloc (%s, sizeof (int));\n",
                             indent.c_str(),
                             regCounter,
                             block->children[0]->children[1]->lexinfo->c_str());
                             break;
                          }
-                         fprintf(oilFile, "%sint* p%d = xcalloc ( __%s, sizeof (int));\n",
+                         fprintf(oilFile, "%sint* p%d = xcalloc (__%s, sizeof (int));\n",
                          indent.c_str(),
                          regCounter,
                          block->children[0]->children[1]->lexinfo->c_str());
@@ -436,6 +444,33 @@ void emitBlock(astree* root, symbol_table* local_vars) {
 
                    }
                    break;
+              }
+              case TOK_INDEX : {
+                   
+                   symbol* temp = findVar(block->children[0]->lexinfo, local_vars);
+                   if ( temp == nullptr ) { 
+			temp = findGlobal(block->children[0]->lexinfo);
+                   }
+
+                   if ( &temp->attributes == NULL ) { 
+                   	break;
+                   }
+
+                   if ( temp->attributes[unsigned(attr::INT)]) {
+			reg = addReg(temp);
+                        fprintf(oilFile, "%s%s%s %s = &_%zd_%s[_%zu_%s];\n", indent.c_str(),
+                        typeStringSym(temp).c_str(), addPtrsSym(temp).c_str(),
+                        reg.c_str(), block->block_nr, block->children[0]->lexinfo->c_str(), 
+                        block->block_nr, block->children[1]->lexinfo->c_str());
+                        break;
+                   }
+
+                   if (temp->attributes[unsigned(attr::STRING)] && temp->attributes[unsigned(attr::ARRAY)] ) {
+		       //fprintf(oilFile, "%schar** a%d = &_$zd_%
+		       break;
+                   }
+                   
+		   break;
               }
           }
     }
